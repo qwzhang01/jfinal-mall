@@ -1,0 +1,1467 @@
+Table: butler_article
+--------------+-----------------------+------+-----+---------+---------
+ Field        | Type                  | Null | Key | Default | Remarks 
+--------------+-----------------------+------+-----+---------+---------
+ article_id   | MEDIUMINT UNSIGNED(8) | NO   | PRI |         |         
+ cat_id       | SMALLINT(5)           | NO   |     | 0       | 类别ID    
+ title        | VARCHAR(150)          | NO   |     |         | 文章标题    
+ content      | LONGTEXT(2147483647)  | NO   |     |         |         
+ author       | VARCHAR(30)           | NO   |     |         | 文章作者    
+ author_email | VARCHAR(60)           | NO   |     |         | 作者邮箱    
+ keywords     | VARCHAR(255)          | NO   |     |         | 关键字     
+ article_type | BIT                   | NO   |     | 2       |         
+ is_open      | BIT                   | NO   |     | 1       |         
+ add_time     | INT UNSIGNED(10)      | NO   |     | 0       |         
+ file_url     | VARCHAR(255)          | NO   |     |         | 附件地址    
+ open_type    | BIT                   | NO   |     | 0       |         
+ link         | VARCHAR(255)          | NO   |     |         | 链接地址    
+ description  | MEDIUMTEXT(16777215)  | YES  |     |         | 文章摘要    
+ click        | INT(10)               | YES  |     | 0       | 浏览量     
+ publish_time | INT(10)               | YES  |     |         | 文章预告发布时间
+ thumb        | VARCHAR(200)          | NO   |     |         | 文章缩略图   
+--------------+-----------------------+------+-----+---------+---------
+
+Table: butler_article_cat
+-------------+------------------+------+-----+---------+---------
+ Field       | Type             | Null | Key | Default | Remarks 
+-------------+------------------+------+-----+---------+---------
+ cat_id      | INT UNSIGNED(10) | NO   | PRI |         |         
+ cat_name    | VARCHAR(20)      | YES  |     |         | 类别名称    
+ cat_type    | SMALLINT(5)      | YES  |     | 0       | 默认分组    
+ parent_id   | SMALLINT(5)      | YES  |     | 0       | 夫级ID    
+ show_in_nav | BIT              | YES  |     | 0       | 是否导航显示  
+ sort_order  | SMALLINT(5)      | YES  |     | 50      | 排序      
+ cat_desc    | VARCHAR(255)     | YES  |     |         | 分类描述    
+ keywords    | VARCHAR(30)      | YES  |     |         | 搜索关键词   
+ cat_alias   | VARCHAR(20)      | YES  |     |         | 别名      
+-------------+------------------+------+-----+---------+---------
+
+Table: butler_brand
+-------------+------------------+------+-----+---------+---------
+ Field       | Type             | Null | Key | Default | Remarks 
+-------------+------------------+------+-----+---------+---------
+ id          | INT UNSIGNED(10) | NO   | PRI |         | 品牌表     
+ name        | VARCHAR(60)      | NO   |     |         | 品牌名称    
+ logo        | VARCHAR(80)      | NO   |     |         | 品牌logo  
+ desc        | TEXT(65535)      | NO   |     |         | 品牌描述    
+ url         | VARCHAR(200)     | NO   |     |         | 品牌地址（字段作废）
+ category_id | INT(10)          | NO   |     | 0       | 分类ID    
+ sort        | INT UNSIGNED(10) | NO   |     | 50      | 排序      
+ is_hot      | INT(10)          | NO   |     | 0       | 是否推荐（0否 1是）
+ status      | INT(10)          | NO   |     | 0       | 0正常 1审核中 2审核失败 审核状态
+ cat_name    | VARCHAR(128)     | YES  |     |         | 品牌分类（字段作废）
+ cat_id1     | INT(10)          | YES  |     | 0       | 一级分类id（字段作废）
+ cat_id2     | INT(10)          | YES  |     | 0       | 二级分类id（字段作废）
+ cat_id3     | INT(10)          | YES  |     | 0       | 三级分类id（字段作废）
+ store_id    | INT(10)          | YES  |     | 0       | 商家ID（字段作废）
+-------------+------------------+------+-----+---------+---------
+
+Table: butler_cart
+---------------+--------------+------+-----+---------+---------
+ Field         | Type         | Null | Key | Default | Remarks 
+---------------+--------------+------+-----+---------+---------
+ id            | INT(10)      | NO   | PRI |         | 购物车信息ID 
+ user_id       | INT(10)      | NO   |     | 0       | 用户id    
+ session_id    | VARCHAR(100) | NO   |     |         | session 
+ item_id       | INT(10)      | NO   |     | 0       | 规格ID    
+ goods_id      | INT(10)      | NO   |     | 0       | 商品id    
+ goods_sn      | VARCHAR(100) | NO   |     |         | 商品货号    
+ goods_name    | VARCHAR(100) | NO   |     |         | 商品名称    
+ goods_num     | INT(10)      | NO   |     | 0       | 购买数量    
+ spec_key      | VARCHAR(64)  | YES  |     |         | 商品规格key 对应butler_spec_goods_price 表
+ spec_key_name | VARCHAR(64)  | YES  |     |         | 商品规格组合名称
+ add_time      | INT(10)      | YES  |     | 0       | 加入购物车的时间
+ store_id      | INT(10)      | YES  |     | 0       | 商家店铺ID  
+---------------+--------------+------+-----+---------+---------
+
+Table: butler_comment
+---------------+------------------+------+-----+---------+---------
+ Field         | Type             | Null | Key | Default | Remarks 
+---------------+------------------+------+-----+---------+---------
+ comment_id    | INT(10)          | NO   | PRI |         | id自增    
+ goods_id      | INT(10)          | NO   |     | 0       | 商品id    
+ order_id      | INT(10)          | NO   |     | 0       | 订单id    
+ rec_id        | INT(10)          | NO   |     | 0       | 订单商品id  
+ store_id      | INT(10)          | NO   |     | 0       | 店铺id    
+ user_id       | INT UNSIGNED(10) | NO   |     | 0       | 用户id    
+ content       | TEXT(65535)      | YES  |     |         | 评论内容    
+ add_time      | INT UNSIGNED(10) | YES  |     |         | 评论时间    
+ ip_address    | VARCHAR(15)      | NO   |     |         | 评论ip地址  
+ is_show       | INT UNSIGNED(10) | NO   |     | 1       | 是否显示;0:不显示；1:显示
+ img           | TEXT(65535)      | YES  |     |         | 晒单图片    
+ spec_key_name | VARCHAR(255)     | NO   |     |         |         
+ goods_rank    | DECIMAL(2,1)     | NO   |     | 0.0     | 商品评价等级，好 中 差
+ zan_num       | INT(10)          | YES  |     | 0       | 点赞人数    
+ zan_userid    | VARCHAR(255)     | NO   |     |         |         
+ reply_num     | INT(10)          | YES  |     |         | 评论回复数   
+ is_anonymous  | INT(10)          | YES  |     | 0       | 是否匿名评价0:是；1不是
+ impression    | VARCHAR(50)      | YES  |     |         | 印象标签    
+ deleted       | INT UNSIGNED(10) | NO   |     | 0       | 假删除标识;1:删除,0:未删除
+ parent_id     | INT(10)          | NO   |     | 0       | 上级评论ID  
+ order_sn      | VARCHAR(20)      | YES  |     |         | 订单号     
+---------------+------------------+------+-----+---------+---------
+
+Table: butler_coupon
+--------------------+---------------+------+-----+---------+---------
+ Field              | Type          | Null | Key | Default | Remarks 
+--------------------+---------------+------+-----+---------+---------
+ id                 | INT(10)       | NO   | PRI |         | 表id     
+ activity_id        | INT(10)       | NO   |     | 0       | 优惠券活动规则ID
+ name               | VARCHAR(60)   | NO   |     |         | 优惠券名字   
+ order_price        | INT(10)       | NO   |     | 0       | 面值/优惠券金 (单位：分) 使用条件为：阶梯满减的券，该字段值为0
+ sale_price         | INT(10)       | NO   |     | 0       | 券的售卖价格 (单位：分)
+ img                | VARCHAR(300)  | YES  |     |         | 优惠券的图片地址
+ num                | INT(10)       | YES  |     |         | 发放数量    
+ issuer             | INT(10)       | YES  |     | 0       | 发行人(发放主体) 1：平台发放(成本全部由平台承担)、2：平台发放(成本由平台与店铺共同承担)、3：店铺发放(成本全部由店铺承担)
+ is_show            | INT(10)       | YES  |     |         | 是否公开显示 1：公开显示、2：不公开显示
+ type               | BIT           | NO   |     | 0       | 发放类型 0下单赠送 1 按用户发放 2 免费领取 3 线下发放 (作废)
+ use_type           | BIT           | YES  |     | 0       | 使用范围：0全店通用1指定商品可用2指定分类商品可用 (作废)
+ money              | DECIMAL(10,2) | NO   |     | 0.00    | 优惠券金额 (作废)
+ condition          | DECIMAL(10,2) | NO   |     | 0.00    | 使用条件 (作废)
+ createnum          | INT(10)       | YES  |     | 10      | 发放数量 (作废)
+ send_num           | INT(10)       | YES  |     | 0       | 已领取数量 (作废)
+ use_num            | INT(10)       | YES  |     | 0       | 已使用数量 (作废)
+ send_start_time    | INT(10)       | YES  |     |         | 发放开始时间 (作废) 
+ send_end_time      | INT(10)       | YES  |     |         | 发放结束时间 (作废)
+ use_start_time     | INT(10)       | YES  |     |         | 使用开始时间 (作废) 
+ use_end_time       | INT(10)       | YES  |     |         | 使用结束时间 (作废)
+ add_time           | INT(10)       | YES  |     |         | 添加时间 (作废)
+ store_id           | INT(10)       | YES  |     | 0       | 商家店铺ID  
+ status             | BIT           | YES  |     | 1       | 状态：1有效2无效 (作废)
+ coupon_info        | VARCHAR(255)  | YES  |     |         | 优惠券描述说明 
+ start_send_time    | DATETIME(19)  | YES  |     |         | 发放开始时间  
+ end_send_time      | DATETIME(19)  | YES  |     |         | 发放结束时间  
+ effective_type     | INT(10)       | YES  |     |         | 使用有效时间类型(1绝对时间，2相对时间)
+ effective_duration | INT(10)       | YES  |     | 0       | 有效时长(单位小时，相对时间的时候有值)
+ start_use_time     | DATETIME(19)  | YES  |     |         | 使用开始时间  
+ end_use_time       | DATETIME(19)  | YES  |     |         | 使用结束时间  
+ create_time        | DATETIME(19)  | YES  |     |         | 创建时间    
+ update_time        | DATETIME(19)  | YES  |     |         | 修改时间    
+--------------------+---------------+------+-----+---------+---------
+
+Table: butler_coupon_activity
+----------------+--------------+------+-----+---------+---------
+ Field          | Type         | Null | Key | Default | Remarks 
+----------------+--------------+------+-----+---------+---------
+ id             | INT(10)      | NO   | PRI |         | 自增长ID   
+ name           | VARCHAR(60)  | NO   |     |         | 优惠券活动名称 
+ type           | INT(10)      | NO   |     | 2       | 发放方式 1：按用户发放、2：用户免费领取、3：发放+领取、4：大客户团购 (用钱购买的购物卡，可以多次使用，有对应记录流水的表)、5：购买代金券(有对应的字段记录券的价格)
+ rule_img       | VARCHAR(300) | YES  |     |         | 优惠券活动的图片地址
+ detail         | VARCHAR(500) | YES  |     |         | 优惠券活动说明 
+ use_threshold  | INT(10)      | NO   |     | 1       | 使用门槛 1：现金券(不限额度)、2：满减券(满多少减多少)、3：折扣券(打x折扣)
+ use_condition  | INT(10)      | NO   |     | 0       | 使用条件  1：无条件使用(不限额直接使用券)、2：固定金额不叠加满减、3：固定金额叠加满减、4：阶梯满减、5：无条件折扣
+ num_limit      | INT(10)      | NO   |     | 1       | 限制数量 1：每人仅限一张、2：每人每天限一张
+ is_conjunction | INT(10)      | NO   |     | 0       | 是否叠加 1：同种券可以叠加使用、2：同种券不可以叠加使用、3：与其他券可以叠加使用、4：与其他券不可以叠加使用
+ is_return      | INT(10)      | NO   |     |         | 退款是否返还优惠券 1：返还、2：不返还
+ is_show        | INT(10)      | NO   |     | 0       | 是否公开显示 1：公开显示、2：不公开显示
+ create_time    | DATETIME(19) | YES  |     |         | 创建时间    
+ update_time    | DATETIME(19) | YES  |     |         | 修改时间    
+----------------+--------------+------+-----+---------+---------
+
+Table: butler_coupon_business
+-------------+--------------+------+-----+---------+---------
+ Field       | Type         | Null | Key | Default | Remarks 
+-------------+--------------+------+-----+---------+---------
+ id          | INT(10)      | NO   | PRI |         | 自增长ID   
+ activity_id | INT(10)      | NO   |     |         | 优惠券活动ID 
+ use_type    | INT(10)      | NO   |     |         | 使用范围 1：针对单品、2：针对分类、3：针对品牌、4：针对全平台所有商品、5:：针对制定店铺
+ business_id | INT(10)      | YES  |     |         | 对应的业务id 
+ create_time | DATETIME(19) | NO   |     |         | 创建时间    
+ update_time | DATETIME(19) | NO   |     |         | 修改时间    
+-------------+--------------+------+-----+---------+---------
+
+Table: butler_coupon_ladder
+-------------+---------+------+-----+---------+---------
+ Field       | Type    | Null | Key | Default | Remarks 
+-------------+---------+------+-----+---------+---------
+ id          | INT(10) | NO   | PRI |         | 自增长ID   
+ activity_id | INT(10) | NO   |     |         | 优惠券ID   
+ minPrice    | INT(10) | NO   |     |         | 购买最小价格 (单位：分)
+ maxPrice    | INT(10) | NO   |     |         | 购买最大价格 (单位：分)
+ order_price | INT(10) | NO   |     |         | 阶梯满减类型-优惠券 面额 (单位：分)
+ create_time | INT(10) | NO   |     |         | 创建时间    
+ update_time | INT(10) | NO   |     |         | 修改时间    
+-------------+---------+------+-----+---------+---------
+
+Table: butler_coupon_list
+---------------+--------------+------+-----+---------+---------
+ Field         | Type         | Null | Key | Default | Remarks 
+---------------+--------------+------+-----+---------+---------
+ id            | INT(10)      | NO   | PRI |         |         
+ coupon_id     | INT(10)      | NO   |     | 0       | 优惠券ID   
+ cid           | INT(10)      | NO   |     | 0       | 优惠券 对应coupon表id (作废)
+ type          | BIT          | NO   |     | 0       | 发放类型 0下单赠送 1 按用户发放 2 免费领取 3 线下发放 (作废)
+ uid           | INT(10)      | NO   |     | 0       | 用户id    
+ order_id      | INT(10)      | NO   |     | 0       | 订单id    
+ coupon_status | INT(10)      | NO   |     |         | 状态 1已领取未使用、2已使用、3已过期、4已退回、5已作废
+ get_order_id  | INT(10)      | YES  |     |         | 送券订单ID (作废)
+ use_time      | INT(10)      | NO   |     | 0       | 使用时间 (作废)
+ code          | VARCHAR(10)  | YES  |     |         | 优惠券兑换码  
+ send_time     | INT(10)      | NO   |     | 0       | 发放时间 (作废)
+ store_id      | INT(10)      | YES  |     | 0       | 商家店铺ID (作废)
+ status        | TINYINT(3)   | YES  |     | 0       | 0未使用1已使用2已过期 (作废)
+ deleted       | BIT          | YES  |     | 0       | 删除标识;1:删除,0未删除 (作废)
+ create_time   | DATETIME(19) | NO   |     |         | 领取时间    
+---------------+--------------+------+-----+---------+---------
+
+Table: butler_coupon_order_record
+----------------+--------------+------+-----+---------+---------
+ Field          | Type         | Null | Key | Default | Remarks 
+----------------+--------------+------+-----+---------+---------
+ id             | INT(10)      | NO   | PRI |         | 自增长ID   
+ coupon_list_id | INT(10)      | NO   |     |         | 优惠券ID   
+ consume_money  | INT(10)      | NO   |     |         | 优惠券消费金额 (本次)
+ residue_money  | INT(10)      | NO   |     |         | 代金券剩余面额 表 (本次)
+ create_time    | DATETIME(19) | NO   |     |         | 创建时间    
+ update_time    | DATETIME(19) | NO   |     |         | 修改时间    
+----------------+--------------+------+-----+---------+---------
+
+Table: butler_coupon_position
+-------------+--------------+------+-----+---------+---------
+ Field       | Type         | Null | Key | Default | Remarks 
+-------------+--------------+------+-----+---------+---------
+ id          | INT(10)      | NO   | PRI |         | 自增长ID   
+ activity_id | INT(10)      | NO   |     |         | 优惠券活动ID 
+ show_type   | INT(10)      | NO   |     | 0       | 显示类型 1：平台广告区域、2：店铺首页、3：商品详情页、4:：朋友圈、5：二维码、6：购物车
+ create_time | DATETIME(19) | NO   |     |         | 创建时间    
+ update_time | DATETIME(19) | NO   |     |         | 修改时间    
+-------------+--------------+------+-----+---------+---------
+
+Table: butler_delivery_doc
+---------------------------+------------------+------+-----+---------+---------
+ Field                     | Type             | Null | Key | Default | Remarks 
+---------------------------+------------------+------+-----+---------+---------
+ id                        | INT UNSIGNED(10) | NO   | PRI |         | 发货单ID   
+ order_id                  | INT UNSIGNED(10) | NO   |     |         | 订单ID    
+ order_sn                  | VARCHAR(64)      | NO   |     |         |         
+ user_id                   | INT UNSIGNED(10) | NO   |     |         | 用户ID    
+ admin_id                  | INT UNSIGNED(10) | NO   |     | 0       | 管理员ID   
+ consignee                 | VARCHAR(64)      | NO   |     |         | 收货人     
+ zipcode                   | VARCHAR(6)       | YES  |     |         | 邮编      
+ mobile                    | VARCHAR(20)      | NO   |     |         | 联系手机    
+ country                   | INT UNSIGNED(10) | NO   |     |         | 国ID     
+ province                  | INT UNSIGNED(10) | NO   |     |         | 省ID     
+ city                      | INT UNSIGNED(10) | NO   |     |         | 市ID     
+ district                  | INT UNSIGNED(10) | NO   |     |         | 区ID     
+ address                   | VARCHAR(255)     | NO   |     |         |         
+ shipping_code             | VARCHAR(32)      | YES  |     |         | 物流code  
+ shipping_name             | VARCHAR(64)      | YES  |     |         | 快递名称    
+ shipping_price            | DECIMAL(10,2)    | YES  |     | 0.00    | 运费      
+ invoice_no                | VARCHAR(255)     | NO   |     |         | 物流单号    
+ tel                       | VARCHAR(64)      | YES  |     |         | 座机电话    
+ note                      | TEXT(65535)      | YES  |     |         | 管理员添加的备注信息
+ best_time                 | INT(10)          | YES  |     |         | 友好收货时间  
+ create_time               | INT(10)          | NO   |     |         | 创建时间    
+ is_del                    | BIT              | YES  |     | 0       | 是否已经删除  
+ store_id                  | INT(10)          | YES  |     | 0       | 店铺商家id  
+ send_type                 | BIT              | YES  |     | 0       | 发货方式0自填快递1在线预约2电子面单3无需物流
+ store_address_consignee   | VARCHAR(64)      | NO   |     |         | 店铺发货人   
+ store_address_mobile      | VARCHAR(20)      | NO   |     |         | 发货人手机   
+ store_address_province_id | INT UNSIGNED(10) | NO   |     | 0       | 发货省     
+ store_address_city_id     | INT UNSIGNED(10) | NO   |     | 0       | 发货市     
+ store_address_district_id | INT UNSIGNED(10) | NO   |     | 0       | 发货县/区   
+ store_address             | VARCHAR(255)     | NO   |     |         | 发货地址    
+---------------------------+------------------+------+-----+---------+---------
+
+Table: butler_door_server
+----------------+--------------+------+-----+---------+---------
+ Field          | Type         | Null | Key | Default | Remarks 
+----------------+--------------+------+-----+---------+---------
+ i_id           | INT(10)      | NO   | PRI |         | 安装任务ID  
+ order_id       | INT(10)      | NO   |     |         | 订单ID    
+ goods_id       | INT(10)      | NO   |     |         | 产品id    
+ i_name         | VARCHAR(255) | NO   |     |         | 安装人员姓名  
+ i_phone        | VARCHAR(255) | NO   |     |         | 安装人员联系方式
+ i_address      | VARCHAR(255) | NO   |     |         | 安装的地址   
+ i_start_time   | DATETIME(19) | YES  |     |         | 预约时间    
+ i_end_time     | DATETIME(19) | YES  |     |         | 安装结束时间  
+ i_active       | INT(10)      | NO   |     |         | 状态（0：待安装，1：已安装，2：已分派，3已取消）
+ operation      | VARCHAR(255) | NO   |     |         | 分配任务人员  
+ i_remarks      | VARCHAR(255) | YES  |     |         | 安装备注    
+ i_name_comment | VARCHAR(255) | YES  |     |         | 对安装人员的评价
+ time           | DATETIME(19) | YES  |     |         | 操作时间    
+ worker_id      | INT(10)      | NO   |     | 0       | 上门服务人员ID
+ appoint_time   | DATETIME(19) | YES  |     |         | 预约时间    
+ done_time      | DATETIME(19) | YES  |     |         | 完成时间    
+----------------+--------------+------+-----+---------+---------
+
+Table: butler_feedback
+-------------+-----------------------+------+-----+---------+---------
+ Field       | Type                  | Null | Key | Default | Remarks 
+-------------+-----------------------+------+-----+---------+---------
+ msg_id      | MEDIUMINT UNSIGNED(8) | NO   | PRI |         | 默认自增ID  
+ parent_id   | MEDIUMINT UNSIGNED(8) | NO   |     | 0       | 回复留言ID  
+ user_id     | MEDIUMINT UNSIGNED(8) | NO   |     | 0       | 用户ID    
+ user_name   | VARCHAR(60)           | NO   |     |         |         
+ msg_title   | VARCHAR(200)          | NO   |     |         | 留言标题    
+ msg_type    | BIT                   | NO   |     | 0       | 留言类型    
+ msg_status  | BIT                   | NO   |     | 0       | 处理状态    
+ msg_content | TEXT(65535)           | NO   |     |         | 留言内容    
+ msg_time    | INT UNSIGNED(10)      | NO   |     | 0       | 留言时间    
+ message_img | VARCHAR(255)          | NO   |     |         |         
+ order_id    | INT UNSIGNED(10)      | NO   |     | 0       |         
+ msg_area    | BIT                   | NO   |     | 0       |         
+-------------+-----------------------+------+-----+---------+---------
+
+Table: butler_flash_info
+-----------+--------------+------+-----+---------+---------
+ Field     | Type         | Null | Key | Default | Remarks 
+-----------+--------------+------+-----+---------+---------
+ id        | INT(10)      | NO   | PRI |         |         
+ name      | VARCHAR(20)  | NO   |     |         | 秒杀活动名称  
+ beginTime | DATETIME(19) | NO   |     |         | 秒杀开始时间  
+ endTime   | DATETIME(19) | NO   |     |         | 秒杀结束时间  
+ buyLimit  | INT(10)      | NO   |     | 0       | 一个人在一个活动中的购买限制数量，0没有限制
+-----------+--------------+------+-----+---------+---------
+
+Table: butler_flash_sale
+---------------+------------------+------+-----+---------+---------
+ Field         | Type             | Null | Key | Default | Remarks 
+---------------+------------------+------+-----+---------+---------
+ id            | INT(10)          | NO   | PRI |         |         
+ flashId       | INT(10)          | NO   |     |         | 秒杀活动ID  
+ goodId        | INT UNSIGNED(10) | NO   |     |         | 商品ID    
+ skuId         | INT(10)          | NO   |     |         | 商品SKUID 
+ price         | DECIMAL(10,2)    | NO   |     |         | 秒杀价格    
+ goodNum       | INT(10)          | NO   |     | 0       | 秒杀商品库存  
+ buyLimit      | INT(10)          | NO   |     | 0       | 每人限购数   
+ buyNum        | INT(10)          | NO   |     | 0       | 购买人数    
+ orderNum      | INT(10)          | NO   |     | 0       | 下单数量    
+ fakeBuyNum    | INT(10)          | NO   |     | 0       | 虚假购买数量  
+ point         | DECIMAL(10,2)    | NO   |     | 0.00    | 积分抵扣金额  
+ pointLimit    | DECIMAL(10,2)    | NO   |     | 0.00    | 积分限制（个人拥有最少这么多积分才可以购买）
+ imgPath       | VARCHAR(200)     | NO   |     |         | 秒杀图片地址  
+ offSaleStatus | INT(10)          | NO   |     | 0       | 1上架2下架  
+ isFake        | INT(10)          | NO   |     | 0       | 1真实2虚假  
+ sorted        | INT(10)          | NO   |     | 0       | 排序字段    
+---------------+------------------+------+-----+---------+---------
+
+Table: butler_freight_config
+----------------+------------------------+------+-----+---------+---------
+ Field          | Type                   | Null | Key | Default | Remarks 
+----------------+------------------------+------+-----+---------+---------
+ config_id      | INT UNSIGNED(10)       | NO   | PRI |         | 配置id    
+ first_unit     | DOUBLE(16,4)           | NO   |     | 0.0000  | 首(重：体积：件）
+ first_money    | DECIMAL UNSIGNED(10,2) | NO   |     | 0.00    | 首(重：体积：件）运费
+ continue_unit  | DOUBLE UNSIGNED(16,4)  | NO   |     | 0.0000  | 继续加（件：重量：体积）区间
+ continue_money | DECIMAL UNSIGNED(10,2) | NO   |     | 0.00    | 继续加（件：重量：体积）的运费
+ template_id    | INT UNSIGNED(10)       | NO   |     | 0       | 运费模板ID  
+ is_default     | BIT                    | NO   |     | 0       | 是否是默认运费配置.0不是，1是
+ store_id       | INT UNSIGNED(10)       | NO   |     | 0       | 店铺ID    
+----------------+------------------------+------+-----+---------+---------
+
+Table: butler_freight_region
+-------------+------------------+------+-----+---------+---------
+ Field       | Type             | Null | Key | Default | Remarks 
+-------------+------------------+------+-----+---------+---------
+ id          | INT(10)          | NO   | PRI |         |         
+ template_id | INT UNSIGNED(10) | NO   |     | 0       | 模板id    
+ config_id   | INT UNSIGNED(10) | NO   |     | 0       | 运费模板配置ID
+ region_id   | INT UNSIGNED(10) | NO   |     | 0       | region表id
+ store_id    | INT UNSIGNED(10) | NO   |     | 0       | 店铺ID    
+-------------+------------------+------+-----+---------+---------
+
+Table: butler_freight_template
+-------------------+------------------+------+-----+---------+---------
+ Field             | Type             | Null | Key | Default | Remarks 
+-------------------+------------------+------+-----+---------+---------
+ template_id       | INT UNSIGNED(10) | NO   | PRI |         | 运费模板ID  
+ template_name     | VARCHAR(255)     | NO   |     |         | 模板名称    
+ type              | BIT              | NO   |     | 0       | 0 件数；1 商品重量；2 商品体积
+ is_enable_default | BIT              | NO   |     | 0       | 是否启用使用默认运费配置,0:不启用，1:启用
+ store_id          | INT UNSIGNED(10) | NO   |     | 0       | 店铺Id    
+-------------------+------------------+------+-----+---------+---------
+
+Table: butler_good
+---------------------+-----------------------+------+-----+---------+---------
+ Field               | Type                  | Null | Key | Default | Remarks 
+---------------------+-----------------------+------+-----+---------+---------
+ goods_id            | INT UNSIGNED(10)      | NO   | PRI |         | 商品id    
+ cat_id1             | INT(10)               | NO   |     | 0       | 一级分类id  
+ cat_id2             | INT(10)               | YES  |     | 0       | 二级分类    
+ cat_id3             | INT(10)               | YES  |     | 0       | 三级分类    
+ good_category_id    | INT(10)               | NO   |     | 0       | 商品分类ID  
+ goods_sn            | VARCHAR(60)           | NO   |     |         | 商品编号    
+ goods_name          | VARCHAR(120)          | NO   |     |         | 商品名称    
+ click_count         | INT(10)               | NO   |     | 0       | 点击数     
+ brand_id            | INT UNSIGNED(10)      | NO   |     | 0       | 品牌id    
+ collect_sum         | INT(10)               | YES  |     | 0       | 商品收藏数   
+ comment_count       | SMALLINT(5)           | YES  |     | 0       | 商品评论数   
+ weight              | INT(10)               | NO   |     | 0       | 商品重量克为单位
+ volume              | DOUBLE UNSIGNED(10,4) | NO   |     | 0.0000  | 商品体积。单位立方米
+ exchange_integral   | INT(10)               | NO   |     | 0       | COMMENT '积分兑换：0不参与积分兑换
+ keywords            | VARCHAR(255)          | NO   |     |         | 商品关键词   
+ goods_remark        | VARCHAR(420)          | NO   |     |         | 商品简单描述  
+ goods_content       | TEXT(65535)           | YES  |     |         | 商品详细描述  
+ mobile_content      | TEXT(65535)           | YES  |     |         | 手机端商品详情 
+ original_img        | VARCHAR(255)          | NO   |     |         | 商品上传原始图 
+ is_virtual          | INT(10)               | NO   |     | 0       | 是否为虚拟商品 1是，0否
+ virtual_indate      | INT(10)               | YES  |     | 0       | 虚拟商品有效期 
+ virtual_limit       | SMALLINT(5)           | YES  |     | 0       | 虚拟商品购买上限
+ virtual_refund      | INT(10)               | YES  |     | 1       | 是否允许过期退款， 1是，0否
+ is_on_sale          | INT(10)               | NO   |     | 1       | 0下架1上架2违规下架
+ is_free_shipping    | INT(10)               | NO   |     | 0       | 是否包邮0否1是
+ on_time             | INT UNSIGNED(10)      | NO   |     | 0       | 商品上架时间  
+ sort                | SMALLINT UNSIGNED(5)  | NO   |     | 1       | 商品排序    
+ is_recommend        | INT(10)               | NO   |     | 0       | 是否推荐(1是，0否)
+ is_new              | INT UNSIGNED(10)      | NO   |     | 0       | 是否新品    
+ is_hot              | INT(10)               | YES  |     | 0       | 是否热卖    
+ give_integral       | INT(10)               | NO   |     | 0       | 购买商品赠送积分
+ sales_sum           | INT(10)               | YES  |     | 0       | 商品销量    
+ prom_type           | INT(10)               | YES  |     | 0       | 0默认1抢购2团购3优惠促销4预售5虚拟(5其实没用)6拼团
+ prom_id             | INT(10)               | YES  |     | 0       | 优惠活动id  
+ store_id            | INT(10)               | YES  |     | 0       | 商家店铺ID  
+ spu                 | VARCHAR(128)          | YES  |     |         | SPU     
+ sku                 | VARCHAR(128)          | YES  |     |         | SKU     
+ goods_state         | INT(10)               | YES  |     | 1       | 0待审核1审核通过2审核失败
+ goods_reason        | VARCHAR(255)          | NO   |     |         | 审核失败原因  
+ close_reason        | VARCHAR(255)          | NO   |     |         | 违规下架原因  
+ template_id         | INT UNSIGNED(10)      | YES  |     | 0       | 运费模板ID  
+ video               | VARCHAR(100)          | NO   |     |         | 视频地址    
+ door_service_status | INT(10)               | NO   |     | 1       | 是否需要上门服务（1.无需上门服务;2.可选上门服务;3.必须上门服务）
+ store_promote_rate  | DECIMAL(4,4)          | NO   |     | 0.0000  | 冗余店铺推广比例
+ is_earn_point       | INT(10)               | YES  |     | 0       | 0否 1是   
+ point_as_money      | DECIMAL(10,2)         | YES  |     | 0.00    | 最多可以使用多少额度积分抵扣金额
+---------------------+-----------------------+------+-----+---------+---------
+
+Table: butler_good_category
+----------------+------------------+------+-----+---------+---------
+ Field          | Type             | Null | Key | Default | Remarks 
+----------------+------------------+------+-----+---------+---------
+ id             | INT UNSIGNED(10) | NO   | PRI |         | 商品分类id  
+ name           | VARCHAR(50)      | NO   |     |         | 商品分类名称（作废）
+ mobile_name    | VARCHAR(50)      | NO   |     |         | 手机端显示的商品分类名
+ parent_id      | INT UNSIGNED(10) | NO   |     | 0       | 父id     
+ parent_id_path | VARCHAR(200)     | NO   |     |         | 家族图谱    
+ name_path      | VARCHAR(200)     | NO   |     |         | 连带父级的分类，用/分割
+ icon           | VARCHAR(200)     | NO   |     |         | ICON 路径，分类的ICON图标
+ image          | VARCHAR(200)     | NO   |     |         | 分类图片，做宣传显示
+ is_show        | INT UNSIGNED(10) | NO   |     | 1       | 是否显示(0否 1是)
+ is_hot         | INT(10)          | NO   |     | 0       | 是否推荐为热门分类(0否 1是)
+ sort_order     | INT UNSIGNED(10) | NO   |     | 50      | 顺序排序    
+----------------+------------------+------+-----+---------+---------
+
+Table: butler_good_collect
+------------+-----------------------+------+-----+---------+---------
+ Field      | Type                  | Null | Key | Default | Remarks 
+------------+-----------------------+------+-----+---------+---------
+ collect_id | MEDIUMINT UNSIGNED(8) | NO   | PRI |         |         
+ user_id    | MEDIUMINT UNSIGNED(8) | NO   |     | 0       | 用户id    
+ goods_id   | MEDIUMINT UNSIGNED(8) | NO   |     | 0       | 商品id    
+ cat_id3    | MEDIUMINT(7)          | NO   |     | 0       |         
+ add_time   | INT UNSIGNED(10)      | NO   |     | 0       | 添加时间    
+------------+-----------------------+------+-----+---------+---------
+
+Table: butler_good_images
+-----------+-----------------------+------+-----+---------+---------
+ Field     | Type                  | Null | Key | Default | Remarks 
+-----------+-----------------------+------+-----+---------+---------
+ img_id    | MEDIUMINT UNSIGNED(8) | NO   | PRI |         | 图片id 自增 
+ goods_id  | MEDIUMINT UNSIGNED(8) | NO   |     | 0       | 商品id    
+ image_url | VARCHAR(255)          | NO   |     |         | 图片地址    
+ img_sort  | BIT                   | YES  |     | 0       | 商品缩略图排序,最小的拍最前面
+ album_id  | INT(10)               | YES  |     |         | 相册ID    
+-----------+-----------------------+------+-----+---------+---------
+
+Table: butler_good_sku
+--------------+---------------------+------+-----+---------+---------
+ Field        | Type                | Null | Key | Default | Remarks 
+--------------+---------------------+------+-----+---------+---------
+ item_id      | BIGINT UNSIGNED(20) | NO   | PRI |         | 规格商品id  
+ goods_id     | INT(10)             | NO   |     | 0       | 商品id    
+ goods_mark   | VARCHAR(200)        | NO   |     |         | 商品规格备注  
+ sku          | VARCHAR(64)         | NO   |     |         | SKU编码   
+ spec_img     | VARCHAR(200)        | NO   |     |         | 规格商品主图  
+ key          | VARCHAR(200)        | NO   |     |         | 规格键名    
+ key_name     | VARCHAR(200)        | NO   |     |         | 规格键名中文  
+ price        | DECIMAL(10,2)       | NO   |     | 0.00    | 销售价格    
+ supply_price | DECIMAL(10,2)       | NO   |     | 0.00    | 供货商供应价格 
+ market_price | DECIMAL(10,2)       | NO   |     | 0.00    | 市场价格    
+ store_count  | INT(10)             | NO   |     | 10      | 库存数量    
+ disAbled     | BIT                 | NO   |     | 0       | 是否可用（0否1是）
+--------------+---------------------+------+-----+---------+---------
+
+Table: butler_good_visit
+---------------+--------------+------+-----+---------+---------
+ Field         | Type         | Null | Key | Default | Remarks 
+---------------+--------------+------+-----+---------+---------
+ id            | INT(10)      | NO   | PRI |         | 主键      
+ user_id       | INT(10)      | NO   |     | 0       | 会员ID    
+ goods_id      | INT(10)      | NO   |     |         | 商品ID    
+ share_user_id | INT(10)      | NO   |     | 0       | 邀请人ID   
+ create_time   | DATETIME(19) | YES  |     |         |         
+ created_by    | VARCHAR(50)  | YES  |     |         |         
+ update_time   | DATETIME(19) | YES  |     |         |         
+ update_by     | VARCHAR(50)  | YES  |     |         |         
+---------------+--------------+------+-----+---------+---------
+
+Table: butler_home_set
+------------------+--------------+------+-----+-------------------+---------
+ Field            | Type         | Null | Key | Default           | Remarks 
+------------------+--------------+------+-----+-------------------+---------
+ id               | INT(10)      | NO   | PRI |                   | 主键      
+ title            | VARCHAR(50)  | NO   |     |                   | 标题      
+ goto_type        | INT(10)      | NO   |     | 0                 | 类型（1资讯2商品详情3商品分类4WEB地址5店铺首页6专题页7推荐店铺8邀请有礼9拼团抽奖10秒杀）
+ goto_id          | INT(10)      | NO   |     | 0                 | 跳转页面对应业务ID
+ position         | INT(10)      | NO   |     | 0                 | 位置（1banner2金刚区3资讯区4打广告5小广告6专场
+ sort_id          | INT(10)      | NO   |     | 0                 | 排序      
+ img              | VARCHAR(200) | NO   |     |                   | 图片地址    
+ web_url          | VARCHAR(200) | NO   |     |                   | 跳转WEB地址 
+ background_color | VARCHAR(50)  | NO   |     |                   | 背景颜色    
+ is_show          | INT(10)      | NO   |     | 1                 | 是否显示(1显示2不显示)
+ parent_id        | INT(10)      | NO   |     | 0                 | 子块对应的父块的ID
+ create_time      | DATETIME(19) | NO   |     | CURRENT_TIMESTAMP | 创建时间    
+ update_time      | DATETIME(19) | NO   |     | CURRENT_TIMESTAMP | 修改时间    
+------------------+--------------+------+-----+-------------------+---------
+
+Table: butler_lottery
+-------------+--------------+------+-----+-------------------+---------
+ Field       | Type         | Null | Key | Default           | Remarks 
+-------------+--------------+------+-----+-------------------+---------
+ id          | INT(10)      | NO   | PRI |                   | 自增长id   
+ title       | VARCHAR(60)  | NO   |     |                   | 一元抢购抽奖活动标题
+ start_time  | DATETIME(19) | NO   |     |                   | 一元抢购抽奖活动开始时间
+ end_time    | DATETIME(19) | NO   |     |                   | 一元抢购抽奖活动结束时间
+ max_num     | INT(10)      | NO   |     | 0                 | 参团最大人数限制
+ min_num     | INT(10)      | NO   |     | 0                 | 开团最少人数底限
+ type        | INT(10)      | NO   |     | 1                 | 开团方式：1 定时开、2 人满开
+ create_time | DATETIME(19) | NO   |     | CURRENT_TIMESTAMP | 一元抢购抽奖活动创建时间
+ update_time | DATETIME(19) | NO   |     | CURRENT_TIMESTAMP | 一元抢购抽奖活动修改时间
+-------------+--------------+------+-----+-------------------+---------
+
+Table: butler_lottery_good
+-------------+---------------+------+-----+-------------------+---------
+ Field       | Type          | Null | Key | Default           | Remarks 
+-------------+---------------+------+-----+-------------------+---------
+ id          | INT(10)       | NO   | PRI |                   | 自增长id   
+ lottery_id  | INT(10)       | NO   |     | 0                 | 一元抢购抽奖活动ID
+ good_id     | INT(10)       | NO   |     |                   | 商品ID    
+ spec_id     | INT(10)       | NO   |     | 0                 | 规格iD    
+ title       | VARCHAR(200)  | NO   |     |                   | 商品的活动标题 
+ img_path    | VARCHAR(150)  | NO   |     |                   | 商品图片    
+ price       | DECIMAL(10,2) | NO   |     | 0.00              | 参与活动的商品价格
+ num         | INT(10)       | NO   |     | 1                 | 参与活动的商品数量
+ orderNum    | INT(10)       | NO   |     | 0                 | 下单人数    
+ buy_num     | INT(10)       | NO   |     | 0                 | 已经被卖掉的数量
+ description | VARCHAR(200)  | NO   |     |                   | 活动描述    
+ status      | INT(10)       | NO   |     | 0                 | 活动状态：1待审核，2正常，3审核拒绝，4下架商品
+ create_time | DATETIME(19)  | NO   |     | CURRENT_TIMESTAMP | 创建时间    
+ update_time | DATETIME(19)  | NO   |     | CURRENT_TIMESTAMP | 修改时间    
+ sort_id     | INT(10)       | NO   |     | 0                 | 排序      
+-------------+---------------+------+-----+-------------------+---------
+
+Table: butler_lottery_order
+-----------------+--------------+------+-----+---------+---------
+ Field           | Type         | Null | Key | Default | Remarks 
+-----------------+--------------+------+-----+---------+---------
+ id              | INT(10)      | NO   | PRI |         | 自增长id   
+ lottery_good_id | INT(10)      | NO   |     | 0       | 一元抢购抽奖活动商品ID
+ activity_num    | INT(10)      | NO   |     |         | 活动场数    
+ user_id         | INT(10)      | NO   |     | 0       | 用户ID    
+ order_id        | INT(10)      | NO   |     |         | 一元抢购抽奖活动 订单ID
+ is_win          | INT(10)      | NO   |     | 2       | 是否中奖: 1 中奖、2 没中
+ open_time       | DATETIME(19) | YES  |     |         | 开奖时间(人满开/定时开都用这个字段)
+-----------------+--------------+------+-----+---------+---------
+
+Table: butler_order
+-----------------+-----------------------+------+-----+---------+---------
+ Field           | Type                  | Null | Key | Default | Remarks 
+-----------------+-----------------------+------+-----+---------+---------
+ order_id        | INT(10)               | NO   | PRI |         | 订单id    
+ order_sn        | VARCHAR(20)           | NO   |     |         | 订单编号    
+ user_id         | MEDIUMINT UNSIGNED(8) | NO   |     | 0       | 用户id    
+ master_order_sn | VARCHAR(20)           | NO   |     |         | 主订单号    
+ order_status    | INT(10)               | NO   |     | 0       | 订单流程状态.0正常进行中的订单，3取消订单，4完成状态，5退款订单-有点类似于订单类型，标识订单处于哪个流程中
+ pay_status      | INT(10)               | NO   |     | 0       | 支付状态.0待支付，1已支付，2部分支付，3已退款，4拒绝退款 -支付流程中的订单状态流转
+ shipping_status | INT(10)               | NO   |     | 0       | 发货状态0未发货 1已发货 2已收货 -发货流程中订单流转状态
+ is_comment      | INT(10)               | NO   |     | 0       | 是否评价（0：未评价；1：已评价）
+ consignee       | VARCHAR(60)           | NO   |     |         | 收货人     
+ country         | INT(10)               | NO   |     | 0       | 国家      
+ province        | INT(10)               | NO   |     | 0       | 省份      
+ city            | INT(10)               | NO   |     | 0       | 城市      
+ district        | INT(10)               | NO   |     | 0       | 县区      
+ twon            | INT(10)               | NO   |     | 0       | 乡镇      
+ address         | VARCHAR(200)          | YES  |     |         | 地址      
+ zipcode         | VARCHAR(60)           | NO   |     |         | 邮政编码    
+ mobile          | VARCHAR(60)           | NO   |     |         | 手机      
+ email           | VARCHAR(60)           | NO   |     |         | 邮件      
+ shipping_code   | VARCHAR(32)           | NO   |     |         | 物流单号    
+ shipping_name   | VARCHAR(120)          | NO   |     |         | 物流名称(物流公司ID)
+ shipping_price  | DECIMAL(10,2)         | NO   |     | 0.00    | 邮费      
+ shipping_time   | INT UNSIGNED(10)      | YES  |     | 0       | 最新发货时间  
+ pay_code        | VARCHAR(32)           | NO   |     |         | 支付方式 1支付宝支付2微信支付
+ pay_name        | VARCHAR(120)          | NO   |     |         | 支付方式名称  
+ transaction_id  | VARCHAR(100)          | YES  |     |         | 第三方平台交易流水号
+ order_amount    | DECIMAL(10,2)         | NO   |     | 0.00    | 应付款金额   
+ total_amount    | DECIMAL(10,2)         | YES  |     | 0.00    | 订单总价    
+ point_as_money  | DECIMAL(10,2)         | NO   |     | 0.00    | 积分抵扣金额  
+ store_id        | INT(10)               | NO   |     | 0       | 店铺ID    
+ add_time        | INT UNSIGNED(10)      | NO   |     | 0       | 下单时间    
+ confirm_time    | INT(10)               | YES  |     | 0       | 收货确认时间  
+ pay_time        | INT UNSIGNED(10)      | NO   |     | 0       | 支付时间    
+ cancel_time     | DATETIME(19)          | YES  |     |         | 取消时间    
+ remind          | INT(10)               | NO   |     | 2       | 2：未提醒发货 3：提醒发货
+ activity_type   | INT(10)               | YES  |     | 1       | 活动类型：1 普通订单、2 秒杀活动订单、3 一元抢购抽奖订单
+ user_note       | VARCHAR(200)          | YES  |     |         | 用户备注    
+ create_time     | DATETIME(19)          | YES  |     |         |         
+ created_by      | VARCHAR(50)           | YES  |     |         |         
+ update_time     | DATETIME(19)          | YES  |     |         |         
+ update_by       | VARCHAR(50)           | YES  |     |         |         
+-----------------+-----------------------+------+-----+---------+---------
+
+Table: butler_order_comment
+------------------+------------------+------+-----+---------+---------
+ Field            | Type             | Null | Key | Default | Remarks 
+------------------+------------------+------+-----+---------+---------
+ order_commemt_id | INT(10)          | NO   | PRI |         | 订单评论索引id
+ order_id         | INT(10)          | NO   |     | 0       | 订单id    
+ store_id         | INT(10)          | NO   |     | 0       | 店铺id    
+ user_id          | INT(10)          | NO   |     | 0       | 用户id    
+ describe_score   | DECIMAL(2,1)     | NO   |     | 0.0     | 描述相符分数（0~5）
+ seller_score     | DECIMAL(2,1)     | NO   |     | 0.0     | 卖家服务分数（0~5）
+ logistics_score  | DECIMAL(2,1)     | NO   |     | 0.0     | 物流服务分数（0~5）
+ commemt_time     | INT UNSIGNED(10) | YES  |     |         | 评分时间    
+ deleted          | INT UNSIGNED(10) | NO   |     | 0       | 不删除0；删除：1
+------------------+------------------+------+-----+---------+---------
+
+Table: butler_order_div_rate
+-------------------------+---------------+------+-----+-------------------+---------
+ Field                   | Type          | Null | Key | Default           | Remarks 
+-------------------------+---------------+------+-----+-------------------+---------
+ id                      | INT(10)       | NO   | PRI |                   |         
+ order_id                | INT(10)       | NO   |     |                   |         
+ store_level_name        | VARCHAR(50)   | NO   |     | ''                | 店铺等级    
+ butler_commission_rate  | DECIMAL(4,4)  | NO   |     | 0.0000            | 平台抽成比例  
+ promote_user_id         | INT(10)       | NO   |     | 0                 | 推广人员ID  
+ promote_user_level_name | VARCHAR(50)   | NO   |     | ''                | 推广用户等级  
+ promote_commission_rate | DECIMAL(4,4)  | NO   |     | 0.0000            | 推广抽成比例  
+ store_promote           | DECIMAL(10,2) | NO   |     | 0.00              | 店铺推广金额  
+ first_reward            | DECIMAL(10,2) | NO   |     | 0.00              | 首单奖励    
+ create_time             | DATETIME(19)  | NO   |     | CURRENT_TIMESTAMP |         
+ update_time             | DATETIME(19)  | NO   |     | CURRENT_TIMESTAMP |         
+-------------------------+---------------+------+-----+-------------------+---------
+
+Table: butler_order_goods
+---------------------+------------------+------+-----+---------+---------
+ Field               | Type             | Null | Key | Default | Remarks 
+---------------------+------------------+------+-----+---------+---------
+ rec_id              | INT(10)          | NO   | PRI |         | 表id自增   
+ order_id            | INT(10)          | NO   |     | 0       | 订单id    
+ order_sn            | VARCHAR(20)      | NO   |     |         | 订单编号（没有定订单ID的时候做外健用，redis中用）
+ goods_id            | INT UNSIGNED(10) | NO   |     | 0       | 商品id    
+ skuId               | INT(10)          | NO   |     | 0       | SKU-ID  
+ goods_name          | VARCHAR(100)     | NO   |     |         | 商品名称    
+ goods_sn            | VARCHAR(50)      | NO   |     |         | 商品货号    
+ goods_num           | INT(10)          | NO   |     | 1       | 购买数量    
+ spec_key            | VARCHAR(200)     | NO   |     |         | 商品规格key 
+ spec_key_name       | VARCHAR(200)     | NO   |     |         | 规格对应的中文名字
+ goods_price         | DECIMAL(10,2)    | NO   |     | 0.00    | 本店销售价格  
+ cost_price          | DECIMAL(10,2)    | NO   |     | 0.00    | 商品成本价   
+ supply_price        | DECIMAL(10,2)    | NO   |     | 0.00    | 供应价格    
+ final_price         | DECIMAL(10,2)    | NO   |     | 0.00    | 商品实际购买价格（不包括积分抵扣的金额），但是包含商品个数
+ point_as_money      | DECIMAL(10,2)    | NO   |     | 0.00    | 积分抵扣金额  
+ give_integral       | INT(10)          | NO   |     | 0       | 购买商品赠送积分
+ activity_id         | INT(10)          | NO   |     | 0       | 活动ID(秒杀ID、一元抢购ID)
+ activity_type       | INT(10)          | NO   |     | 1       | 活动类型：1 普通订单、2 秒杀活动订单、3 一元抢购抽奖订单
+ door_service_status | INT(10)          | NO   |     | 1       | 是否需要上门服务（1.无需上门服务;3.需要上门服务）
+ create_time         | DATETIME(19)     | YES  |     |         |         
+ created_by          | VARCHAR(50)      | YES  |     |         |         
+ update_time         | DATETIME(19)     | YES  |     |         |         
+ update_by           | VARCHAR(50)      | YES  |     |         |         
+---------------------+------------------+------+-----+---------+---------
+
+Table: butler_point_effective
+---------------+---------------+------+-----+---------+---------
+ Field         | Type          | Null | Key | Default | Remarks 
+---------------+---------------+------+-----+---------+---------
+ id            | INT(10)       | NO   | PRI |         | 主键      
+ user_id       | INT(10)       | NO   |     |         | 用户ID    
+ type          | INT(10)       | NO   |     |         | 类型（1入账 2出账）
+ business_type | INT(10)       | NO   |     | 0       | 业务类型（1注册 2分享转发 3 取消订单 4提现 5消费 6下线首单奖励 7邀请用户注册 8购买商品赠送 9提现审核拒绝退回 10线下录入）
+ is_withdraw   | INT(10)       | NO   |     | 1       | 是否可以提现（1可以2不可以）
+ business_id   | INT(10)       | NO   |     | 0       | 业务类型对应的ID
+ businessCode  | VARCHAR(100)  | NO   |     |         | 业务编号（秒杀没有ID引起的）
+ amount        | DECIMAL(10,2) | NO   |     | 0.00    | 积分值     
+ create_time   | DATETIME(19)  | YES  |     |         |         
+ created_by    | VARCHAR(50)   | YES  |     |         |         
+ update_time   | DATETIME(19)  | YES  |     |         |         
+ update_by     | VARCHAR(50)   | YES  |     |         |         
+---------------+---------------+------+-----+---------+---------
+
+Table: butler_point_freeze
+-------------+---------------+------+-----+---------+---------
+ Field       | Type          | Null | Key | Default | Remarks 
+-------------+---------------+------+-----+---------+---------
+ id          | INT(10)       | NO   | PRI |         | 主键      
+ user_id     | INT(10)       | YES  |     |         | 用户ID    
+ type        | INT(10)       | YES  |     |         | 类型（1核销入账 2领取出账）
+ amount      | DECIMAL(10,2) | YES  |     |         | 金额      
+ create_time | DATETIME(19)  | YES  |     |         |         
+ created_by  | VARCHAR(50)   | YES  |     |         |         
+ update_time | DATETIME(19)  | YES  |     |         |         
+ update_by   | VARCHAR(50)   | YES  |     |         |         
+-------------+---------------+------+-----+---------+---------
+
+Table: butler_point_invest
+---------------------+---------------+------+-----+---------+---------
+ Field               | Type          | Null | Key | Default | Remarks 
+---------------------+---------------+------+-----+---------+---------
+ id                  | INT(10)       | NO   | PRI |         | 主键      
+ user_id             | INT(10)       | YES  |     |         | 用户ID    
+ type                | INT(10)       | YES  |     |         | 类型（1我的投资 2我的下线投资）
+ verification_status | INT(10)       | YES  |     |         | 核销状态（1未核销 2 部分核销 3已核销）
+ order_id            | INT(10)       | YES  |     |         | 订单(订单商品)ID
+ amount              | DECIMAL(10,2) | YES  |     |         | 投资金额    
+ verification_amount | DECIMAL(10,2) | YES  |     | 0.00    | 核销金额    
+ create_time         | DATETIME(19)  | YES  |     |         |         
+ created_by          | VARCHAR(50)   | YES  |     |         |         
+ update_time         | DATETIME(19)  | YES  |     |         |         
+ update_by           | VARCHAR(50)   | YES  |     |         |         
+---------------------+---------------+------+-----+---------+---------
+
+Table: butler_point_sum
+-----------------------+---------------+------+-----+---------+---------
+ Field                 | Type          | Null | Key | Default | Remarks 
+-----------------------+---------------+------+-----+---------+---------
+ id                    | INT(10)       | NO   | PRI |         | 主键      
+ user_id               | INT(10)       | NO   |     |         | 用户ID    
+ mine_invest_total     | DECIMAL(10,2) | NO   |     | 0.00    | 我的投资汇总  
+ subline_invest_total  | DECIMAL(10,2) | NO   |     | 0.00    | 我的下线投资汇总
+ mine_invest_remain    | DECIMAL(10,2) | NO   |     | 0.00    | 我的投资剩余积分
+ subline_invest_remain | DECIMAL(10,2) | NO   |     | 0.00    | 我的下线投资剩余积分
+ freeze_remain         | DECIMAL(10,2) | NO   |     | 0.00    | 待领取的剩余积分（剩余冻结积分）
+ usable_remain         | DECIMAL(10,2) | NO   |     | 0.00    | 剩余可用积分（包含可提现积分）
+ withdrawable_remain   | DECIMAL(10,2) | NO   |     | 0.00    | 剩余可提现积分 
+ withdrawable_total    | DECIMAL(10,2) | NO   |     | 0.00    | 提现总额    
+ consume_total         | DECIMAL(10,2) | NO   |     | 0.00    | 消费积分总和  
+ create_time           | DATETIME(19)  | YES  |     |         |         
+ created_by            | VARCHAR(50)   | YES  |     |         |         
+ update_time           | DATETIME(19)  | YES  |     |         |         
+ update_by             | VARCHAR(50)   | YES  |     |         |         
+-----------------------+---------------+------+-----+---------+---------
+
+Table: butler_point_withdraw
+-----------------+---------------+------+-----+---------+---------
+ Field           | Type          | Null | Key | Default | Remarks 
+-----------------+---------------+------+-----+---------+---------
+ id              | INT(10)       | NO   | PRI |         |         
+ withdraw_sn     | VARCHAR(50)   | YES  |     |         | 提现编号    
+ user_id         | INT(10)       | YES  |     |         | 用户ID    
+ withdraw_status | INT(10)       | YES  |     |         | 提现状态（1待审核 2待打款 3已完成 5审核拒绝
+ amount          | DECIMAL(10,2) | YES  |     |         | 积分值     
+ actual_amount   | DECIMAL(10,2) | NO   |     | 0.00    | 扣除手续费以后的实际金额
+ remark          | VARCHAR(50)   | YES  |     |         | 备注      
+ name            | VARCHAR(50)   | YES  |     |         | 姓名      
+ bankName        | VARCHAR(50)   | YES  |     |         | 开户行     
+ bankCard        | VARCHAR(50)   | YES  |     |         | 银行卡号    
+ auth_user_id    | INT(10)       | YES  |     |         | 审核人ID   
+ auth_time       | DATETIME(19)  | YES  |     |         | 审核时间    
+ pay_user_id     | INT(10)       | YES  |     |         | 支付人ID   
+ pay_time        | DATETIME(19)  | YES  |     |         | 支付时间    
+ pay_sn          | VARCHAR(100)  | NO   |     |         | 支付编号（第三方支付回调后的单号，方便查询）
+ pay_type        | INT(10)       | NO   |     | 0       | 支付方式（1人工打款 2微信红包 3微信零钱 4微信转银行卡 5支付宝余额 6支付宝转银行卡）
+ create_time     | DATETIME(19)  | YES  |     |         |         
+ created_by      | VARCHAR(50)   | YES  |     |         |         
+ update_time     | DATETIME(19)  | YES  |     |         |         
+ update_by       | VARCHAR(50)   | YES  |     |         |         
+-----------------+---------------+------+-----+---------+---------
+
+Table: butler_prom_goods
+-------------+--------------+------+-----+---------+---------
+ Field       | Type         | Null | Key | Default | Remarks 
+-------------+--------------+------+-----+---------+---------
+ id          | BIGINT(19)   | NO   | PRI |         | 活动ID    
+ title       | VARCHAR(60)  | NO   |     |         | 促销活动名称  
+ type        | INT(10)      | NO   |     | 0       | 促销类型:0直接打折,1减价优惠,2固定金额出售,3买就赠优惠券
+ expression  | VARCHAR(100) | NO   |     |         | 优惠体现    
+ description | TEXT(65535)  | YES  |     |         | 活动描述    
+ start_time  | INT(10)      | NO   |     |         | 活动开始时间  
+ end_time    | INT(10)      | NO   |     |         | 活动结束时间  
+ status      | INT(10)      | YES  |     | 1       | 1正常，0管理员关闭
+ is_end      | INT(10)      | YES  |     | 0       | 是否已结束   
+ group       | VARCHAR(255) | YES  |     |         | 适用范围    
+ store_id    | INT(10)      | YES  |     | 0       | 商家店铺id  
+ orderby     | INT(10)      | YES  |     | 0       | 排序      
+ prom_img    | VARCHAR(150) | YES  |     |         | 活动宣传图片  
+ recommend   | INT(10)      | YES  |     | 0       | 是否推荐    
+ buy_limit   | INT(10)      | YES  |     |         | 每人限购数   
+-------------+--------------+------+-----+---------+---------
+
+Table: butler_prom_order
+-------------+--------------+------+-----+---------+---------
+ Field       | Type         | Null | Key | Default | Remarks 
+-------------+--------------+------+-----+---------+---------
+ id          | BIGINT(19)   | NO   | PRI |         |         
+ title       | VARCHAR(60)  | NO   |     |         | 活动名称    
+ type        | INT(10)      | NO   |     | 0       | 活动类型 0满额打折,1满额优惠金额,2满额送积分,3满额送优惠券
+ money       | FLOAT(10,2)  | YES  |     | 0.00    | 最小金额    
+ expression  | VARCHAR(100) | YES  |     |         | 优惠体现    
+ description | TEXT(65535)  | YES  |     |         | 活动描述    
+ start_time  | DATETIME(19) | YES  |     |         | 活动开始时间  
+ end_time    | DATETIME(19) | YES  |     |         | 活动结束时间  
+ status      | BIT          | YES  |     | 1       | 1正常，0管理员关闭
+ group       | VARCHAR(255) | YES  |     |         | 适用范围    
+ prom_img    | VARCHAR(255) | YES  |     |         | 活动宣传图   
+ store_id    | INT(10)      | YES  |     | 0       | 商家店铺id  
+ orderby     | INT(10)      | YES  |     | 0       | 排序      
+ recommend   | TINYINT(3)   | YES  |     | 0       | 是否推荐    
+ goods_id    | INT(10)      | NO   |     | 0       | 商品id    
+-------------+--------------+------+-----+---------+---------
+
+Table: butler_recharge
+----------------+---------------+------+-----+-------------------+---------
+ Field          | Type          | Null | Key | Default           | Remarks 
+----------------+---------------+------+-----+-------------------+---------
+ order_id       | BIGINT(19)    | NO   | PRI |                   |         
+ user_id        | BIGINT(19)    | NO   |     | 0                 | 会员ID    
+ nickname       | VARCHAR(50)   | YES  |     |                   | 会员昵称    
+ order_sn       | VARCHAR(50)   | NO   |     |                   | 充值单号    
+ account        | DECIMAL(10,2) | YES  |     | 0.00              | 充值金额    
+ ctime          | INT(10)       | YES  |     |                   | 充值时间    
+ pay_time       | INT(10)       | YES  |     |                   | 支付时间    
+ pay_code       | VARCHAR(20)   | YES  |     |                   |         
+ pay_name       | VARCHAR(80)   | YES  |     |                   | 支付方式    
+ pay_status     | INT(10)       | YES  |     | 0                 | 充值状态0:待支付 1:充值成功 2:交易关闭
+ transaction_id | VARCHAR(100)  | YES  |     |                   | 第三方平台交易流水号
+ remark         | VARCHAR(100)  | NO   |     |                   | 备注      
+ create_time    | DATETIME(19)  | YES  |     | CURRENT_TIMESTAMP |         
+ update_time    | DATETIME(19)  | YES  |     | CURRENT_TIMESTAMP |         
+----------------+---------------+------+-----+-------------------+---------
+
+Table: butler_return_goods
+-----------------+---------------+------+-----+---------+---------
+ Field           | Type          | Null | Key | Default | Remarks 
+-----------------+---------------+------+-----+---------+---------
+ id              | INT(10)       | NO   | PRI |         | 退货申请表id自增
+ rec_id          | INT(10)       | NO   |     | 0       | 对应订单商品表ID
+ order_id        | INT(10)       | YES  |     | 0       | 订单id    
+ order_sn        | VARCHAR(50)   | YES  |     |         | 订单编号    
+ goods_id        | INT(10)       | YES  |     | 0       | 商品id    
+ goods_num       | INT(10)       | YES  |     | 1       | 退货数量    
+ type            | INT(10)       | YES  |     | 0       | 0仅退款 1退货退款  2换货 3维修
+ reason          | VARCHAR(255)  | YES  |     |         | 退换货退款申请原因
+ describe        | TEXT(65535)   | YES  |     |         | 问题描述    
+ evidence        | VARCHAR(255)  | YES  |     | 1       | 申请凭据    
+ imgs            | TEXT(65535)   | YES  |     |         | 上传图片路径  
+ status          | INT(10)       | YES  |     | 0       | -2用户取消-1不同意0待审核1通过2已发货3待退款4换货完成5退款完成6申诉仲裁
+ remark          | VARCHAR(255)  | YES  |     |         | 卖家审核进度说明
+ user_id         | INT(10)       | YES  |     | 0       | 用户id    
+ store_id        | INT(10)       | YES  |     | 0       | 商家店铺ID  
+ spec_key        | VARCHAR(64)   | YES  |     |         | 商品规格    
+ consignee       | VARCHAR(20)   | YES  |     |         | 客户姓名    
+ mobile          | VARCHAR(20)   | YES  |     |         | 手机号码    
+ address         | VARCHAR(250)  | YES  |     |         | 收货地址    
+ refund_integral | INT(10)       | YES  |     | 0       | 退还积分    
+ refund_deposit  | DECIMAL(10,2) | YES  |     | 0.00    | 退还预存款   
+ refund_money    | DECIMAL(10,2) | YES  |     | 0.00    | 退款金额    
+ refund_type     | INT(10)       | YES  |     | 0       | 0退到用户余额 1支付原路退回
+ refund_mark     | VARCHAR(255)  | YES  |     |         | 管理员退款备注 
+ refund_time     | INT(10)       | YES  |     | 0       | 退款时间    
+ addtime         | INT(10)       | YES  |     | 0       | 售后申请时间  
+ checktime       | INT(10)       | YES  |     | 0       | 卖家审核时间  
+ receivetime     | INT(10)       | YES  |     | 0       | 卖家收货时间  
+ canceltime      | INT(10)       | YES  |     | 0       | 用户取消时间  
+ seller_delivery | TEXT(65535)   | YES  |     |         | 换货服务，卖家重新发货信息
+ delivery        | TEXT(65535)   | YES  |     |         | 用户发货信息  
+ gap             | DECIMAL(10,2) | YES  |     | 0.00    | 退款差额    
+ gap_reason      | VARCHAR(255)  | YES  |     |         | 差额原因    
+ is_receive      | INT(10)       | YES  |     | 0       | 申请售后时是否已收货0未收货1已收货
+-----------------+---------------+------+-----+---------+---------
+
+Table: butler_search_word
+---------------+--------------+------+-----+---------+---------
+ Field         | Type         | Null | Key | Default | Remarks 
+---------------+--------------+------+-----+---------+---------
+ id            | INT(10)      | NO   | PRI |         | 搜索表ID   
+ keywords      | VARCHAR(255) | NO   |     |         | 搜索关键词，商品关键词
+ pinyin_full   | VARCHAR(255) | NO   |     |         | 拼音全拼    
+ pinyin_simple | VARCHAR(255) | NO   |     |         | 拼音简写    
+ search_num    | INT(10)      | NO   |     | 0       | 搜索次数    
+ goods_num     | INT(10)      | NO   |     | 0       | 商品数量    
+---------------+--------------+------+-----+---------+---------
+
+Table: butler_service_worker
+-------+-------------+------+-----+---------+---------
+ Field | Type        | Null | Key | Default | Remarks 
+-------+-------------+------+-----+---------+---------
+ id    | INT(10)     | NO   | PRI |         |         
+ name  | VARCHAR(20) | NO   |     |         | 姓名      
+ phone | VARCHAR(20) | NO   |     |         | 手机      
+-------+-------------+------+-----+---------+---------
+
+Table: butler_shipping
+-------------------+------------------+------+-----+---------+---------
+ Field             | Type             | Null | Key | Default | Remarks 
+-------------------+------------------+------+-----+---------+---------
+ shipping_id       | INT UNSIGNED(10) | NO   | PRI |         | 物流公司id  
+ shipping_name     | VARCHAR(255)     | NO   |     |         | 物流公司名称  
+ shipping_code     | VARCHAR(255)     | NO   |     |         | 物流公司编码  
+ shipping_desc     | VARCHAR(255)     | NO   |     |         | 物流描述    
+ shipping_logo     | VARCHAR(255)     | NO   |     |         | 物流公司logo
+ template_width    | INT UNSIGNED(10) | NO   |     | 0       | 运单模板宽度  
+ template_height   | INT UNSIGNED(10) | NO   |     | 0       | 运单模板高度  
+ template_offset_x | INT UNSIGNED(10) | NO   |     | 0       | 运单模板左偏移量
+ template_offset_y | INT UNSIGNED(10) | NO   |     | 0       | 运单模板上偏移量
+ template_img      | VARCHAR(255)     | NO   |     |         | 运单模板图片  
+ template_html     | TEXT(65535)      | NO   |     |         | 打印项偏移校正 
+-------------------+------------------+------+-----+---------+---------
+
+Table: butler_shipping_area
+---------------+-------------+------+-----+---------+---------
+ Field         | Type        | Null | Key | Default | Remarks 
+---------------+-------------+------+-----+---------+---------
+ id            | INT(10)     | NO   | PRI |         |         
+ shipping_code | VARCHAR(50) | NO   |     |         | 物流公司    
+ is_close      | BIT         | YES  |     | 1       | 是否关闭：1开启，0关闭
+ store_id      | INT(10)     | YES  |     | 0       | 商家id    
+---------------+-------------+------+-----+---------+---------
+
+Table: butler_sms_template
+--------------+--------------+------+-----+---------+---------
+ Field        | Type         | Null | Key | Default | Remarks 
+--------------+--------------+------+-----+---------+---------
+ tpl_id       | MEDIUMINT(7) | NO   | PRI |         | 自增ID    
+ sms_sign     | VARCHAR(50)  | NO   |     |         | 短信签名    
+ sms_tpl_code | VARCHAR(100) | NO   |     |         | 短信模板ID  
+ tpl_content  | VARCHAR(512) | NO   |     |         | 发送短信内容  
+ send_scene   | VARCHAR(100) | NO   |     |         | 短信发送场景  
+ add_time     | INT(10)      | NO   |     |         | 添加时间    
+--------------+--------------+------+-----+---------+---------
+
+Table: butler_spec
+------------+-------------+------+-----+---------+---------
+ Field      | Type        | Null | Key | Default | Remarks 
+------------+-------------+------+-----+---------+---------
+ id         | INT(10)     | NO   | PRI |         | 规格表     
+ name       | VARCHAR(30) | NO   |     |         | 规格名称    
+ categoryId | INT(10)     | NO   |     | 0       | 分类ID    
+------------+-------------+------+-----+---------+---------
+
+Table: butler_spec_item
+----------+-------------+------+-----+---------+---------
+ Field    | Type        | Null | Key | Default | Remarks 
+----------+-------------+------+-----+---------+---------
+ id       | INT(10)     | NO   | PRI |         | 规格项id   
+ spec_id  | INT(10)     | NO   |     | 0       | 规格id    
+ item     | VARCHAR(30) | NO   |     |         | 规格项     
+ store_id | INT(10)     | YES  |     | 0       | 商家id（作废）
+----------+-------------+------+-----+---------+---------
+
+Table: butler_stock_log
+------------+------------------+------+-----+---------+---------
+ Field      | Type             | Null | Key | Default | Remarks 
+------------+------------------+------+-----+---------+---------
+ id         | INT UNSIGNED(10) | NO   | PRI |         |         
+ goods_id   | INT(10)          | YES  |     |         | 商品ID    
+ goods_name | VARCHAR(100)     | YES  |     |         | 商品名称    
+ goods_spec | VARCHAR(50)      | YES  |     |         | 商品规格    
+ order_sn   | VARCHAR(30)      | YES  |     |         | 订单编号    
+ store_id   | INT(10)          | YES  |     |         | 商家ID    
+ muid       | INT(10)          | YES  |     |         | 操作用户ID  
+ stock      | INT(10)          | YES  |     |         | 更改库存    
+ ctime      | INT(10)          | YES  |     |         | 操作时间    
+------------+------------------+------+-----+---------+---------
+
+Table: butler_store
+-------------------------------+------------------------+------+-----+-----------+---------
+ Field                         | Type                   | Null | Key | Default   | Remarks 
+-------------------------------+------------------------+------+-----+-----------+---------
+ store_id                      | INT(10)                | NO   | PRI |           | 店铺索引id  
+ store_name                    | VARCHAR(50)            | NO   |     |           | 店铺名称    
+ grade_id                      | INT(10)                | NO   |     | 0         | 店铺等级(作废)
+ user_id                       | INT(10)                | NO   |     | 0         | 会员id    
+ user_name                     | VARCHAR(50)            | NO   |     |           | 会员名称(作废)
+ seller_name                   | VARCHAR(50)            | YES  |     |           | 店主卖家用户名(作废)
+ sc_id                         | INT(10)                | NO   |     | 0         | 店铺分类(作废)
+ company_name                  | VARCHAR(50)            | YES  |     |           | 店铺公司名称(作废)
+ region_id                     | INT(10)                | NO   |     | 0         | 店铺所在区域ID
+ province_id                   | MEDIUMINT UNSIGNED(8)  | NO   |     | 0         | 店铺所在省份ID(作废)
+ city_id                       | MEDIUMINT(7)           | NO   |     | 0         | 店铺所在城市ID(作废)
+ district                      | MEDIUMINT UNSIGNED(8)  | NO   |     | 0         | 店铺所在地区ID(作废)
+ store_address                 | VARCHAR(100)           | NO   |     |           | 详细地区    
+ longitude                     | DECIMAL(10,7)          | YES  |     | 0.0000000 | 商家地址经度  
+ latitude                      | DECIMAL(10,7)          | YES  |     | 0.0000000 | 商家地址纬度  
+ store_zip                     | VARCHAR(10)            | NO   |     |           | 邮政编码    
+ store_state                   | INT(10)                | NO   |     | 2         | 店铺状态，0关闭，1开启，2审核中
+ store_close_info              | VARCHAR(255)           | YES  |     |           | 店铺关闭原因  
+ store_sort                    | INT(10)                | NO   |     | 0         | 店铺排序(作废)
+ store_rebate_paytime          | VARCHAR(10)            | NO   |     |           | 店铺结算类型(作废)
+ store_time                    | INT(10)                | YES  |     |           | 开店时间    
+ store_end_time                | INT(10)                | YES  |     | 0         | 店铺有效截止时间
+ store_logo                    | VARCHAR(255)           | YES  |     |           | 店铺logo  
+ store_banner                  | VARCHAR(255)           | YES  |     |           | 店铺横幅    
+ store_avatar                  | VARCHAR(150)           | YES  |     |           | 店铺头像    
+ seo_keywords                  | VARCHAR(255)           | YES  |     |           | 店铺seo关键字(作废)
+ seo_description               | VARCHAR(255)           | YES  |     |           | 店铺seo描述(作废)
+ store_aliwangwang             | VARCHAR(64)            | YES  |     |           | 阿里旺旺(作废)
+ store_qq                      | VARCHAR(50)            | YES  |     |           | QQ(作废)  
+ store_phone                   | VARCHAR(20)            | YES  |     |           | 商家电话(作废)
+ store_zy                      | TEXT(65535)            | YES  |     |           | 主营商品(作废)
+ store_domain                  | VARCHAR(50)            | YES  |     |           | 店铺二级域名(作废)
+ store_recommend               | BIT                    | NO   |     | 0         | 推荐，0为否，1为是，默认为0
+ store_theme                   | VARCHAR(50)            | NO   |     | default   | 店铺当前主题(作废)
+ store_credit                  | INT(10)                | NO   |     | 0         | 店铺信用    
+ store_desccredit              | DECIMAL(3,2)           | NO   |     | 0.00      | 描述相符度分数 
+ store_servicecredit           | DECIMAL(3,2)           | NO   |     | 0.00      | 服务态度分数  
+ store_deliverycredit          | DECIMAL(3,2)           | NO   |     | 0.00      | 发货速度分数  
+ store_collect                 | INT UNSIGNED(10)       | NO   |     | 0         | 店铺收藏数量  
+ store_slide                   | TEXT(65535)            | YES  |     |           | 店铺幻灯片(作废)
+ store_slide_url               | TEXT(65535)            | YES  |     |           | 店铺幻灯片链接(作废)
+ store_printdesc               | VARCHAR(500)           | YES  |     |           | 打印订单页面下方说明文字(作废)
+ store_sales                   | INT UNSIGNED(10)       | NO   |     | 0         | 店铺销量    
+ store_presales                | TEXT(65535)            | YES  |     |           | 售前客服(作废)
+ store_aftersales              | TEXT(65535)            | YES  |     |           | 售后客服(作废)
+ store_workingtime             | VARCHAR(100)           | YES  |     |           | 工作时间(作废)
+ store_free_price              | DECIMAL UNSIGNED(10,2) | NO   |     | 0.00      | 超出该金额免运费，大于0才表示该值有效
+ store_warning_storage         | INT(10)                | YES  |     | 0         |  库存预警数(作废)
+ store_decoration_switch       | INT UNSIGNED(10)       | NO   |     | 0         | 店铺装修开关(0-关闭 装修编号-开启)（作废）
+ store_decoration_only         | BIT                    | NO   |     | 0         | 开启店铺装修时，仅显示店铺装修(1-是 0-否（作废）
+ is_own_shop                   | TINYINT UNSIGNED(3)    | NO   |     | 0         | 是否自营店铺 1是 0否（作废）
+ bind_all_gc                   | BIT                    | YES  |     | 0         | 自营店是否绑定全部分类 0否1是（作废）
+ qitian                        | BIT                    | YES  |     | 0         | 7天退换（作废）
+ certified                     | BIT                    | YES  |     | 0         | 正品保障（作废）
+ returned                      | BIT                    | YES  |     | 0         | 退货承诺（作废）
+ store_free_time               | VARCHAR(10)            | YES  |     |           | 商家配送时间（作废）
+ mb_slide                      | TEXT(65535)            | YES  |     |           | 手机店铺 轮播图链接地址（作废）
+ mb_slide_url                  | TEXT(65535)            | YES  |     |           | 手机版广告链接（作废）
+ deliver_region                | VARCHAR(50)            | YES  |     |           | 店铺默认配送区域（作废）
+ cod                           | BIT                    | YES  |     | 0         | 货到付款（作废）
+ two_hour                      | BIT                    | YES  |     | 0         | 两小时发货（作废）
+ ensure                        | BIT                    | YES  |     | 0         | 保证服务开关（作废）
+ deposit                       | DECIMAL(10,2)          | YES  |     | 0.00      | 保证金额（作废）
+ deposit_icon                  | BIT                    | YES  |     | 0         | 保证金显示开关（作废）
+ store_money                   | DECIMAL(12,2)          | YES  |     | 0.00      | 店铺可用资金（作废）
+ pending_money                 | DECIMAL(12,2)          | YES  |     | 0.00      | 待结算资金（作废）
+ deleted                       | BIT                    | NO   |     | 0         | 未删除0，已删除1（作废）
+ goods_examine                 | BIT                    | YES  |     | 0         | 店铺发布商品是否需要审核
+ service_phone                 | VARCHAR(20)            | YES  |     |           | 客户下单, 接收下单提醒短信（作废）
+ domain_enable                 | BIT                    | NO   |     | 0         | 是否启用二级域名.1:启用;0:关闭（作废）
+ main_category_id              | INT(10)                | NO   |     | 0         | 主营商品分类ID（作废）
+ butler_rate                   | DECIMAL(4,4)           | NO   |     | 0.0500    | 平成抽取佣金比例
+ store_type                    | INT(10)                | NO   |     | 0         | 1 个人店铺 2 企业店铺
+ store_desc                    | VARCHAR(200)           | NO   |     |           | 店铺简介    
+ id_front                      | VARCHAR(200)           | NO   |     |           | 身份证正面   
+ id_back                       | VARCHAR(200)           | NO   |     |           | 身份正反面   
+ id_hold                       | VARCHAR(200)           | NO   |     |           | 手持身份证   
+ business_license              | VARCHAR(200)           | NO   |     |           | 营业执照照片  
+ unified_social_reference_code | VARCHAR(50)            | NO   |     |           | 营业执照编号  
+ validity_period_type          | INT(10)                | NO   |     | 1         | 营业执照有效期类型(1长期有效 2固定期限)
+ start_validity_period         | DATE(10)               | YES  |     |           | 营业执照开始时间 
+ end_validity_period           | DATE(10)               | YES  |     |           | 营业执照结束时间
+ card_num                      | VARCHAR(50)            | NO   |     |           | 银行卡号    
+ card_front                    | VARCHAR(200)           | NO   |     |           | 银行卡正面   
+ card_back                     | VARCHAR(200)           | NO   |     |           | 银行卡背面   
+-------------------------------+------------------------+------+-----+-----------+---------
+
+Table: butler_store_address
+------------------+-----------------------+------+-----+---------+---------
+ Field            | Type                  | Null | Key | Default | Remarks 
+------------------+-----------------------+------+-----+---------+---------
+ store_address_id | MEDIUMINT UNSIGNED(8) | NO   | PRI |         |         
+ consignee        | VARCHAR(60)           | NO   |     |         | 收货人     
+ province_id      | INT(10)               | NO   |     | 0       | 省份      
+ city_id          | INT(10)               | NO   |     | 0       | 城市      
+ district_id      | INT(10)               | NO   |     | 0       | 地区      
+ town_id          | INT(10)               | NO   |     | 0       | 乡镇      
+ address          | VARCHAR(250)          | NO   |     |         | 地址      
+ zip_code         | VARCHAR(60)           | NO   |     |         | 邮政编码    
+ mobile           | VARCHAR(60)           | NO   |     |         | 手机      
+ is_default       | BIT                   | NO   |     | 0       | 1为默认收货地址
+ type             | BIT                   | NO   |     | 0       | 0为发货地址。1为收货地址
+ store_id         | INT UNSIGNED(10)      | NO   |     | 0       | 店铺id    
+------------------+-----------------------+------+-----+---------+---------
+
+Table: butler_store_apply
+-------------------------+------------------+------+-----+---------+---------
+ Field                   | Type             | Null | Key | Default | Remarks 
+-------------------------+------------------+------+-----+---------+---------
+ id                      | INT UNSIGNED(10) | NO   | PRI |         |         
+ user_id                 | INT(10)          | NO   |     | 0       | 申请人会员ID 
+ agent_role_id           | INT(10)          | NO   |     | 0       | 代理商角色ID 
+ is_fictitious_supplier  | TINYINT(3)       | NO   |     | 0       | 是否为虚拟供应商 0否 1是 （agent_role_id = 4时有效）
+ agent_province_id       | INT(10)          | YES  |     | 0       | 代理商代理省  
+ agent_city_id           | INT(10)          | YES  |     | 0       | 代理商代理市  
+ agent_district_id       | INT(10)          | YES  |     | 0       | 代理商代理区  
+ contacts_name           | VARCHAR(20)      | YES  |     |         | 联系人姓名   
+ contacts_mobile         | VARCHAR(20)      | YES  |     |         | 联系人手机   
+ contacts_email          | VARCHAR(50)      | YES  |     |         | 联系人邮箱   
+ contacts_address        | VARCHAR(100)     | YES  |     |         | 联系人所在地址 
+ company_name            | VARCHAR(30)      | YES  |     |         | 公司名称    
+ company_type            | BIT              | YES  |     | 1       | 公司性质    
+ company_website         | VARCHAR(50)      | YES  |     |         | 公司网址    
+ company_province        | MEDIUMINT(7)     | YES  |     | 0       | 公司所在省份  
+ company_city            | MEDIUMINT(7)     | YES  |     | 0       | 公司所在城市  
+ company_district        | MEDIUMINT(7)     | YES  |     | 0       | 公司所在地区  
+ company_address         | VARCHAR(100)     | YES  |     |         | 公司详细地址  
+ company_telephone       | VARCHAR(20)      | YES  |     |         | 固定电话    
+ company_email           | VARCHAR(50)      | YES  |     |         | 电子邮箱    
+ company_fax             | VARCHAR(30)      | YES  |     |         | 传真      
+ company_zipcode         | VARCHAR(20)      | YES  |     |         | 邮政编码    
+ business_licence_number | VARCHAR(20)      | YES  |     |         | 营业执照注册号/统一社会信用代码
+ business_licence_cert   | VARCHAR(100)     | YES  |     |         | 营业执照电子版 
+ threeinone              | BIT              | YES  |     | 1       | 是否为一证一码商家
+ reg_capital             | VARCHAR(10)      | YES  |     |         | 注册资金    
+ legal_person            | VARCHAR(20)      | YES  |     |         | 法人代表    
+ legal_identity_cert     | VARCHAR(100)     | YES  |     |         | 法人身份证照片 
+ legal_identity          | VARCHAR(50)      | YES  |     |         | 法人身份证号  
+ power_attorney_cert     | VARCHAR(100)     | YES  |     |         | 授权书图片   
+ business_date_start     | VARCHAR(20)      | YES  |     |         | 营业执照有效期 
+ business_date_end       | VARCHAR(20)      | YES  |     |         |         
+ orgnization_code        | VARCHAR(20)      | YES  |     |         | 组织机构代码  
+ orgnization_cert        | VARCHAR(100)     | YES  |     |         | 组织机构代码证 
+ attached_tax_number     | VARCHAR(30)      | YES  |     |         | 纳税人识别号  
+ tax_rate                | TINYINT(3)       | YES  |     | 0       | 纳税类型税码  
+ taxpayer                | BIT              | YES  |     | 1       | 纳税人类型   
+ taxpayer_cert           | VARCHAR(100)     | YES  |     |         | 一般纳税人资格证书
+ business_scope          | TEXT(65535)      | YES  |     |         | 营业执照经营范围
+ store_name              | VARCHAR(30)      | YES  |     |         | 店铺名称    
+ seller_name             | VARCHAR(30)      | YES  |     |         | 卖家账号    
+ store_type              | BIT              | YES  |     | 0       | 店铺性质    
+ store_address           | VARCHAR(100)     | YES  |     |         |         
+ store_person_name       | VARCHAR(20)      | YES  |     |         | 店铺负责人姓名 
+ store_person_mobile     | VARCHAR(20)      | YES  |     |         | 店铺负责人手机 
+ store_person_qq         | VARCHAR(20)      | YES  |     |         | 店铺联系人QQ 
+ store_person_email      | VARCHAR(50)      | YES  |     |         | 店铺负责人邮箱 
+ store_person_cert       | VARCHAR(100)     | YES  |     |         | 店铺负责人身份证照片
+ store_person_cert_back  | VARCHAR(100)     | YES  |     |         | 店铺负责人身份证照片反面
+ store_person_identity   | VARCHAR(50)      | YES  |     |         | 店铺负责人身份证号
+ bank_account_name       | VARCHAR(50)      | YES  |     |         | 结算银行名称  
+ bank_account_number     | VARCHAR(50)      | YES  |     |         | 结算银行账号  
+ bank_branch_name        | VARCHAR(50)      | YES  |     |         | 开户银行支行名称
+ bank_card_cert          | VARCHAR(100)     | YES  |     |         | 银行卡正面照片 
+ bank_province           | MEDIUMINT(7)     | YES  |     | 0       | 开户银行支行所在地
+ bank_city               | MEDIUMINT(7)     | YES  |     | 0       | 开户银行支行所在城市
+ main_channel            | BIT              | YES  |     | 0       | 近一年主营渠道 
+ sales_volume            | VARCHAR(255)     | YES  |     |         | 近一年销售额  
+ sku_num                 | MEDIUMINT(7)     | YES  |     | 1       | 可网售商品数量 
+ ec_experience           | BIT              | YES  |     | 0       | 同类电子商务网站经验
+ avg_price               | DECIMAL(10,2)    | YES  |     | 0.00    | 预计平均客单价 
+ ware_house              | BIT              | YES  |     | 0       | 仓库情况    
+ entity_shop             | BIT              | YES  |     | 0       | 有无实体店   
+ sc_name                 | VARCHAR(50)      | YES  |     |         | 店铺分类名称  
+ sc_id                   | INT(10)          | YES  |     |         | 店铺分类编号  
+ sc_bail                 | MEDIUMINT(7)     | YES  |     | 0       | 店铺分类保证金 
+ sg_id                   | TINYINT(3)       | YES  |     | 0       | 店铺等级编号  
+ sg_name                 | VARCHAR(30)      | YES  |     |         | 店铺等级名称  
+ store_class_ids         | TEXT(65535)      | YES  |     |         | 申请分类佣金信息
+ paying_amount           | DECIMAL(10,2)    | YES  |     | 0.00    | 付款金额    
+ paying_amount_cert      | VARCHAR(100)     | YES  |     |         | 付款凭证    
+ auditing_admin_id       | INT(10)          | YES  |     | 0       | 审核管理员ID 
+ apply_state             | TINYINT(3)       | YES  |     | 0       | 店铺申请状态 0未审核，1通过，2拒绝
+ review_msg              | VARCHAR(255)     | YES  |     |         | 管理员审核信息 
+ add_time                | INT(10)          | YES  |     | 0       | 提交申请时间  
+ apply_type              | BIT              | YES  |     | 0       | 申请类型默认0企业1个人
+ bonus_balance_time      | VARCHAR(200)     | YES  |     |         | 提成结算时间  
+ wages_balance_time      | TEXT(65535)      | YES  |     |         | 工资结算时间  
+ store_balance_time      | VARCHAR(200)     | YES  |     |         | 店铺结算时间  
+-------------------------+------------------+------+-----+---------+---------
+
+Table: butler_store_collect
+------------+------------------+------+-----+---------+---------
+ Field      | Type             | Null | Key | Default | Remarks 
+------------+------------------+------+-----+---------+---------
+ log_id     | INT UNSIGNED(10) | NO   | PRI |         |         
+ user_id    | INT(10)          | YES  |     |         |         
+ store_id   | INT(10)          | YES  |     |         |         
+ add_time   | INT(10)          | YES  |     |         | 收藏店铺时间  
+ store_name | VARCHAR(100)     | YES  |     |         |         
+ user_name  | VARCHAR(50)      | YES  |     |         | 收藏会员名称  
+------------+------------------+------+-----+---------+---------
+
+Table: butler_store_goods_class
+--------------+-------------+------+-----+---------+---------
+ Field        | Type        | Null | Key | Default | Remarks 
+--------------+-------------+------+-----+---------+---------
+ cat_id       | INT(10)     | NO   | PRI |         | 索引ID    
+ cat_name     | VARCHAR(50) | NO   |     |         | 店铺商品分类名称
+ parent_id    | INT(10)     | NO   |     |         | 父级id    
+ store_id     | INT(10)     | NO   |     | 0       | 店铺id    
+ cat_sort     | INT(10)     | NO   |     | 0       | 商品分类排序  
+ is_show      | BIT         | NO   |     | 0       | 分类显示状态  
+ is_nav_show  | BIT         | YES  |     | 0       | 是否显示在导航栏
+ is_recommend | BIT         | YES  |     | 0       | 是否首页推荐  
+ show_num     | SMALLINT(5) | YES  |     | 4       | 首页此类商品显示数量
+--------------+-------------+------+-----+---------+---------
+
+Table: butler_store_level
+-------------------------+--------------+------+-----+-------------------+---------
+ Field                   | Type         | Null | Key | Default           | Remarks 
+-------------------------+--------------+------+-----+-------------------+---------
+ id                      | INT(10)      | NO   | PRI |                   |         
+ store_level_category_id | INT(10)      | YES  |     |                   | 商家等级配置ID
+ store_id                | INT(10)      | YES  |     |                   | 商家ID    
+ create_time             | DATETIME(19) | YES  |     | CURRENT_TIMESTAMP |         
+ update_time             | DATETIME(19) | YES  |     | CURRENT_TIMESTAMP |         
+-------------------------+--------------+------+-----+-------------------+---------
+
+Table: butler_store_level_category
+-----------------+---------------+------+-----+-------------------+---------
+ Field           | Type          | Null | Key | Default           | Remarks 
+-----------------+---------------+------+-----+-------------------+---------
+ id              | INT(10)       | NO   | PRI |                   |         
+ level           | INT(10)       | YES  |     |                   | 等级      
+ category_id     | INT(10)       | YES  |     |                   | 商品分类ID  
+ floor_amount    | DECIMAL(10,2) | YES  |     |                   | 等级交易金额下限
+ commission_rate | DECIMAL(4,4)  | YES  |     |                   | 平台抽成比率  
+ create_time     | DATETIME(19)  | YES  |     | CURRENT_TIMESTAMP |         
+ update_time     | DATETIME(19)  | YES  |     | CURRENT_TIMESTAMP |         
+-----------------+---------------+------+-----+-------------------+---------
+
+Table: butler_store_level_set
+-------------+--------------+------+-----+-------------------+---------
+ Field       | Type         | Null | Key | Default           | Remarks 
+-------------+--------------+------+-----+-------------------+---------
+ id          | INT(10)      | NO   | PRI |                   |         
+ level_name  | VARCHAR(50)  | YES  |     |                   | 等级名称    
+ level       | INT(10)      | YES  |     | 0                 | 等级      
+ create_time | DATETIME(19) | YES  |     | CURRENT_TIMESTAMP |         
+ update_time | DATETIME(19) | YES  |     | CURRENT_TIMESTAMP |         
+-------------+--------------+------+-----+-------------------+---------
+
+Table: butler_user
+------------------+---------------------+------+-----+---------+---------
+ Field            | Type                | Null | Key | Default | Remarks 
+------------------+---------------------+------+-----+---------+---------
+ user_id          | INT(10)             | NO   | PRI |         | 表id     
+ mobile           | VARCHAR(20)         | NO   |     |         | 手机号码    
+ password         | VARCHAR(32)         | NO   |     |         | 密码      
+ nickname         | VARCHAR(50)         | NO   |     |         | 第三方返回昵称 
+ email            | VARCHAR(60)         | NO   |     |         | 邮件      
+ sex              | INT UNSIGNED(10)    | NO   |     | 0       | 0 保密 1 男 2 女
+ birthday         | INT(10)             | NO   |     | 0       | 生日      
+ province_id      | INT(10)             | NO   |     | 0       | 所在省ID   
+ city_id          | INT(10)             | NO   |     | 0       | 所在市ID   
+ district_id      | INT(10)             | NO   |     | 0       | 所在区ID   
+ paypwd           | VARCHAR(200)        | NO   |     |         | 支付密码    
+ reg_time         | INT UNSIGNED(10)    | NO   |     | 0       | 注册时间    
+ last_login       | INT UNSIGNED(10)    | NO   |     | 0       | 最后登录时间  
+ last_ip          | VARCHAR(15)         | NO   |     |         | 最后登录ip  
+ qq               | VARCHAR(20)         | NO   |     |         | QQ      
+ mobile_validated | TINYINT UNSIGNED(3) | NO   |     | 0       | 是否验证手机  
+ head_pic         | VARCHAR(255)        | NO   |     |         | 头像      
+ bank_name        | VARCHAR(150)        | YES  |     |         | 银行名称    
+ bank_card        | VARCHAR(50)         | YES  |     |         | 银行账号    
+ realname         | VARCHAR(50)         | YES  |     |         | 用户真实姓名  
+ idcard           | VARCHAR(100)        | YES  |     |         | 身份证号    
+ email_validated  | BIT                 | NO   |     | 0       | 是否验证电子邮箱
+ is_lock          | BIT                 | YES  |     | 0       | 是否被锁定冻结 
+ first_leader     | INT(10)             | YES  |     | 0       | 第一个上级   
+ open_id          | VARCHAR(50)         | NO   |     |         | 微信openID
+ create_time      | DATETIME(19)        | YES  |     |         |         
+ created_by       | VARCHAR(50)         | YES  |     |         |         
+ update_time      | DATETIME(19)        | YES  |     |         |         
+ update_by        | VARCHAR(50)         | YES  |     |         |         
+ level_id         | INT(10)             | YES  |     |         |         
+------------------+---------------------+------+-----+---------+---------
+
+Table: butler_user_address
+------------+-----------------------+------+-----+---------+---------
+ Field      | Type                  | Null | Key | Default | Remarks 
+------------+-----------------------+------+-----+---------+---------
+ address_id | MEDIUMINT UNSIGNED(8) | NO   | PRI |         |         
+ user_id    | MEDIUMINT UNSIGNED(8) | NO   |     | 0       |         
+ consignee  | VARCHAR(60)           | NO   |     |         | 收货人     
+ email      | VARCHAR(60)           | NO   |     |         | 邮箱地址    
+ country    | INT(10)               | NO   |     | 0       | 国家      
+ province   | INT(10)               | NO   |     | 0       | 省份      
+ city       | INT(10)               | NO   |     | 0       | 城市      
+ district   | INT(10)               | NO   |     | 0       | 地区      
+ twon       | INT(10)               | YES  |     | 0       | 乡镇      
+ address    | VARCHAR(250)          | NO   |     |         | 地址      
+ zipcode    | VARCHAR(60)           | NO   |     |         | 邮政编码    
+ mobile     | VARCHAR(60)           | NO   |     |         | 手机      
+ is_default | INT(10)               | YES  |     | 0       | 默认收货地址  
+------------+-----------------------+------+-----+---------+---------
+
+Table: butler_user_balance
+--------------------+---------------+------+-----+-------------------+---------
+ Field              | Type          | Null | Key | Default           | Remarks 
+--------------------+---------------+------+-----+-------------------+---------
+ id                 | INT(10)       | NO   | PRI |                   |         
+ user_id            | INT(10)       | YES  |     |                   | 用户ID    
+ available_amount   | DECIMAL(10,4) | YES  |     |                   | 可用金额    
+ frozen_amount      | DECIMAL(10,4) | YES  |     |                   | 冻结金额    
+ total_amount       | DECIMAL(10,4) | YES  |     |                   | 总金额     
+ withdrawal_amount  | DECIMAL(10,4) | YES  |     |                   | 提现中金额   
+ platinum_bit       | DECIMAL(10,4) | YES  |     |                   | 白金币（与先进1比1的关系，只可消费，不能提现）
+ achievement_amount | DECIMAL(10,4) | YES  |     |                   | 推广业绩总额(订单销售总额)
+ create_time        | DATETIME(19)  | YES  |     | CURRENT_TIMESTAMP |         
+ update_time        | DATETIME(19)  | YES  |     | CURRENT_TIMESTAMP |         
+--------------------+---------------+------+-----+-------------------+---------
+
+Table: butler_user_balance_detail
+-------------+---------------+------+-----+-------------------+---------
+ Field       | Type          | Null | Key | Default           | Remarks 
+-------------+---------------+------+-----+-------------------+---------
+ id          | INT(10)       | NO   | PRI |                   |         
+ user_id     | INT(10)       | YES  |     |                   | 用户ID    
+ amount      | DECIMAL(10,4) | YES  |     |                   |         
+ amount_type | INT(10)       | YES  |     |                   | 1平台推广佣金2店铺推广佣金3.特殊商品优惠返现4充值 5商品销售收入 6提现 7消费 8 推广首单奖励
+ object_id   | INT(10)       | YES  |     |                   | 关联对应业务的ID（1-orderId2-orderId3-orderId4-充值id 5 orderId 6提现id7-orderId）
+ in_out_flag | INT(10)       | YES  |     |                   | 1收入 2支出 
+ frozen_flag | INT(10)       | YES  |     |                   | 订单支付但是没有结束的佣金1冻结 2正常，3取消
+ update_time | DATETIME(19)  | YES  |     | CURRENT_TIMESTAMP |         
+ create_time | DATETIME(19)  | YES  |     | CURRENT_TIMESTAMP |         
+-------------+---------------+------+-----+-------------------+---------
+
+Table: butler_user_level
+------------+----------------------+------+-----+---------+---------
+ Field      | Type                 | Null | Key | Default | Remarks 
+------------+----------------------+------+-----+---------+---------
+ level_id   | SMALLINT UNSIGNED(5) | NO   | PRI |         |         
+ level_name | VARCHAR(30)          | YES  |     |         | 头衔名称    
+ amount     | DECIMAL(10,2)        | YES  |     |         | 等级必要金额  
+ discount   | SMALLINT(5)          | YES  |     | 0       | 折扣      
+ describe   | VARCHAR(200)         | YES  |     |         |         
+------------+----------------------+------+-----+---------+---------
+
+Table: butler_user_message
+------------+-----------------------+------+-----+---------+---------
+ Field      | Type                  | Null | Key | Default | Remarks 
+------------+-----------------------+------+-----+---------+---------
+ rec_id     | INT(10)               | NO   | PRI |         |         
+ user_id    | MEDIUMINT UNSIGNED(8) | NO   |     | 0       | 用户id    
+ message_id | INT UNSIGNED(10)      | NO   |     | 0       | 消息id    
+ category   | BIT                   | NO   |     | 0       | 通知消息：0, 活动消息：1, 物流:2, 私信:3
+ is_see     | BIT                   | NO   |     | 0       | 是否查看：0未查看, 1已查看
+ deleted    | BIT                   | NO   |     | 0       | 用户假删除标识,1:删除,0未删除
+ status     | INT(10)               | NO   |     | 0       | 查看状态：0未查看，1已查看
+------------+-----------------------+------+-----+---------+---------
+
+Table: butler_user_msg_tpl
+---------------------+---------------------+------+-----+---------+---------
+ Field               | Type                | Null | Key | Default | Remarks 
+---------------------+---------------------+------+-----+---------+---------
+ mmt_code            | VARCHAR(50)         | NO   | PRI |         | 用户消息模板编号
+ mmt_name            | VARCHAR(50)         | NO   |     |         | 模板名称    
+ mmt_message_switch  | TINYINT UNSIGNED(3) | NO   |     |         | 站内信接收开关 
+ mmt_message_content | VARCHAR(255)        | NO   |     |         | 站内信消息内容 
+ mmt_short_switch    | TINYINT UNSIGNED(3) | NO   |     |         | 短信接收开关  
+ mmt_short_content   | VARCHAR(255)        | YES  |     |         | 短信接收内容  
+ mmt_short_sign      | VARCHAR(50)         | YES  |     |         | 短信签名    
+ mmt_short_code      | VARCHAR(50)         | YES  |     |         | 短信模板ID  
+ mmt_mail_switch     | TINYINT UNSIGNED(3) | NO   |     |         | 邮件接收开关  
+ mmt_mail_subject    | VARCHAR(255)        | YES  |     |         | 邮件标题    
+ mmt_mail_content    | TEXT(65535)         | YES  |     |         | 邮件内容    
+---------------------+---------------------+------+-----+---------+---------
+
+Table: butler_user_sign
+---------------------+--------------+------+-----+---------+---------
+ Field               | Type         | Null | Key | Default | Remarks 
+---------------------+--------------+------+-----+---------+---------
+ id                  | INT(10)      | NO   | PRI |         |         
+ user_id             | INT(10)      | NO   |     | 0       | 用户id    
+ sign_total          | INT(10)      | NO   |     | 0       | 累计签到天数  
+ continue_sign_count | INT(10)      | NO   |     | 0       | 连续签到天数  
+ date_month          | VARCHAR(50)  | NO   |     |         | 签到时间，时间格式20170907
+ create_time         | DATETIME(19) | YES  |     |         |         
+ created_by          | VARCHAR(50)  | YES  |     |         |         
+ update_time         | DATETIME(19) | YES  |     |         |         
+ update_by           | VARCHAR(50)  | YES  |     |         |         
+---------------------+--------------+------+-----+---------+---------
+
+Table: oms_config
+----------+--------------+------+-----+---------+---------
+ Field    | Type         | Null | Key | Default | Remarks 
+----------+--------------+------+-----+---------+---------
+ id       | INT(10)      | NO   | PRI |         |         
+ name     | VARCHAR(50)  | NO   |     |         | 字典健     
+ value    | VARCHAR(500) | NO   |     |         | 字典值     
+ inc_type | VARCHAR(20)  | NO   |     |         | 字典类型（basic为k-v字典）
+ desc     | VARCHAR(50)  | NO   |     |         | 字典描述    
+----------+--------------+------+-----+---------+---------
+
+Table: oms_express_company
+-------------+--------------+------+-----+---------+---------
+ Field       | Type         | Null | Key | Default | Remarks 
+-------------+--------------+------+-----+---------+---------
+ id          | INT(10)      | NO   | PRI |         |         
+ name        | VARCHAR(50)  | NO   |     |         | 公司名称    
+ code        | VARCHAR(50)  | NO   |     |         | 公司编码    
+ remark      | VARCHAR(500) | NO   |     |         | 说明      
+ type        | VARCHAR(50)  | NO   |     |         | 类型      
+ nation_code | VARCHAR(50)  | NO   |     |         | 国家编码    
+ isDisable   | INT(10)      | NO   |     | 2       | 是否使用 1使用 2不使用
+-------------+--------------+------+-----+---------+---------
+
+Table: oms_operate
+---------+-------------+------+-----+---------+---------
+ Field   | Type        | Null | Key | Default | Remarks 
+---------+-------------+------+-----+---------+---------
+ id      | INT(10)     | NO   | PRI |         |         
+ menu    | VARCHAR(50) | NO   |     |         | 主模块名称   
+ subMenu | VARCHAR(50) | NO   |     |         | 子模块名称   
+ operate | VARCHAR(50) | NO   |     |         | 操作名称    
+ sortNo  | VARCHAR(10) | NO   |     | 0       |         
+---------+-------------+------+-----+---------+---------
+
+Table: oms_region
+-----------+------------------+------+-----+---------+---------
+ Field     | Type             | Null | Key | Default | Remarks 
+-----------+------------------+------+-----+---------+---------
+ id        | INT UNSIGNED(10) | NO   | PRI |         | 区域ID    
+ name      | VARCHAR(50)      | NO   |     |         | 区域名称    
+ level     | INT(10)          | NO   |     | 0       | 区域级别：1 省/直辖市/自治区、2 市、3 区/县、4 镇/街道/乡
+ parent_id | INT(10)          | NO   |     |         | 区域的父级ID 
+-----------+------------------+------+-----+---------+---------
+
+Table: oms_role
+----------+--------------+------+-----+---------+---------
+ Field    | Type         | Null | Key | Default | Remarks 
+----------+--------------+------+-----+---------+---------
+ id       | INT(10)      | NO   | PRI |         |         
+ roleName | VARCHAR(50)  | NO   |     |         |         
+ desc     | VARCHAR(200) | NO   |     |         |         
+----------+--------------+------+-----+---------+---------
+
+Table: oms_role_operation
+-----------+---------+------+-----+---------+---------
+ Field     | Type    | Null | Key | Default | Remarks 
+-----------+---------+------+-----+---------+---------
+ roleId    | INT(10) | NO   | PRI |         |         
+ operateId | INT(10) | NO   | PRI |         |         
+-----------+---------+------+-----+---------+---------
+
+Table: oms_sms_log
+------------+--------------+------+-----+---------+---------
+ Field      | Type         | Null | Key | Default | Remarks 
+------------+--------------+------+-----+---------+---------
+ id         | INT(10)      | NO   | PRI |         | 表id     
+ mobile     | VARCHAR(11)  | YES  |     |         | 手机号     
+ session_id | VARCHAR(128) | YES  |     |         | session_id
+ add_time   | INT(10)      | YES  |     | 0       | 发送时间    
+ code       | VARCHAR(100) | YES  |     |         | 验证码     
+ seller_id  | INT(10)      | YES  |     | 0       |         
+ status     | INT(10)      | YES  |     | 0       | 1:发送成功,0:发送失败
+ msg        | VARCHAR(255) | YES  |     |         | 短信内容    
+ scene      | INT(10)      | YES  |     | 0       | 发送场景,1:用户注册,2:找回密码,3:客户下单,4:客户支付,5:商家发货,6:身份验证
+ error_msg  | TEXT(65535)  | YES  |     |         | 发送短信异常内容
+------------+--------------+------+-----+---------+---------
+
+Table: oms_staff
+----------+-------------+------+-----+---------+---------
+ Field    | Type        | Null | Key | Default | Remarks 
+----------+-------------+------+-----+---------+---------
+ id       | INT(10)     | NO   | PRI |         |         
+ username | VARCHAR(20) | NO   |     |         |         
+ password | VARCHAR(50) | NO   |     |         |         
+ name     | VARCHAR(20) | NO   |     |         |         
+ phone    | VARCHAR(20) | NO   |     |         |         
+----------+-------------+------+-----+---------+---------
+
+Table: oms_staff_role
+---------+---------+------+-----+---------+---------
+ Field   | Type    | Null | Key | Default | Remarks 
+---------+---------+------+-----+---------+---------
+ roleId  | INT(10) | NO   | PRI |         |         
+ adminId | INT(10) | NO   | PRI |         |         
+---------+---------+------+-----+---------+---------
+
+Table: oms_wxbank
+-------+--------------+------+-----+---------+---------
+ Field | Type         | Null | Key | Default | Remarks 
+-------+--------------+------+-----+---------+---------
+ id    | INT(10)      | NO   | PRI |         |         
+ name  | VARCHAR(100) | NO   |     |         |         
+-------+--------------+------+-----+---------+---------
+
