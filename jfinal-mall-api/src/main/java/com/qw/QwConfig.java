@@ -182,10 +182,10 @@ public class QwConfig extends JFinalConfig {
         me.add(new FastDfsPlugin());
 
         // ESPlugin - es 存放查看的商品的数据
-        me.add(new ESPlugin(PropKit.get("es-ip"), Integer.parseInt(PropKit.get("es-port")), PropKit.get("es-cluster-name")));
+        // me.add(new ESPlugin(PropKit.get("es-ip"), Integer.parseInt(PropKit.get("es-port")), PropKit.get("es-cluster-name")));
         // MongoPlugin -  存放商品浏览记录，短信、通知等消息记录，APP显示类配置数据，cms信息
-        me.add(new MongoPlugin().add(PropKit.get("mongo-host"), PropKit.getInt("mongo-port")).setDatabase(PropKit.get("mongo-database")));
-        //
+        // me.add(new MongoPlugin().add(PropKit.get("mongo-host"), PropKit.getInt("mongo-port")).setDatabase(PropKit.get("mongo-database")));
+
         me.add(new RabbitMQPlugin(PropKit.get("rabitmq-host"), PropKit.getInt("rabitmq-port"), PropKit.get("rabitmq-username"), PropKit.get("rabitmq-password"), PropKit.get("rabitmq-virtual-host")));
     }
 

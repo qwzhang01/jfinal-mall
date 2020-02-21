@@ -2,15 +2,28 @@ package com.qw.controller.common;
 
 import cn.qw.base.RestController;
 import cn.qw.kit.ValidateKit;
+import cn.qw.rabbitmq.RabbitMQKit;
 import com.qw.interceptor.RestSecurityInterceptor;
 import com.qw.service.common.CaptchaService;
 import com.jfinal.aop.Clear;
 import com.jfinal.kit.StrKit;
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.Channel;
+
+import java.io.IOException;
 
 /**
  * 验证码
  */
 public class CaptchaController extends RestController {
+
+    @Clear(RestSecurityInterceptor.class)
+    public void test() throws IOException {
+        Channel channel = RabbitMQKit.getChannel();
+        channel.basicPublish("test-qw", "test", null, "Hello World".getBytes());
+        RabbitMQKit.free(channel);
+        renderText("发布成功");
+    }
 
     /**
      * @param phone|手机号|String|必填

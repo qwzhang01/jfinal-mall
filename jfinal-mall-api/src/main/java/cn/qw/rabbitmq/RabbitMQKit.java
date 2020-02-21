@@ -17,7 +17,11 @@ public class RabbitMQKit {
         p = null;
     }
 
-    public static Channel getChannel(Channel channel){
+    /**
+     * 多线程间channel实例是不安全的，也就是多线程不可以共享一个channel  TODO 以前不清楚这个，刚刚看文章有提到，所以要看一下这里原来设计的对不对
+     * @return
+     */
+    public static Channel getChannel(){
         return pool.getChannel();
     }
 

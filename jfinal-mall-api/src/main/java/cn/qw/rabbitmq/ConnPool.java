@@ -22,18 +22,22 @@ public class ConnPool {
         this.connPoolSize = connPoolSize;
 
         CONN_POOL = Collections.synchronizedList(new LinkedList<>());
-        for(int i = 0; i < connPoolSize; i++){
-            CONN_POOL.add(creatConn(host, port, username, password, virtualHost));
-        }
+        initConnPool(0, host, port, username, password, virtualHost);
 
         CHANNEL_POOL = Collections.synchronizedList(new LinkedList<>());
-        for(int i = 0; i < channelPoolSize; i++){
+        initChannelPool(0);
+    }
+    private void initConnPool(int start, String host, int port, String username, String password, String virtualHost) {
+        for(int i = start; i < connPoolSize; i++){
+            CONN_POOL.add(creatConn(host, port, username, password, virtualHost));
+        }
+    }
+    private void initChannelPool(int start) {
+        for(int i = start; i < channelPoolSize; i++){
             Connection conn = null;
             try {
                  conn = getConn();
-                CHANNEL_POOL.add(conn.createChannel());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                CHANNEL_POOL.add(creatChannel(conn));
             } finally {
                 freeConn(conn);
             }
@@ -41,14 +45,19 @@ public class ConnPool {
     }
 
     Connection getConn(){
-        Connection connection = CONN_POOL.get(0);
-        CONN_POOL.remove(0);
+        int lastIndex = CONN_POOL.size() - 1;
+        Connection connection = CONN_POOL.get(lastIndex);
+        CONN_POOL.remove(lastIndex);
         return connection;
     }
 
     Channel getChannel(){
-        Channel connection = CHANNEL_POOL.get(0);
-        CHANNEL_POOL.remove(0);
+        int lastIndex = CHANNEL_POOL.size() - 1;
+        Channel connection = CHANNEL_POOL.get(lastIndex);
+        CHANNEL_POOL.remove(lastIndex);
+        if(lastIndex <= 3) {
+            initChannelPool(lastIndex);
+        }
         return connection;
     }
 

@@ -404,9 +404,9 @@
                 <configuration>
                     <scanIntervalSeconds>0</scanIntervalSeconds>
                     <stopKey>foo</stopKey>
-                    <stopPort>9998</stopPort>
+                    <stopPort>7778</stopPort>
                     <httpConnector>
-                        <port>8899</port>
+                        <port>7777</port>
                     </httpConnector>
                     <webApp>
                         <contextPath>/</contextPath>
