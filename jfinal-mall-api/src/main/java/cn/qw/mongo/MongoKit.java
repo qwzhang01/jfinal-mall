@@ -13,7 +13,7 @@ import com.mongodb.client.model.IndexModel;
 import com.mongodb.client.model.InsertManyOptions;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-import com.qw.model.Article;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.bson.BsonDocument;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -30,69 +30,94 @@ import java.util.*;
 
 public enum MongoKit {
 
-    /*
-     *枚举实现单例模式
+    /**
+     * 枚举实现单例模式
      */
     INSTANCE;
     private static MongoClient client;
     private static MongoDatabase defaultDb;
     private Log log = Log.getLog(getClass());
 
-    public MongoClient getClient() {
-        return client;
-    }
-
     public void init(MongoClient client, String database) {
         MongoKit.client = client;
         MongoKit.defaultDb = client.getDatabase(database);
     }
 
+    /**
+     * 获取客户端连接
+     *
+     * @return
+     */
+    public MongoClient getClient() {
+        return client;
+    }
+
+    /**
+     * 根据集合名称获取集合
+     *
+     * @param collectionName
+     * @return
+     */
     public MongoCollection<Document> getCollection(String collectionName) {
         return defaultDb.getCollection(collectionName);
     }
 
+    /**
+     * 批量插入
+     *
+     * @param collectionName
+     * @param docs
+     * @param ops
+     */
     public void insert(String collectionName, List<Document> docs, InsertManyOptions ops) {
         getCollection(collectionName).insertMany(uniding(docs), ops);
     }
 
-
+    /**
+     * 插入单条数据
+     *
+     * @param collectionName
+     * @param doc
+     */
     public void insert(String collectionName, Document doc) {
         getCollection(collectionName).insertOne(uniding(doc));
     }
 
+    /**
+     * 聚合操作
+     *
+     * @param collectionName
+     * @param query
+     * @param allowDiskUse
+     * @return
+     */
     public List<JSONObject> aggregate(String collectionName, List<Bson> query, boolean allowDiskUse) {
-
-        final List<JSONObject> list = new ArrayList<JSONObject>();
-
-        Block<Document> block = new Block<Document>() {
-
-            @Override
-            public void apply(Document document) {
-                document = iding(document);
-                list.add(parseObject(document.toJson()));
-            }
+        final List<JSONObject> list = new ArrayList<>();
+        Block<Document> block = document -> {
+            document = iding(document);
+            list.add(parseObject(document.toJson()));
         };
-
         getCollection(collectionName).aggregate(query).allowDiskUse(allowDiskUse).forEach(block);
-
         return list;
     }
 
+    /**
+     * 聚合操作
+     *
+     * @param collectionName
+     * @param query
+     * @param allowDiskUse
+     * @param clazz
+     * @param <T>
+     * @return
+     */
     public <T> List<T> aggregate(String collectionName, List<Bson> query, boolean allowDiskUse, final Class<T> clazz) {
-
         final List list = new ArrayList();
-
-        Block<Document> block = new Block<Document>() {
-
-            @Override
-            public void apply(Document document) {
-                document = iding(document);
-                list.add(parseObject(document, clazz));
-            }
+        Block<Document> block = document -> {
+            document = iding(document);
+            list.add(parseObject(document, clazz));
         };
-
         getCollection(collectionName).aggregate(query).allowDiskUse(allowDiskUse).forEach(block);
-
         return list;
     }
 
@@ -120,7 +145,6 @@ public enum MongoKit {
         return find(collectionName, query, new BsonDocument(), projection, 0, 0, "");
     }
 
-
     public long count(String collectionName, Bson query) {
         return getCollection(collectionName).count(query);
     }
@@ -128,7 +152,6 @@ public enum MongoKit {
     public long count(String collectionName) {
         return getCollection(collectionName).count();
     }
-
 
     public JSONObject findOne(String collectionName, Bson query, Bson sort, String join) {
         return toJSON(
@@ -142,45 +165,28 @@ public enum MongoKit {
                 , clazz);
     }
 
-
     public List<JSONObject> find(String collectionName, Bson query, Bson sort, Bson projection, int limit,
                                  int skip, final String join) {
-
-        final List<JSONObject> list = new ArrayList<JSONObject>();
-
-        Block<Document> block = new Block<Document>() {
-
-            @Override
-            public void apply(Document document) {
-                document = iding(document);
-                document = jointing(document, join);
-                list.add(toJSON(document));
-            }
+        final List<JSONObject> list = new ArrayList<>();
+        Block<Document> block = document -> {
+            document = iding(document);
+            document = jointing(document, join);
+            list.add(toJSON(document));
         };
         getCollection(collectionName).find(query).projection(projection).sort(sort).limit(limit).skip(skip).forEach(block);
-
         return list;
-
     }
 
     public <T> List<T> find(String collectionName, Bson query, Bson sort, Bson projection, int limit, int skip,
                             final String join, final Class<T> clazz) {
-
         final List list = new ArrayList();
-
-        Block<Document> block = new Block<Document>() {
-            @Override
-            public void apply(Document document) {
-                document = iding(document);
-                document = jointing(document, join);
-                list.add(parseObject(document, clazz));
-            }
+        Block<Document> block = document -> {
+            document = iding(document);
+            document = jointing(document, join);
+            list.add(parseObject(document, clazz));
         };
-
         getCollection(collectionName).find(query).projection(projection).sort(sort).limit(limit).skip(skip).forEach(block);
-
         return list;
-
     }
 
 
@@ -210,42 +216,33 @@ public enum MongoKit {
     }
 
     public String validation(Object obj) {
-
-        StringBuffer buffer = new StringBuffer(64);//用于存储验证后的错误信息
-
-        Validator validator = Validation.buildDefaultValidatorFactory()
-                .getValidator();
-
-        Set<ConstraintViolation<Object>> constraintViolations = validator
-                .validate(obj);//验证某个对象,其实也可以只验证其中的某一个属性的
-
+        //用于存储验证后的错误信息
+        StringBuffer buffer = new StringBuffer(64);
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        //验证某个对象,其实也可以只验证其中的某一个属性的
+        Set<ConstraintViolation<Object>> constraintViolations = validator.validate(obj);
         Iterator iter = constraintViolations.iterator();
         while (iter.hasNext()) {
             ConstraintViolation c = (ConstraintViolation) iter.next();
             buffer.append(c.getMessage());
         }
-
         return buffer.toString();
     }
 
-    //校验单个属性
+    /**
+     * 校验单个属性
+     */
     public String validation(Object obj, String[] keys) {
-
-        StringBuffer buffer = new StringBuffer(64);//用于存储验证后的错误信息
-
-        Validator validator = Validation.buildDefaultValidatorFactory()
-                .getValidator();
-
+        //用于存储验证后的错误信息
+        StringBuffer buffer = new StringBuffer(64);
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<Object>> constraintViolations = new HashSet<ConstraintViolation<Object>>();
-
         for (String key : keys) {
             Iterator<ConstraintViolation<Object>> it = validator.validateProperty(obj, key).iterator();
             if (it.hasNext()) {
                 constraintViolations.add(it.next());
             }
-
         }
-
 
         Iterator iter = constraintViolations.iterator();
         while (iter.hasNext()) {
@@ -265,25 +262,19 @@ public enum MongoKit {
     }
 
     public List<JSONObject> getIndex(String collectionName) {
-
         final List list = new ArrayList();
-
         Block<Document> block = new Block<Document>() {
             @Override
             public void apply(final Document document) {
                 list.add(parseObject(document.toJson()));
             }
         };
-
         getCollection(collectionName).listIndexes().forEach(block);
-
         return list;
     }
 
     public void deleteIndex(String collectionName, Bson bson) {
-
         getCollection(collectionName).dropIndex(bson);
-
     }
 
     public void deleteIndex(String collectionName) {
@@ -299,7 +290,7 @@ public enum MongoKit {
             }
         } catch (ClassCastException e) {
             /*如果转换出错直接返回原本的值,不做任何处理*/
-
+            log.error(ExceptionUtils.getStackTrace(e));
         }
         return document;
     }
@@ -321,7 +312,7 @@ public enum MongoKit {
             }
         } catch (ClassCastException e) {
             /*如果转换出错直接返回原本的值,不做任何处理*/
-
+            log.error(ExceptionUtils.getStackTrace(e));
         }
         return document;
     }
@@ -338,15 +329,16 @@ public enum MongoKit {
                 document.put(join, joinDoc);
             } catch (ClassCastException e) {
                 /*用于避免如果key对应的值并不是DBRef,如果转换出错直接返回原本的值,不做任何处理*/
+                log.error(ExceptionUtils.getStackTrace(e));
             }
         }
         return document;
 
     }
 
-    /*由于fastjson转换空对象时就会直接抛出异常,而在实际查询中查不到东西是很正常的
-     * ,所以为了避免会有空异常,特别做了异常处理*/
-
+    /**
+     * 由于fastjson转换空对象时就会直接抛出异常,而在实际查询中查不到东西是很正常的,所以为了避免会有空异常,特别做了异常处理
+     */
     private JSONObject parseObject(String json) {
         try {
             if (json != null && !json.isEmpty()) {
@@ -354,11 +346,9 @@ public enum MongoKit {
             }
             return new JSONObject();
         } catch (NullPointerException e) {
-            error("parseObject", json);
+            log.error(ExceptionUtils.getStackTrace(e));
             return new JSONObject();
         }
-
-
     }
 
     private <T> T parseObject(Document doc, Class<T> clazz) {
@@ -368,7 +358,7 @@ public enum MongoKit {
             }
             return JSON.parseObject(JSON.toJSONString(doc), clazz);
         } catch (NullPointerException e) {
-            error("parseObject", clazz.getName());
+            log.error(ExceptionUtils.getStackTrace(e));
             return JSON.parseObject(new JSONObject().toJSONString(), clazz);
         }
     }
@@ -377,20 +367,16 @@ public enum MongoKit {
         try {
             return (JSONObject) JSON.toJSON(obj);
         } catch (NullPointerException e) {
-            error("toJSON", obj.getClass().getName());
+            log.error(ExceptionUtils.getStackTrace(e));
             return new JSONObject();
         }
-    }
-
-    protected void error(String funName, String text) {
-        log.error("MongKit tips: (づ￣ 3￣)づ " + funName + " is error ! " + text);
     }
 
     public Map<String, Object> toMap(Object obj) {
         if (obj == null) {
             return null;
         }
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         try {
             BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
@@ -407,7 +393,7 @@ public enum MongoKit {
                 }
             }
         } catch (Exception e) {
-            MongoKit.INSTANCE.error("MongKit.class", "toMap is error " + e.getMessage());
+            log.error(ExceptionUtils.getStackTrace(e));
         }
         return map;
     }

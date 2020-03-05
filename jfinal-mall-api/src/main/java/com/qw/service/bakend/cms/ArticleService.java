@@ -31,6 +31,7 @@ public class ArticleService extends BaseService {
      * 将mysql中的数据全部转到mongodb
      */
     public void init(){
+
         String sql = "SELECT * FROM butler_article";
         List<Article> articles = Article.dao.find(sql);
         articles.stream().forEach(a->{
@@ -44,7 +45,7 @@ public class ArticleService extends BaseService {
             record.set("cat", catRecord.getColumns());
 
             Document document = MongoKit.INSTANCE.toDocument(record.getColumns());
-            MongoKit.INSTANCE.insert("content", document);
+            MongoKit.INSTANCE.insert("cms_article", document);
         });
     }
 

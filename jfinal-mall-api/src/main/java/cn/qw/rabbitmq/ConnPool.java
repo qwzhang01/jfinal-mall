@@ -82,7 +82,8 @@ public class ConnPool {
 
     Channel creatChannel(Connection connection) {
         try {
-            return connection.createChannel();
+            Channel channel = connection.createChannel();
+            return channel;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

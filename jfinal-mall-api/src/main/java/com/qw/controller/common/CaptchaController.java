@@ -4,6 +4,7 @@ import cn.qw.base.RestController;
 import cn.qw.kit.ValidateKit;
 import cn.qw.rabbitmq.RabbitMQKit;
 import com.qw.interceptor.RestSecurityInterceptor;
+import com.qw.service.bakend.cms.ArticleService;
 import com.qw.service.common.CaptchaService;
 import com.jfinal.aop.Clear;
 import com.jfinal.kit.StrKit;
@@ -20,6 +21,7 @@ public class CaptchaController extends RestController {
     @Clear(RestSecurityInterceptor.class)
     public void test() throws IOException, InterruptedException {
         Channel channel = RabbitMQKit.getChannel();
+        channel.basicQos(4);
         channel.basicPublish("test-qw", "test", null, "Hello World".getBytes());
         // 如果消息发送失败了，可以在如下的回调中处理
         if(channel.waitForConfirms())  {
