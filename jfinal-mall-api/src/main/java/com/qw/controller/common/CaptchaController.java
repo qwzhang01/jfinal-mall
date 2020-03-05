@@ -18,9 +18,13 @@ import java.io.IOException;
 public class CaptchaController extends RestController {
 
     @Clear(RestSecurityInterceptor.class)
-    public void test() throws IOException {
+    public void test() throws IOException, InterruptedException {
         Channel channel = RabbitMQKit.getChannel();
         channel.basicPublish("test-qw", "test", null, "Hello World".getBytes());
+        // 如果消息发送失败了，可以在如下的回调中处理
+        if(channel.waitForConfirms())  {
+            System.out.println("发送成功");
+        }
         RabbitMQKit.free(channel);
         renderText("发布成功");
     }

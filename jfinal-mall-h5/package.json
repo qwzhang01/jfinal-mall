@@ -14,7 +14,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "babel-polyfill": "^6.26.0",
     "clipboard": "^2.0.4",
     "es6-promise": "^4.2.6",
@@ -24,7 +24,7 @@
     "lrz": "^4.9.40",
     "mobile-detect": "^1.4.3",
     "prettier": "^1.12.1",
-    "vant": "^2.0.2",
+    "vant": "^2.5.2",
     "vue": "^2.5.2",
     "vue-cookies": "^1.5.13",
     "vue-router": "^3.0.1",

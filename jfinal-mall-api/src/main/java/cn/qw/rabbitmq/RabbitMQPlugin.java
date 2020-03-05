@@ -67,10 +67,13 @@ public class RabbitMQPlugin implements IPlugin {
         Channel channel = null;
         try {
             channel = RabbitMQKit.getChannel();
+            // 声明一个exchange
             channel.exchangeDeclare("test-qw", "direct", true);
+//            声明一个queue
             String queueName = channel.queueDeclare("testquene", true, true,true, null).getQueue();
+//            队列绑定exchange
             channel.queueBind(queueName, "test-qw", "test");
-            // 开启发送方确认模式
+            // 开启发送方确认模式，保障消息不丢失，分两种情况，持久化后返回id加数据，不持久化返回id
             channel.confirmSelect();
 
             //异步监听确认和未确认的消息
