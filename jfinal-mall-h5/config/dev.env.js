@@ -4,6 +4,6 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  BASE_API: '"http://localhost:8899/api"',
+  BASE_API: '"http://localhost:7777/api"',
   JUPT_URL: '"http://shop.sdbjgj.com"'
 })

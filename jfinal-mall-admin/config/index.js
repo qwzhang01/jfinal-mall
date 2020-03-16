@@ -15,7 +15,7 @@ module.exports = {
         pathRewrite: {
           '^/tomcat': ''
         },
-        target: 'http://127.0.0.1:8899'
+        target: 'http://127.0.0.1:7777'
         // target: 'http://www.bjgjyun.com/tomcat/web'
       }
     },
