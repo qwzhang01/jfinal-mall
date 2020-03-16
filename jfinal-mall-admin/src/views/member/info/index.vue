@@ -10,7 +10,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="success" v-on:click="getList">查询</el-button>
-          <!-- <el-button type="primary" v-on:click="downloadUser">导出</el-button> -->
+          <el-button type="primary" v-on:click="downloadUser">导出</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -23,6 +23,11 @@
         style="width: 100%;"
       >
         <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+        <el-table-column align="center" width="80" label="头像">
+          <template slot-scope="scope">
+            <el-image :src="scope.row.headPic" fit="cover"></el-image>
+          </template>
+        </el-table-column>
         <el-table-column
           v-for="(val,i) in colomus"
           :key="i"
@@ -35,11 +40,11 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
-              @click="auth(scope.row)"
+              @click="giveWithdrowPoint(scope.row)"
               type="success"
               size="mini"
-              v-if="scope.row.status === 1"
-            >审核</el-button>
+              v-if="checkPermission('会员信息-线下送积分')"
+            >线下积分</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -80,7 +85,7 @@
 
 <script>
 import util from "@/util/util";
-import { userList, auth } from "@/api/member/userinfo";
+import { userList, download, savePoint } from "@/api/member/userinfo";
 import Paging from "../../../components/paging";
 import config from "./config.js";
 import { checkPermission } from "@/util/operator";
@@ -109,25 +114,6 @@ export default {
     downloadUser() {
       let para = this.filters;
       download(para);
-    },
-    // 审核
-    auth(row) {
-      MessageBox.confirm("确定要审核吗", "审核", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        auth(row.user_id).then(res => {
-          if (res.status === 0) {
-            Message({
-              message: "审核成功",
-              type: "success",
-              duration: 3 * 1000
-            });
-            this.getList();
-          }
-        });
-      });
     },
     // 人工送可以提现的积分
     giveWithdrowPoint(row) {

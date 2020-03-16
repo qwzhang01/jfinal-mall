@@ -21,18 +21,3 @@ export function savePoint(params) {
         params
     })
 }
-
-export function auth(userId) {
-    return service({
-        url: '/member/auth',
-        method: 'post',
-        params: { userId }
-    })
-}
-export function authSpec(userId) {
-    return service({
-        url: '/member/authSpec',
-        method: 'post',
-        params: { userId }
-    })
-}

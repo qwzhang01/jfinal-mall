@@ -1,6 +1,6 @@
 <template>
   <section class="index-main">
-    <!-- <el-row type="flex" :gutter="40" class="block-row">
+    <el-row type="flex" :gutter="40" class="block-row">
       <el-col :span="14" class="static">
         <div class="title">
           <i class="el-icon-s-flag"></i>
@@ -103,7 +103,7 @@
         </div>
         <div id="chartLine" style="width:100%; height:400px;"></div>
       </el-col>
-    </el-row> -->
+    </el-row>
   </section>
 </template>
 
@@ -143,9 +143,9 @@ export default {
   },
   mounted() {
     this.freshTime = util.formatDate.format(new Date(), "yyyy-MM-dd hh:mm:ss");
-    // this.initUser();
-    // this.initOrder();
-    // this.initOrderStatic();
+    this.initUser();
+    this.initOrder();
+    this.initOrderStatic();
   },
   methods: {
     initUser() {

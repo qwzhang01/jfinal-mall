@@ -3,7 +3,7 @@
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="search">
         <el-form-item>
-          <el-input v-model="search.key" placeholder="客户姓名"></el-input>
+          <el-input v-model="search.key" placeholder="店名/店主"></el-input>
         </el-form-item>
 
         <el-form-item>
@@ -16,44 +16,17 @@
       <!--列表-->
       <el-table :data="list" highlight-current-row v-loading="listLoading" style="width: 100%;">
         <el-table-column type="selection" min-width="40"></el-table-column>
-        <el-table-column type="index" label="序号" width="50"></el-table-column>
-        <el-table-column prop="name" label="姓名" min-width="60"></el-table-column>
-        <el-table-column prop="mobile" label="手机" min-width="80"></el-table-column>
-        <el-table-column label="套餐" min-width="60">
-          <template slot-scope="scope">{{scope.row.productkey === 1? '129套餐':'199套餐'}}</template>
-        </el-table-column>
-        <el-table-column label="状态" min-width="60">
-          <template slot-scope="scope">{{scope.row.status === 1? '未审核':'审核通过'}}</template>
-        </el-table-column>
-        <el-table-column prop="promName" label="上报人" min-width="100"></el-table-column>
-        <el-table-column label="身份证正面" min-width="100">
-          <template slot-scope="scope">
-            <el-image :src="scope.row.cardFront" fit="cover"></el-image>
-          </template>
-        </el-table-column>
-        <el-table-column label="身份证反面" min-width="100">
-          <template slot-scope="scope">
-            <el-image :src="scope.row.cardBack" fit="cover"></el-image>
-          </template>
-        </el-table-column>
-        <el-table-column label="协议" min-width="100">
-          <template slot-scope="scope">
-            <el-image :src="scope.row.agreement" fit="cover"></el-image>
-          </template>
-        </el-table-column>
-        <el-table-column label="手持协议" min-width="100">
-          <template slot-scope="scope">
-            <el-image :src="scope.row.agreementHand" fit="cover"></el-image>
-          </template>
-        </el-table-column>
-        <el-table-column label="半身相" min-width="100">
-          <template slot-scope="scope">
-            <el-image :src="scope.row.bust" fit="cover"></el-image>
-          </template>
-        </el-table-column>
+        <el-table-column type="index" label="序号" width="80"></el-table-column>
+        <el-table-column
+          v-for="(val,i) in colomus"
+          :key="i"
+          :prop="val.props"
+          :label="val.label"
+          :min-width="val.width"
+        ></el-table-column>
         <el-table-column label="操作">
-          <template slot-scope="scope" v-if="scope.row.status === 1">
-            <el-button @click="authFn(scope.row)" type="success" size="mini">审核</el-button>
+          <template slot-scope="scope">
+            <el-button @click="setButlerRate(scope.row)" type="success" size="mini">设置平台佣金比例</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -89,7 +62,7 @@
 </template>
 <script>
 import util from "@/util/util";
-import { pageList, auth } from "@/api/client";
+import { storeList, setButlerRate } from "@/api/store/store";
 import { Message, MessageBox } from "element-ui";
 import Paging from "../../../components/paging";
 
@@ -170,24 +143,6 @@ export default {
     };
   },
   methods: {
-    authFn(row) {
-      MessageBox.confirm("确定要审核吗", "审核", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        auth({ id: row.id }).then(res => {
-          if (res.status === 0) {
-            Message({
-              message: "审核成功",
-              type: "success",
-              duration: 3 * 1000
-            });
-            this.getList();
-          }
-        });
-      });
-    },
     setButlerRate(row) {
       this.dialogVisible = true;
       this.authForm.storeId = row.storeId;
@@ -200,7 +155,7 @@ export default {
         if (!valid) {
           return false;
         }
-        auth(formData).then(res => {
+        setButlerRate(formData).then(res => {
           if (res.status === 0) {
             _this.dialogVisible = false;
             Message({
@@ -229,7 +184,7 @@ export default {
       };
 
       //NProgress.start();
-      pageList(para).then(res => {
+      storeList(para).then(res => {
         this.page.totalPage = res.data.totalPage;
         this.page.totalRow = res.data.totalRow;
         this.list = res.data.list;

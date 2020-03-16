@@ -14,15 +14,6 @@ export function authList(params) {
 export function downloadAuth(params) {
     util.download('/point/withdrawal/download', '提现打款汇总统计表', params)
 }
-
-
-export function authNew(params) {
-    return service({
-        url: '/point/withdrawal/authNew',
-        method: 'post',
-        params
-    })
-}
 export function auth(params) {
     return service({
         url: '/point/withdrawal/author',

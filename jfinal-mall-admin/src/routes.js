@@ -7,7 +7,6 @@ import Layout from './views/layout/index.vue'
 import Main from './views/cms/index/index.vue'
 // 会员管理
 import userInfo from "./views/member/info/index.vue"
-import userInfo2 from "./views/member/info2/index.vue"
 import invest from "./views/member/invest/index.vue"
 import point from "./views/member/point/index.vue"
 // 订单管理
@@ -84,89 +83,25 @@ let routes = [
         iconCls: 'fa fa-users',
         meta: { authInfo: '会员管理' },
         children: [
-            { path: '/member/info', component: userInfo, name: '会员审核', meta: { authInfo: '会员信息-查看' } },
-            { path: '/member/info2', component: userInfo2, name: '特约商审核', meta: { authInfo: '会员信息-查看' } },
-            // { path: '/member/invest', component: invest, name: '有奖购买', meta: { authInfo: '有奖购买-查看' } },
-            // { path: '/member/point', component: point, name: '积分明细', meta: { authInfo: '积分明细-查看' } },
+            { path: '/member/info', component: userInfo, name: '会员信息', meta: { authInfo: '会员信息-查看' } },
+            { path: '/member/invest', component: invest, name: '有奖购买', meta: { authInfo: '有奖购买-查看' } },
+            { path: '/member/point', component: point, name: '积分明细', meta: { authInfo: '积分明细-查看' } },
             // { path: '/member/charge', component: charge, name: '充值信息', meta: { authInfo: '充值管理-查看' } },
             // { path: '/member/balance', component: balance, name: '钱包明细', meta: { authInfo: '钱包明细-查看' } },
         ]
     },
-    // {
-    //     path: '/',
-    //     component: Layout,
-    //     name: '订单管理',
-    //     meta: { authInfo: '订单管理' },
-    //     iconCls: 'fa fa-first-order',
-    //     children: [
-    //         { path: '/order/info', component: orderInfo, name: '订单信息', meta: { authInfo: '订单信息-查看' } },
-    //         { path: '/order/deliver', component: orderDeliver, name: '订单发货', meta: { authInfo: '订单发货-查看' } },
-    //         { path: '/order/lottery', component: lotteryOrder, name: '拼团抽奖', meta: { authInfo: '拼团抽奖订单-查看' } },
-    //         // { path: '/order/refund', component: orderRefund, name: '退款管理', meta: { authInfo: '退款管理-查看' } },
-    //         // { path: '/order/return', component: orderReturn, name: '退货管理', meta: { authInfo: '退货管理-查看' } }
-    //     ]
-    // },
-    // {
-    //     path: '/',
-    //     component: Layout,
-    //     name: '提现管理',
-    //     meta: { authInfo: '提现管理' },
-    //     iconCls: 'fa fa-address-card',
-    //     children: [
-    //         { path: '/withdrawl/auth', component: withdrawlAuth, name: '待审核', meta: { authInfo: '审核-查看' } },
-    //         { path: '/withdrawl/pay', component: withdrawlPay, name: '待打款', meta: { authInfo: '打款-查看' } },
-    //         { path: '/withdrawl/success', component: withdrawlSuccess, name: '成功记录', meta: { authInfo: '成功记录-查看' } },
-    //         { path: '/withdrawl/fail', component: withdrawlFail, name: '拒绝记录', meta: { authInfo: '拒绝记录-查看' } }
-    //     ]
-    // },
-    // {
-    //     path: '/',
-    //     component: Layout,
-    //     name: '商品管理',
-    //     meta: { authInfo: '商品管理' },
-    //     iconCls: 'fa fa-address-card',
-    //     children: [
-    //         { path: '/good/info', component: goodInfo, name: '商品信息', meta: { authInfo: '商品信息-查看' } },
-    //         { path: '/good/form', component: goodForm, name: '商品编辑', hidden: true, meta: { authInfo: '商品信息-查看' } },
-    //         { path: '/good/category', component: category, name: '商品分类', meta: { authInfo: '商品分类-查看' } },
-    //         { path: '/good/spec', component: spec, name: '商品规格', meta: { authInfo: '商品规格-查看' } },
-    //         { path: '/good/brand', component: brand, name: '品牌管理', meta: { authInfo: '品牌管理-查看' } }
-    //     ]
-    // },
-    // {
-    //     path: '/',
-    //     component: Layout,
-    //     name: '售后管理',
-    //     meta: { authInfo: '上门安装' },
-    //     iconCls: 'fa fa-address-card',
-    //     children: [
-    //         { path: '/door/service', component: doorService, name: '上门安装', meta: { authInfo: '上门安装-查看' } }
-    //     ]
-    // },
-    // {
-    //     path: '/',
-    //     component: Layout,
-    //     name: '促销管理',
-    //     meta: { authInfo: '促销管理' },
-    //     iconCls: 'fa fa-address-card',
-    //     children: [
-    //         { path: '/seckill', component: seckill, name: '秒杀设置', meta: { authInfo: '秒杀设置-查看' } },
-    //         { path: '/seckill/good', component: seckillGood, name: '秒杀商品', hidden: true, meta: { authInfo: '秒杀设置-商品查看' } },
-
-    //         { path: '/crowdRob', component: crowdRob, name: '抢购抽奖', meta: { authInfo: '抢购设置-查看' } },
-    //         { path: '/crowdRob/good', component: crowdRobGood, name: '抢购商品', hidden: true, meta: { authInfo: '抢购设置-商品查看' } },
-    //     ]
-    // },
-
     {
         path: '/',
         component: Layout,
-        name: '客户管理',
-        meta: { authInfo: '店铺管理' },
-        iconCls: 'fa fa-id-card-o',
+        name: '订单管理',
+        meta: { authInfo: '订单管理' },
+        iconCls: 'fa fa-first-order',
         children: [
-            // { path: '/store/auth', component: storeAuth, name: '开店审核', meta: { authInfo: '开店审核-查看' } },
-            { path: '/store/info', component: storeInfo, name: '客户信息', meta: { authInfo: '店铺信息-查看' } },
+            { path: '/order/info', component: orderInfo, name: '订单信息', meta: { authInfo: '订单信息-查看' } },
+            { path: '/order/deliver', component: orderDeliver, name: '订单发货', meta: { authInfo: '订单发货-查看' } },
+            { path: '/order/lottery', component: lotteryOrder, name: '拼团抽奖', meta: { authInfo: '拼团抽奖订单-查看' } },
+            // { path: '/order/refund', component: orderRefund, name: '退款管理', meta: { authInfo: '退款管理-查看' } },
+            // { path: '/order/return', component: orderReturn, name: '退货管理', meta: { authInfo: '退货管理-查看' } }
         ]
     },
     {
@@ -176,11 +111,48 @@ let routes = [
         meta: { authInfo: '提现管理' },
         iconCls: 'fa fa-address-card',
         children: [
-            { path: '/withdrawl/auth', component: withdrawlAuth, name: '提现审核', meta: { authInfo: '审核-查看' } },
-            // { path: '/withdrawl/auth', component: withdrawlAuth, name: '待审核', meta: { authInfo: '审核-查看' } },
-            // { path: '/withdrawl/pay', component: withdrawlPay, name: '待打款', meta: { authInfo: '打款-查看' } },
-            // { path: '/withdrawl/success', component: withdrawlSuccess, name: '成功记录', meta: { authInfo: '成功记录-查看' } },
-            // { path: '/withdrawl/fail', component: withdrawlFail, name: '拒绝记录', meta: { authInfo: '拒绝记录-查看' } }
+            { path: '/withdrawl/auth', component: withdrawlAuth, name: '待审核', meta: { authInfo: '审核-查看' } },
+            { path: '/withdrawl/pay', component: withdrawlPay, name: '待打款', meta: { authInfo: '打款-查看' } },
+            { path: '/withdrawl/success', component: withdrawlSuccess, name: '成功记录', meta: { authInfo: '成功记录-查看' } },
+            { path: '/withdrawl/fail', component: withdrawlFail, name: '拒绝记录', meta: { authInfo: '拒绝记录-查看' } }
+        ]
+    },
+    {
+        path: '/',
+        component: Layout,
+        name: '商品管理',
+        meta: { authInfo: '商品管理' },
+        iconCls: 'fa fa-address-card',
+        children: [
+            { path: '/good/info', component: goodInfo, name: '商品信息', meta: { authInfo: '商品信息-查看' } },
+            { path: '/good/form', component: goodForm, name: '商品编辑', hidden: true, meta: { authInfo: '商品信息-查看' } },
+            { path: '/good/category', component: category, name: '商品分类', meta: { authInfo: '商品分类-查看' } },
+            { path: '/good/spec', component: spec, name: '商品规格', meta: { authInfo: '商品规格-查看' } },
+            { path: '/good/brand', component: brand, name: '品牌管理', meta: { authInfo: '品牌管理-查看' } }
+        ]
+    },
+    {
+        path: '/',
+        component: Layout,
+        name: '售后管理',
+        meta: { authInfo: '上门安装' },
+        iconCls: 'fa fa-address-card',
+        children: [
+            { path: '/door/service', component: doorService, name: '上门安装', meta: { authInfo: '上门安装-查看' } }
+        ]
+    },
+    {
+        path: '/',
+        component: Layout,
+        name: '促销管理',
+        meta: { authInfo: '促销管理' },
+        iconCls: 'fa fa-address-card',
+        children: [
+            { path: '/seckill', component: seckill, name: '秒杀设置', meta: { authInfo: '秒杀设置-查看' } },
+            { path: '/seckill/good', component: seckillGood, name: '秒杀商品', hidden: true, meta: { authInfo: '秒杀设置-商品查看' } },
+
+            { path: '/crowdRob', component: crowdRob, name: '抢购抽奖', meta: { authInfo: '抢购设置-查看' } },
+            { path: '/crowdRob/good', component: crowdRobGood, name: '抢购商品', hidden: true, meta: { authInfo: '抢购设置-商品查看' } },
         ]
     },
     {
@@ -192,10 +164,22 @@ let routes = [
         children: [
             { path: '/cms/article', component: article, name: '资讯管理', meta: { authInfo: '资讯管理-查看' } },
             { path: '/cms/article/form', component: articleForm, name: '资讯编辑', hidden: true, meta: { authInfo: '资讯管理-查看' } },
-            { path: '/app/index', component: appIndex, name: 'APP首页', hidden: true, meta: { authInfo: 'APP首页-查看' } },
+            { path: '/app/index', component: appIndex, name: 'APP首页', meta: { authInfo: 'APP首页-查看' } },
             { path: '/app/specShow/good', component: specShowGood, name: 'APP首页专场商品', hidden: true, meta: { authInfo: 'APP首页-查看' } },
         ]
-    }, {
+    },
+    {
+        path: '/',
+        component: Layout,
+        name: '店铺管理',
+        meta: { authInfo: '店铺管理' },
+        iconCls: 'fa fa-id-card-o',
+        children: [
+            { path: '/store/auth', component: storeAuth, name: '开店审核', meta: { authInfo: '开店审核-查看' } },
+            { path: '/store/info', component: storeInfo, name: '店铺信息', meta: { authInfo: '店铺信息-查看' } },
+        ]
+    },
+    {
         path: '/',
         component: Layout,
         name: '系统管理',
@@ -204,7 +188,7 @@ let routes = [
         children: [
             { path: '/sys/user', component: staff, name: '系统用户', meta: { authInfo: '系统用户-查看' } },
             { path: '/sys/role', component: role, name: '系统角色', meta: { authInfo: '系统角色-查看' } },
-            // { path: '/sys/config', component: param, name: '参数查看', meta: { authInfo: '参数查看-查看' } },
+            { path: '/sys/config', component: param, name: '参数查看', meta: { authInfo: '参数查看-查看' } },
             { path: '/sys/smsLog', component: smsLog, name: '短息记录', meta: { authInfo: '短信记录-查看' } }
 
         ]

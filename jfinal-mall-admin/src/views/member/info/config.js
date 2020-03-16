@@ -14,34 +14,45 @@ const config = {
         totalRow: 0
     },
     colomus: [{
-        label: "姓名",
+        label: "会员昵称",
         width: 100,
         props: "nickname"
+    }, {
+        label: "真实姓名",
+        width: 100,
+        props: "realName"
     }, {
         label: "手机号码",
         width: 100,
         props: "mobile"
     }, {
-        label: "推荐人",
+        label: "推广人",
         width: 100,
         props: "promName"
     }, {
-        label: "等级",
+        label: "会员等级",
         width: 100,
         props: "level_name"
     }, {
-        label: "状态",
+        label: "注册时间",
         width: 100,
-        props: "status",
-        formatter: (row) => {
-            if (row.status === 1) {
-                return '待审核'
-            }
-            if (row.status === 2) {
-                return '已审核'
-            }
-            return ''
-        }
+        props: "regTime"
+    }, {
+        label: "可用积分",
+        width: 100,
+        props: "usable_remain"
+    }, {
+        label: "可提现积分",
+        width: 100,
+        props: "withdrawable_remain"
+    }, {
+        label: "消费总额",
+        width: 100,
+        props: "consume_total"
+    }, {
+        label: "提现总额",
+        width: 100,
+        props: "withdrawable_total"
     }],
     form: {
         userId: '',

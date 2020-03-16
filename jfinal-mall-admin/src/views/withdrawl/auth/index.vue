@@ -2,16 +2,16 @@
   <el-card class="box-card">
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="search">
-        <!-- <el-form-item>
+        <el-form-item>
           <el-input v-model="search.withdrawSn" placeholder="申请编号"></el-input>
-        </el-form-item>-->
+        </el-form-item>
         <el-form-item>
           <el-input v-model="search.nickname" placeholder="姓名"></el-input>
         </el-form-item>
         <el-form-item>
           <el-input v-model="search.userMobile" placeholder="手机"></el-input>
         </el-form-item>
-        <!-- 
+
         <el-form-item>
           <el-date-picker
             v-model="search.rangeDate"
@@ -21,11 +21,11 @@
             :default-time="['00:00:00', '23:59:59']"
             placeholder="申请时间"
           ></el-date-picker>
-        </el-form-item>-->
+        </el-form-item>
 
         <el-form-item>
           <el-button type="success" v-on:click="getList">查询</el-button>
-          <!-- <el-button type="primary" v-on:click="download">导出</el-button> -->
+          <el-button type="primary" v-on:click="download">导出</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -40,17 +40,11 @@
           :key="i"
           :prop="val.props"
           :label="val.label"
-          :formatter="val.formatter"
           :min-width="val.width"
         ></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              @click="auth(scope.row)"
-              type="danger"
-              size="mini"
-              v-if="scope.row.authStatus === 1"
-            >审核</el-button>
+            <el-button @click="auth(scope.row)" type="danger" size="mini" v-if="checkPermission('审核-审核')">审核</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -90,11 +84,7 @@
 </template>
 <script>
 import util from "@/util/util";
-import {
-  authList,
-  downloadAuth,
-  authNew
-} from "@/api/withdrawal/pointWithdrawal";
+import { authList, downloadAuth, auth } from "@/api/withdrawal/pointWithdrawal";
 import { Message, MessageBox } from "element-ui";
 import Paging from "../../../components/paging";
 import { checkPermission } from "@/util/operator";
@@ -126,8 +116,13 @@ export default {
       },
       colomus: [
         {
+          label: "申请编号",
+          width: 100,
+          props: "withdraw_sn"
+        },
+        {
           label: "申请人",
-          width: 80,
+          width: 100,
           props: "nickname"
         },
         {
@@ -137,51 +132,18 @@ export default {
         },
         {
           label: "申请金额",
-          width: 80,
+          width: 100,
           props: "amount"
         },
         {
           label: "申请时间",
           props: "applyTime",
-          width: 150
+          width: 120
         },
         {
           label: "实际金额",
-          width: 80,
+          width: 100,
           props: "actual_amount"
-        },
-        {
-          label: "账户类型",
-          width: 80,
-          props: "type",
-          formatter: (row, column) => {
-            if (row.type == 1) {
-              return "银行卡";
-            }
-            if (row.type == 2) {
-              return "支付宝";
-            }
-            return "";
-          }
-        },
-        {
-          label: "状态",
-          width: 80,
-          props: "status",
-          formatter: (row, column) => {
-            if (row.authStatus == 1) {
-              return "待审核";
-            }
-            if (row.authStatus == 2) {
-              return "审核成功";
-            }
-            return "";
-          }
-        },
-        {
-          label: "账户所有人",
-          width: 80,
-          props: "bankUserName"
         },
         {
           label: "开户行",
@@ -189,14 +151,14 @@ export default {
           props: "bankName"
         },
         {
+          label: "持卡人",
+          width: 100,
+          props: "bankUserName"
+        },
+        {
           label: "银行卡号",
           width: 150,
           props: "bankCard"
-        },
-        {
-          label: "支付宝",
-          width: 100,
-          props: "aliCount"
         }
       ],
       authForm: {
@@ -219,27 +181,6 @@ export default {
   },
   methods: {
     checkPermission,
-
-    auth(row) {
-      MessageBox.confirm("确定要审核吗", "审核", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        authNew({ id: row.id }).then(res => {
-          if (res.status === 0) {
-            Message({
-              message: "审核成功",
-              type: "success",
-              duration: 3 * 1000
-            });
-            this.getList();
-          }
-        });
-      });
-    },
-
-    /*
     auth(row) {
       this.dialogVisible = true;
       this.authForm.id = row.id;
@@ -248,7 +189,6 @@ export default {
       this.authForm.authStatus = 2;
       this.authForm.reason = "";
     },
-    */
     authSubject: function() {
       let _this = this;
       let formData = _this.authForm;
