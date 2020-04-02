@@ -1,24 +1,39 @@
 # 舅服你商城系统介绍
 
-说明一点一点加，希望最终形成一个完整的有价值的东东。
+把项目多余功能全删除以后一个脚手架。
 
 ## 介绍
-Jfinal + vant + element-ui 的电商平台。前年给一客人开发，项目没做完客人倒闭了，一直搁置，计划在最开始的基础上，加入三级缓存、埋点、用户数据收集分析、商品推荐等（以后学习的技术，逐步加入），做成开源的项目。
+Jfinal + element-ui 最纯的后台脚手架，没有任何多余组件，有权限、用户、角色管理，有基础的文件上传，系统可以采取正常的梭哈写，也支持任务异步。
 
-## 项目名称由来
-自己喜欢Jfinal，想叫jfinal商城，觉得不应该用波总的名字，搜狗输入JFN，出来了舅服你，然后就定下来。
+
 
 ## 项目结构
 ``` lua
 jfinal-mall
 ├── jfinal-mall-api -- 后端接口
 ├── jfinal-mall-admin -- 后台系统
-└── jfinal-mall-h5 -- 前端H5
+├── qw_original_v1 -- 数据库脚本
 ```
 
-## 准备补充的功能
-- 高频低变化页面缓存设计
 
-## 准备补充的资料
-- SQL脚本
-- 功能说明
+
+## 项目特色
+
+- 最好用的私活神器，拿起来直接撸业务
+- 最简单直接的部署方式，一个Tomcat、一个MySQL齐活
+- 缓存使用ehcache，不用部署Redis
+- 权限框架使用Shiro，逻辑上权限等于目录
+- 使用Element-UI
+
+##  你问我怎么用
+
+- 导入数据库
+- 修改Java项目中resources/config.properties 中的数据库连接信息
+- maven  jetty:run，至此后端项目启动
+- 前端项目 npm install
+- npm run dev 至此，后端项目启动
+
+## 好吧 张这个样子
+
+![image](https://github.com/qwzhang01/img-storage/blob/master/Snipaste_2020-04-02_18-03-46.png)
+
