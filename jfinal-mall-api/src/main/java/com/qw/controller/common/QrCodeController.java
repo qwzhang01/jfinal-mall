@@ -3,8 +3,8 @@ package com.qw.controller.common;
 import cn.qw.base.RestController;
 import cn.qw.kit.Base64Decoder;
 import cn.qw.render.QrCodeRender;
-import com.qw.interceptor.RestSecurityInterceptor;
 import com.jfinal.aop.Clear;
+import com.qw.interceptor.SecurityInterceptor;
 
 /**
  * 二维码
@@ -17,7 +17,7 @@ public class QrCodeController extends RestController {
      * @param url|Base64URL|String|必填
      * @title 根据链接生成二维码
      */
-    @Clear(RestSecurityInterceptor.class)
+    @Clear(SecurityInterceptor.class)
     public void index() {
         String title = getPara("title", "白金管家");
         int width = getParaToInt("width", 400);

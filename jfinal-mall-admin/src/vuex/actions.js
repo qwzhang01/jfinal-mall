@@ -1,6 +1,6 @@
 /* jshint esversion: 6 */
-import { staffOperator } from './../api/system/staff'
-import { basic } from "@/api/system/param.js";
+import { staffOperator } from './../api/staff'
+import { basic } from "@/api/param.js";
 
 // 获取参数
 export const initVue = ({ commit }) => {

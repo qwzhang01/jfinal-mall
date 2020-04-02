@@ -2,12 +2,11 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.canyou</groupId>
+    <groupId>com.qw</groupId>
     <artifactId>jfinal-mall-api</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
     <name>jfinal-mall-api</name>
-    <url>http://maven.apache.org</url>
 
     <properties>
         <argLine>-Dfile.encoding=UTF-8</argLine>
@@ -51,7 +50,21 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.9.0</version>
+            <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.sun.mail</groupId>
+                    <artifactId>javax.mail</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>com.jfinal</groupId>
             <artifactId>jfinal</artifactId>
@@ -83,27 +96,17 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.58</version>
         </dependency>
+
         <dependency>
             <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache-core</artifactId>
-            <version>2.6.11</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>ehcache</artifactId>
+            <version>2.10.6</version>
         </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.5</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
@@ -111,15 +114,17 @@
             <version>1.2.17</version>
         </dependency>
         <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.jfinal</groupId>
             <artifactId>cos</artifactId>
             <version>2017.5</version>
         </dependency>
-        <dependency>
-            <groupId>net.dreamlu</groupId>
-            <artifactId>JFinal-event</artifactId>
-            <version>2.3.0</version>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-email</artifactId>
@@ -135,77 +140,13 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.24</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2-adb</artifactId>
-            <version>1.7.4</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.geronimo.specs</groupId>
-                    <artifactId>geronimo-activation_1.1_spec</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2-kernel</artifactId>
-            <version>1.7.4</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-io</groupId>
-                    <artifactId>commons-io</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>servlet-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2-transport-http</artifactId>
-            <version>1.7.4</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-codec</groupId>
-                    <artifactId>commons-codec</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.axis2</groupId>
-            <artifactId>axis2-transport-local</artifactId>
-            <version>1.7.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.ws.commons.axiom</groupId>
-            <artifactId>axiom-impl</artifactId>
-            <version>1.2.20</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>javase</artifactId>
             <version>3.2.1</version>
         </dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>4.1.42.Final</version>
-        </dependency>
+
         <dependency>
             <groupId>com.thetransactioncompany</groupId>
             <artifactId>cors-filter</artifactId>
@@ -237,109 +178,13 @@
             <artifactId>flying-saucer-pdf-itext5</artifactId>
             <version>9.0.7</version>
         </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>de.ruedigermoeller</groupId>
-            <artifactId>fst</artifactId>
-            <version>2.43</version>
-        </dependency>
+        <!--bouncycastle加密-->
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk14</artifactId>
             <version>1.64</version>
         </dependency>
-        <dependency>
-            <groupId>com.alipay.sdk</groupId>
-            <artifactId>alipay-sdk-java</artifactId>
-            <version>3.4.49.ALL</version>
-        </dependency>
-        <dependency>
-            <groupId>com.xuxueli</groupId>
-            <artifactId>xxl-job-core</artifactId>
-            <version>1.8.2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpclient</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.sun.mail</groupId>
-                    <artifactId>javax.mail</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
-        <dependency>
-            <groupId>org.csource</groupId>
-            <artifactId>fastdfs-client-java</artifactId>
-            <version>1.27-RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>4.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.5</version>
-        </dependency>
-
-        <!-- elasticsearch begin-->
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>transport</artifactId>
-            <version>6.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>2.8.10</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.11.1</version>
-        </dependency>
-        <!-- elasticsearch end-->
-
-        <!-- MongoDB begin-->
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>3.10.1</version>
-        </dependency>
-        <!-- MongoDB end-->
-
-        <!-- rabbitmq begin -->
-        <dependency>
-            <groupId>com.rabbitmq</groupId>
-            <artifactId>amqp-client</artifactId>
-            <version>5.7.3</version>
-        </dependency>
-
-        <!-- rabbitmq end -->
 
     </dependencies>
 
@@ -359,15 +204,9 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.properties</include>
-                    <include>**/*.jf</include>
                     <include>**/*.xml</include>
-                    <include>**/*.ftl</include>
-                    <include>**/*.html</include>
-                    <include>**/*.pdf</include>
                     <include>**/*.ini</include>
                     <include>**/*.ttf</include>
-                    <include>**/*.p12</include>
-                    <include>**/*.pem</include>
                     <include>**/*.png</include>
                 </includes>
                 <filtering>false</filtering>
@@ -393,14 +232,14 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
-                    <warName>butler_api</warName>
+                    <warName>jfinal-mall-api</warName>
                 </configuration>
             </plugin>
             <!-- jetty服务器插件 -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.4.8.v20171121</version>
+                <version>9.4.24.v20191120</version>
                 <configuration>
                     <scanIntervalSeconds>0</scanIntervalSeconds>
                     <stopKey>foo</stopKey>

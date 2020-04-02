@@ -12,8 +12,8 @@ import com.jfinal.kit.JsonKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
 import com.jfinal.plugin.activerecord.Record;
-import com.qw.interceptor.RestExceptionInterceptor;
-import com.qw.interceptor.RestSecurityInterceptor;
+import com.qw.interceptor.ExceptionInterceptor;
+import com.qw.interceptor.SecurityInterceptor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -23,7 +23,7 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-@Before({RestSecurityInterceptor.class, RestExceptionInterceptor.class})
+@Before({SecurityInterceptor.class, ExceptionInterceptor.class})
 public class RestController extends Controller {
 
     protected final Log log = Log.getLog(getClass());

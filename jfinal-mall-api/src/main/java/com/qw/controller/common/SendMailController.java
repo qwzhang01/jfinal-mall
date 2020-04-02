@@ -1,7 +1,7 @@
 package com.qw.controller.common;
 
 import cn.qw.base.RestController;
-import com.qw.helper.MailHelper;
+import cn.qw.kit.MailKit;
 
 /**
  * 邮件管理
@@ -20,7 +20,7 @@ public class SendMailController extends RestController {
         String content = getPara("content");
         String mailTos = getPara("mailTos");
         try {
-            MailHelper.sendSimpleEmail(subject, content, mailTos);
+            MailKit.sendSimpleEmail(subject, content, mailTos);
             renderJson("发送成功！");
         } catch (Exception ex) {
             renderOperateError(ex.getMessage());

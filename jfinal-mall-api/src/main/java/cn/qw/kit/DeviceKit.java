@@ -1,7 +1,6 @@
 package cn.qw.kit;
 
 import com.jfinal.kit.StrKit;
-import com.qw.conf.ButlerEmnu;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
@@ -19,25 +18,25 @@ public class DeviceKit {
     private static Pattern phonePat = Pattern.compile(phoneReg, Pattern.CASE_INSENSITIVE);
     private static Pattern tablePat = Pattern.compile(tableReg, Pattern.CASE_INSENSITIVE);
 
-    public static ButlerEmnu.DeviceEnum what(HttpServletRequest request) {
+    public static int what(HttpServletRequest request) {
         String device = request.getHeader("device");
         if (StrKit.isBlank(device)) {
             device = request.getParameter("device");
         }
         if ("Android_APP".equalsIgnoreCase(device)) {
-            return ButlerEmnu.DeviceEnum.ANDROID;
+            return 1;
         }
         if ("IOS_APP".equalsIgnoreCase(device)) {
-            return ButlerEmnu.DeviceEnum.IOS;
+            return 2;
         }
         String userAgent = request.getHeader("user-agent").toLowerCase();
         if (userAgent.contains("micromessenger")) {
-            return ButlerEmnu.DeviceEnum.WEIXIN;
+            return 3;
         }
         if (check(userAgent)) {
-            return ButlerEmnu.DeviceEnum.WAP;
+            return 4;
         }
-        return ButlerEmnu.DeviceEnum.PC;
+        return 5;
     }
 
     private static boolean check(String userAgent) {

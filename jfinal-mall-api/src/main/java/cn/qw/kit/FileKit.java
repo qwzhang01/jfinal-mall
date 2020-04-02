@@ -1,35 +1,31 @@
 package cn.qw.kit;
 
-public class FileKit {
-    /**
-     * 获取文件扩展名
-     *
-     * @param filename
-     * @return
-     */
-    public static String getExtensionName(String filename) {
-        if ((filename != null) && (filename.length() > 0)) {
-            int dot = filename.lastIndexOf('.');
-            if ((dot > -1) && (dot < (filename.length() - 1))) {
-                return filename.substring(dot + 1);
-            }
-        }
-        return filename;
-    }
+import java.io.*;
 
-    /**
-     * 获取不带扩展名的文件名
-     *
-     * @param filename
-     * @return
-     */
-    public static String getFileNameNoEx(String filename) {
-        if ((filename != null) && (filename.length() > 0)) {
-            int dot = filename.lastIndexOf('.');
-            if ((dot > -1) && (dot < (filename.length()))) {
-                return filename.substring(0, dot);
+public class FileKit extends com.jfinal.kit.FileKit {
+    public static byte[] getBytes(String filePath) {
+        File file = new File(filePath);
+        ByteArrayOutputStream out = null;
+        try {
+            FileInputStream in = new FileInputStream(file);
+            out = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            int i = 0;
+            while ((i = in.read(b)) != -1) {
+
+                out.write(b, 0, b.length);
             }
+            out.close();
+            in.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new RuntimeException(e);
         }
-        return filename;
+        byte[] s = out.toByteArray();
+        return s;
+
     }
 }

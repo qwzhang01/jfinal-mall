@@ -108,8 +108,8 @@ import {
   staffForm,
   staffDetail,
   staffDelete
-} from "@/api/system/staff";
-import { userRole } from "@/api/system/role";
+} from "@/api/staff";
+import { userRole } from "@/api/role";
 import { Message, MessageBox } from "element-ui";
 import rules from "@/comm/rules";
 import Paging from "../../../components/paging";

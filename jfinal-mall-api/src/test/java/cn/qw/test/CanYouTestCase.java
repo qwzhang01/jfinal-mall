@@ -1,7 +1,6 @@
 package cn.qw.test;
 
 import cn.qw.kit.Reflect;
-import cn.qw.shiro.ShiroTestUtils;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;

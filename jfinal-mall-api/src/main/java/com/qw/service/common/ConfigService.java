@@ -1,14 +1,12 @@
 package com.qw.service.common;
 
 import cn.qw.base.BaseService;
-import com.qw.conf.QuantityConf;
-import com.qw.model.Config;
 import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
-import com.jfinal.plugin.redis.Cache;
-import com.jfinal.plugin.redis.Redis;
+import com.jfinal.plugin.ehcache.CacheKit;
+import com.qw.model.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +19,9 @@ import java.util.stream.Collectors;
  */
 public class ConfigService extends BaseService {
     private static ConfigService service;
-    private Cache cache;
 
     private ConfigService() {
-        this.cache = Redis.use(QuantityConf.PARAM_CATCHE);
+
     }
 
     public static synchronized ConfigService me() {
@@ -56,7 +53,7 @@ public class ConfigService extends BaseService {
      * 根据类型键 获取list类型的k-v列表
      */
     public List<Record> findList(String incType) {
-        List<Record> result = cache.get(CACHE_NAME + "-findList-" + incType);
+        List<Record> result = CacheKit.get(CACHE_NAME, "findList-" + incType);
         if (result != null) {
             return result;
         }
@@ -70,7 +67,7 @@ public class ConfigService extends BaseService {
             record.set("value", c.getValue());
             return record;
         }).collect(Collectors.toList());
-        cache.setex(CACHE_NAME + "-findList-" + incType, 60 * 60 * 24, result);
+        CacheKit.put(CACHE_NAME,"findList-" + incType, result);
         return result;
     }
 
@@ -81,7 +78,7 @@ public class ConfigService extends BaseService {
      * @return
      */
     public Map<String, String> findMap(String incType) {
-        Map<String, String> result = cache.get(CACHE_NAME + "-findMap-" + incType);
+        Map<String, String> result = CacheKit.get(CACHE_NAME, "findMap-" + incType);
         if (result != null) {
             return result;
         }
@@ -90,7 +87,7 @@ public class ConfigService extends BaseService {
             throw new RuntimeException("系统配置错误，参数不存在");
         }
         result = list.stream().collect(Collectors.toMap(k -> k.getName(), v -> v.getValue()));
-        cache.setex(CACHE_NAME + "-findMap-" + incType, 60 * 60 * 24, result);
+        CacheKit.put(CACHE_NAME, "findMap-" + incType, result);
         return result;
     }
 
@@ -126,6 +123,7 @@ public class ConfigService extends BaseService {
      * 清除所有缓存
      */
     private void removeCache(String incType) {
-        cache.del(CACHE_NAME + "-findMap-" + incType, CACHE_NAME + "-findList-" + incType);
+        CacheKit.remove(CACHE_NAME,"findMap-" + incType);
+        CacheKit.remove(CACHE_NAME,"findList-" + incType);
     }
 }

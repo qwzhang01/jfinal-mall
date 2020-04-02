@@ -5,11 +5,9 @@ import cn.qw.base.BaseService;
 import cn.qw.kit.HttpKit;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.qw.conf.QuantityConf;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
-import com.jfinal.plugin.redis.Cache;
-import com.jfinal.plugin.redis.Redis;
+import com.jfinal.plugin.ehcache.CacheKit;
 
 public class WxMpService extends BaseService {
     private static WxMpService service;
@@ -31,8 +29,8 @@ public class WxMpService extends BaseService {
 
     public String getAccessToken() {
 
-        Cache wechatMp = Redis.use(QuantityConf.TOKEN_REDIS);
-        String accessToken = wechatMp.get("WechatMpAccessToken");
+
+        String accessToken = CacheKit.get("com.qw.WxToken", "WechatMpAccessToken");
         if (StrKit.notBlank(accessToken)) {
             return accessToken;
         }
@@ -42,13 +40,12 @@ public class WxMpService extends BaseService {
             throw new RuntimeException("微信获取access _token失败");
         }
         accessToken = jsonObject.getString("access_token");
-        wechatMp.setex("WechatMpAccessToken", 7100, accessToken);
+        CacheKit.put("com.qw.WxToken", "WechatMpAccessToken", accessToken);
         return accessToken;
     }
 
     public String jsapiTicket(String accessToken) {
-        Cache wechatMp = Redis.use(QuantityConf.TOKEN_REDIS);
-        String ticket = wechatMp.get("WechatJsApiTicket");
+        String ticket = CacheKit.get("com.qw.WxToken", "WechatJsApiTicket");
         if (StrKit.notBlank(ticket)) {
             return ticket;
         }
@@ -58,7 +55,7 @@ public class WxMpService extends BaseService {
             throw new RuntimeException("获取jsapi_ticket失败");
         }
         ticket = jsonObject.getString("ticket");
-        wechatMp.setex("WechatJsApiTicket", 7100, ticket);
+        CacheKit.put("com.qw.WxToken", "WechatJsApiTicket",  ticket);
         return ticket;
     }
 }

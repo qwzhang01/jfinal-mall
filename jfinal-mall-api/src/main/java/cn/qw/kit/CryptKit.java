@@ -24,17 +24,7 @@ public class CryptKit {
     private static final Log log = Log.getLog(CryptKit.class);
     private static final int MAX_ENCRYPT_BLOCK = 117;
     // 安全密钥
-    private static String SECURITY_TOKEN = "bjgj@2019";
-
-    /**
-     * 系统密码加密，为了兼容TPSHOP
-     *
-     * @param str
-     * @return
-     */
-    public static String butlerMd5(String str) {
-        return md5("TPSHOP" + str);
-    }
+    private static String SECURITY_TOKEN = "qw@2016";
 
     /**
      * MD5加密
@@ -73,7 +63,7 @@ public class CryptKit {
      * @param str
      * @return
      */
-    public static String cyCry(String str) {
+    public static String qwCry(String str) {
         return CryptKit.cymd5(SECURITY_TOKEN + str + SECURITY_TOKEN);
     }
 

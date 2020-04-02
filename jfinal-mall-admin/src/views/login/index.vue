@@ -10,7 +10,7 @@
         class="login-form"
       >
         <div class="title">
-          <span>联通创客销售管理平台</span>
+          <span>{{set.title}}</span>
         </div>
         <el-form-item prop="account">
           <el-input
@@ -55,7 +55,7 @@
         </el-form-item>
       </el-form>
       <div class="tips-login">
-        <span>版权所有：联通创客销售管理平台</span>
+        <span>版权所有：{{set.title}}</span>
         <a href="http://static.centbrowser.com/installer_32/centbrowser_2.5.6.57.exe">下载谷歌浏览器</a>
       </div>
     </div>
@@ -63,12 +63,14 @@
 </template>
 
 <script>
-import { login } from "@/api/member/login";
+import { login } from "@/api/login";
 import { setToken, setUserId } from "@/util/cookie";
+import set from "@/set.js";
 
 export default {
   data() {
     return {
+      set,
       logining: false,
       codeUrl: "/tomcat/web/staff/image?t=",
       ruleForm2: {
@@ -149,7 +151,7 @@ export default {
       padding: 35px 35px 15px 35px;
       background: #fff;
       border: 1px solid #eaeaea;
-      box-shadow: 0 0 25px #cac6c6;
+      // box-shadow: 0 0 25px #cac6c6;
       .title {
         margin: 0px auto 40px auto;
         text-align: center;

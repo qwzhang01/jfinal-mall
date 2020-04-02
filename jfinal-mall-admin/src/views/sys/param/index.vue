@@ -44,7 +44,7 @@
 </template>
 <script>
 import util from "@/util/util";
-import { pageList } from "@/api/system/param";
+import { pageList } from "@/api/param.js";
 import { Message, MessageBox } from 'element-ui'
 import Paging from "../../../components/paging"
 

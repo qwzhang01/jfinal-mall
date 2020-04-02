@@ -2,14 +2,14 @@ package com.qw.controller.common;
 
 import cn.qw.base.RestController;
 import cn.qw.kit.MathKit;
-import com.qw.interceptor.RestSecurityInterceptor;
-import com.qw.model.Region;
-import com.qw.service.common.ConfigService;
-import com.qw.service.common.RegionService;
 import com.jfinal.aop.Clear;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Record;
+import com.qw.interceptor.SecurityInterceptor;
+import com.qw.model.Region;
+import com.qw.service.common.ConfigService;
+import com.qw.service.common.RegionService;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +27,7 @@ public class ParamController extends RestController {
      * @respParam level|等级|int|必填
      * @respParam parent_id|父级ID|int|必填
      */
-    @Clear(RestSecurityInterceptor.class)
+    @Clear(SecurityInterceptor.class)
     public void regin() {
         Integer parentId = getParaToInt("parentId", 0);
         List<Region> list = RegionService.me().findByParentId(parentId);

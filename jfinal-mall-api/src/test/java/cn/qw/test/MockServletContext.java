@@ -235,6 +235,11 @@ public class MockServletContext implements ServletContext {
     }
 
     @Override
+    public String getVirtualServerName() {
+        return null;
+    }
+
+    @Override
     public Enumeration<String> getServletNames() {
         return null;
     }

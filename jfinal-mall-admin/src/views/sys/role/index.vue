@@ -122,7 +122,7 @@ import {
   get,
   del,
   save
-} from "@/api/system/role";
+} from "@/api/role";
 import { Message, MessageBox } from "element-ui";
 import Paging from "../../../components/paging";
 import rules from "@/comm/rules";

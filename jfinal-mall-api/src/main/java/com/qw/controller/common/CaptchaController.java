@@ -2,41 +2,22 @@ package com.qw.controller.common;
 
 import cn.qw.base.RestController;
 import cn.qw.kit.ValidateKit;
-import cn.qw.rabbitmq.RabbitMQKit;
-import com.qw.interceptor.RestSecurityInterceptor;
-import com.qw.service.bakend.cms.ArticleService;
-import com.qw.service.common.CaptchaService;
 import com.jfinal.aop.Clear;
 import com.jfinal.kit.StrKit;
-import com.rabbitmq.client.AMQP;
-import com.rabbitmq.client.Channel;
-
-import java.io.IOException;
+import com.qw.interceptor.SecurityInterceptor;
+import com.qw.service.common.CaptchaService;
 
 /**
  * 验证码
  */
 public class CaptchaController extends RestController {
 
-    @Clear(RestSecurityInterceptor.class)
-    public void test() throws IOException, InterruptedException {
-        Channel channel = RabbitMQKit.getChannel();
-        channel.basicQos(4);
-        channel.basicPublish("test-qw", "test", null, "Hello World".getBytes());
-        // 如果消息发送失败了，可以在如下的回调中处理
-        if(channel.waitForConfirms())  {
-            System.out.println("发送成功");
-        }
-        RabbitMQKit.free(channel);
-        renderText("发布成功");
-    }
-
     /**
      * @param phone|手机号|String|必填
      * @title 获取短信验证码
      * @respBody {"status":"0","data":"", "msg":"请求成功"}
      */
-    @Clear(RestSecurityInterceptor.class)
+    @Clear(SecurityInterceptor.class)
     public void sms() {
         String phone = getPara("phone");
         if (StrKit.isBlank(phone)) {

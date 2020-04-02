@@ -33,7 +33,6 @@ public class ArticleController extends RestController {
         record.set("author", article.getAuthor());
         record.set("keywords", article.getKeywords());
         record.set("thumb", article.getThumb());
-        record.set("showThumb", PropKit.get("fileHost") + article.getThumb());
         String content = article.getContent();
         try {
             // TODO 临时解决老数据 新数据不兼容的问题

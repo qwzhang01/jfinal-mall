@@ -1,11 +1,11 @@
 package com.qw.controller.web.sys;
 
 import cn.qw.base.RestController;
-import com.qw.model.Role;
-import com.qw.service.bakend.system.RoleService;
 import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
+import com.qw.model.Role;
+import com.qw.service.bakend.system.RoleService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

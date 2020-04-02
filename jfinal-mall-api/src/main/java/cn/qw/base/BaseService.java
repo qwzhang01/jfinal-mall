@@ -12,7 +12,7 @@ public class BaseService {
     protected String CACHE_NAME;
 
     protected BaseService() {
-        CACHE_NAME = getClass().getSimpleName();
+        CACHE_NAME = getClass().getName();
     }
 
     protected Map<String, Object> searchParam(String key, Object value) {

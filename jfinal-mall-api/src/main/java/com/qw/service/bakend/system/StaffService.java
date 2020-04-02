@@ -5,15 +5,13 @@ import cn.qw.kit.AppIdKit;
 import cn.qw.kit.ArrayKit;
 import cn.qw.kit.CryptKit;
 import cn.qw.shiro.ShiroMethod;
-import com.qw.conf.QuantityConf;
-import com.qw.model.Operate;
-import com.qw.model.Staff;
 import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
-import com.jfinal.plugin.redis.Cache;
-import com.jfinal.plugin.redis.Redis;
+import com.jfinal.plugin.ehcache.CacheKit;
+import com.qw.model.Operate;
+import com.qw.model.Staff;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -25,10 +23,8 @@ import java.util.*;
  */
 public class StaffService extends BaseService {
     private static StaffService service;
-    private Cache cache;
 
     private StaffService() {
-        this.cache = Redis.use(QuantityConf.TOKEN_REDIS);
     }
 
     public static synchronized StaffService me() {
@@ -50,11 +46,10 @@ public class StaffService extends BaseService {
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.login(token);
 
-        // redis 保存登录信息
+        //  保存登录信息
         String accessToken = UUID.randomUUID().toString().replaceAll("-", "").toLowerCase();
-        String userKey = CACHE_NAME + admin.getId();
         // 登录保存时间为1天
-        cache.setex(userKey, 60 * 60 * 8, CryptKit.cymd5(CryptKit.cyCry(accessToken)));
+        CacheKit.put(CACHE_NAME, admin.getId(), CryptKit.cymd5(CryptKit.qwCry(accessToken)));
 
         Map<String, Object> map = new HashMap<>();
         map.put("accessToken", accessToken);
@@ -64,31 +59,28 @@ public class StaffService extends BaseService {
         return map;
     }
 
-    public boolean logout() {
+    public void logout() {
         if (ShiroMethod.authenticated()) {
             SecurityUtils.getSubject().logout();
         }
         Integer userId = AppIdKit.getUserId();
-        String userKey = CACHE_NAME + userId;
-        Long del = cache.del(userKey);
-        return del == 1;
+        CacheKit.remove(CACHE_NAME, userId);
     }
 
     public boolean validToken(String accessToken, Integer userId) {
         if (userId == 0) {
             return false;
         }
-        String userIdKey = CACHE_NAME + userId;
-        boolean valid = CryptKit.cymd5(CryptKit.cyCry(accessToken)).equals(cache.get(userIdKey));
+        boolean valid = CryptKit.cymd5(CryptKit.qwCry(accessToken)).equals(CacheKit.get(CACHE_NAME, userId));
         if (!valid) {
-            cache.del(userIdKey);
+            CacheKit.remove(CACHE_NAME, userId);
         }
         return valid;
     }
 
     public Page<Record> pageList(int pageNumber, int pageSize, String key) {
         String select = "SELECT id, name, phone, username";
-        String from = " FROM oms_staff WHERE username <> 'admin'";
+        String from = " FROM oms_staff WHERE 1 = 1 ";
         List<Object> paras = new ArrayList<>();
         if (StrKit.notBlank(key)) {
             from += " AND(username LIKE ? OR name LIKE ? OR phone LIKE ?)";

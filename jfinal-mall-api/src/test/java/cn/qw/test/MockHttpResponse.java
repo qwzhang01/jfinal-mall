@@ -163,6 +163,11 @@ public class MockHttpResponse implements HttpServletResponse {
     }
 
     @Override
+    public void setContentLengthLong(long l) {
+
+    }
+
+    @Override
     public void setDateHeader(String arg0, long arg1) {
 
     }

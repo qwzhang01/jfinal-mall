@@ -1,18 +1,15 @@
 package com.qw.controller.web.sys;
 
 import cn.qw.base.RestController;
-import com.qw.model.ExpressCompany;
-import com.qw.service.common.ConfigService;
-import com.qw.service.common.ExpressCompanyService;
-import com.qw.shiro.ShiroInterceptor;
 import com.jfinal.aop.Clear;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
+import com.qw.service.common.ConfigService;
+import com.qw.shiro.ShiroInterceptor;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 参数管理
@@ -44,18 +41,4 @@ public class ParamController extends RestController {
         renderJson(value);
     }
 
-    @Clear(ShiroInterceptor.class)
-    public void expressCompany() {
-        List<ExpressCompany> list = ExpressCompanyService.me().available();
-        if (list == null || list.size() <= 0) {
-            renderParamError("参数错误，不存在对应下级数据");
-            return;
-        }
-        renderJson(list.stream().map(s -> {
-            Record r = new Record();
-            r.set("id", s.getId());
-            r.set("name", s.getName());
-            return r;
-        }).collect(Collectors.toList()));
-    }
 }

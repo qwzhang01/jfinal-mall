@@ -3,12 +3,11 @@ package com.qw.controller.common;
 import cn.qw.base.RestController;
 import cn.qw.kit.DeviceKit;
 import cn.qw.kit.WxMpSHA1Kit;
-import com.qw.conf.ButlerEmnu;
-import com.qw.interceptor.RestSecurityInterceptor;
-import com.qw.service.common.WxMpService;
 import com.jfinal.aop.Clear;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
+import com.qw.interceptor.SecurityInterceptor;
+import com.qw.service.common.WxMpService;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.*;
@@ -21,7 +20,7 @@ public class WechatController extends RestController {
     /**
      * @title 校验服务器
      */
-    @Clear(RestSecurityInterceptor.class)
+    @Clear(SecurityInterceptor.class)
     public void index() {
 
         String signature = getPara("signature");
@@ -54,10 +53,10 @@ public class WechatController extends RestController {
      * @respParam timestamp|时间戳|String|必填
      * @respBody {"status":"0","data":"", "msg":"请求成功"}
      */
-    @Clear(RestSecurityInterceptor.class)
+    @Clear(SecurityInterceptor.class)
     public void jsConfig() {
-        ButlerEmnu.DeviceEnum what = DeviceKit.what(getRequest());
-        if (!what.equals(ButlerEmnu.DeviceEnum.WEIXIN)) {
+        int what = DeviceKit.what(getRequest());
+        if (what != 3) {
             renderParamError("不在微信浏览器中，无法获取");
             return;
         }

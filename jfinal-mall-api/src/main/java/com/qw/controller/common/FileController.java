@@ -2,8 +2,9 @@ package com.qw.controller.common;
 
 import cn.qw.base.RestController;
 import cn.qw.kit.DateKit;
-import cn.qw.kit.FastDFSKit;
-import com.qw.interceptor.RestSecurityInterceptor;
+import cn.qw.kit.UploadKit;
+import cn.qw.render.FileRender;
+import cn.qw.shiro.ClearShiro;
 import com.jfinal.aop.Clear;
 import com.jfinal.kit.Base64Kit;
 import com.jfinal.kit.HttpKit;
@@ -11,9 +12,12 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.upload.UploadFile;
+import com.qw.interceptor.SecurityInterceptor;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -22,13 +26,19 @@ import java.util.UUID;
  */
 public class FileController extends RestController {
 
+    public void show() throws FileNotFoundException {
+        String path = get("p");
+        String file_path = PropKit.get("file_path");
+        String fileUrl = file_path + File.separator + "jfile" + File.separator + path;
+        render(new FileRender(fileUrl));
+    }
     /**
      * @title 图片上传(File)
      * @respBody {"status":"0","data":"", "msg":"操作成功"}
      * @respParam showPath|回显地址|String|必填
      * @respParam savePath|保存地址|String|必填
      */
-    @Clear(RestSecurityInterceptor.class)
+    @Clear(SecurityInterceptor.class)
     public void updateFile() {
         UploadFile sourceFile = getFile();
         String fileName = sourceFile.getFileName();
@@ -37,10 +47,9 @@ public class FileController extends RestController {
         // 获取后缀名
         String fileNameHouZhui = fileName.substring(index);
         String uuidFileName = UUID.randomUUID().toString().replace("-", "") + fileNameHouZhui;
-        String file = FastDFSKit.uploadFile(sourceFile.getFile(), uuidFileName);
+        String file = UploadKit.uploadFile(sourceFile.getFile(), uuidFileName);
 
         Record result = new Record();
-        result.set("showPath", PropKit.get("fileHost") + file);
         result.set("savePath", file);
         String key = getPara("key");
         if (StrKit.notBlank(key)) {
@@ -55,7 +64,6 @@ public class FileController extends RestController {
      * @respParam showPath|回显地址|String|必填
      * @respParam savePath|保存地址|String|必填
      */
-    @Clear(RestSecurityInterceptor.class)
     public void updateString() {
         HttpServletRequest request = getRequest();
         String img = HttpKit.readData(request);
@@ -77,9 +85,8 @@ public class FileController extends RestController {
         String fileName = DateKit.dateToString(new Date(), "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(5) + pre;
 
         byte[] decode = Base64Kit.decode(img);
-        String file = FastDFSKit.uploadFile(decode, fileName);
+        String file = UploadKit.uploadFile(decode, fileName);
         Record result = new Record();
-        result.set("showPath", PropKit.get("fileHost") + file);
         result.set("savePath", file);
         String key = getPara("key");
         if (StrKit.notBlank(key)) {

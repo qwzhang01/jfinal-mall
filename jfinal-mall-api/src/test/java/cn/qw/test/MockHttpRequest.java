@@ -69,6 +69,11 @@ public class MockHttpRequest implements HttpServletRequest {
     }
 
     @Override
+    public long getContentLengthLong() {
+        return 0;
+    }
+
+    @Override
     public String getContentType() {
 
         return null;
@@ -309,6 +314,11 @@ public class MockHttpRequest implements HttpServletRequest {
     }
 
     @Override
+    public String changeSessionId() {
+        return null;
+    }
+
+    @Override
     public HttpSession getSession(boolean arg0) {
         return null;
     }
@@ -345,6 +355,11 @@ public class MockHttpRequest implements HttpServletRequest {
 
     @Override
     public Part getPart(String s) throws IOException, ServletException {
+        return null;
+    }
+
+    @Override
+    public <T extends HttpUpgradeHandler> T upgrade(Class<T> aClass) throws IOException, ServletException {
         return null;
     }
 

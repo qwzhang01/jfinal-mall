@@ -16,85 +16,17 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 public class _MappingKit {
 	
 	public static void mapping(ActiveRecordPlugin arp) {
-		arp.addMapping("butler_article", "article_id", Article.class);
-		arp.addMapping("butler_article_cat", "cat_id", ArticleCat.class);
-		arp.addMapping("butler_brand", "id", Brand.class);
-		arp.addMapping("butler_cart", "id", Cart.class);
-		arp.addMapping("butler_comment", "comment_id", Comment.class);
-		arp.addMapping("butler_coupon", "id", Coupon.class);
-		arp.addMapping("butler_coupon_activity", "id", CouponActivity.class);
-		arp.addMapping("butler_coupon_business", "id", CouponBusiness.class);
-		arp.addMapping("butler_coupon_ladder", "id", CouponLadder.class);
-		arp.addMapping("butler_coupon_list", "id", CouponList.class);
-		arp.addMapping("butler_coupon_order_record", "id", CouponOrderRecord.class);
-		arp.addMapping("butler_coupon_position", "id", CouponPosition.class);
-		arp.addMapping("butler_delivery_doc", "id", DeliveryDoc.class);
-		arp.addMapping("butler_door_server", "i_id", DoorServer.class);
-		arp.addMapping("butler_feedback", "msg_id", Feedback.class);
-		arp.addMapping("butler_flash_info", "id", FlashInfo.class);
-		arp.addMapping("butler_flash_sale", "id", FlashSale.class);
-		arp.addMapping("butler_freight_config", "config_id", FreightConfig.class);
-		arp.addMapping("butler_freight_region", "id", FreightRegion.class);
-		arp.addMapping("butler_freight_template", "template_id", FreightTemplate.class);
-		arp.addMapping("butler_good", "goods_id", Good.class);
-		arp.addMapping("butler_good_category", "id", GoodCategory.class);
-		arp.addMapping("butler_good_collect", "collect_id", GoodCollect.class);
-		arp.addMapping("butler_good_images", "img_id", GoodImages.class);
-		arp.addMapping("butler_good_sku", "item_id", GoodSku.class);
-		arp.addMapping("butler_good_visit", "id", GoodVisit.class);
-		arp.addMapping("butler_home_set", "id", HomeSet.class);
-		arp.addMapping("butler_lottery", "id", Lottery.class);
-		arp.addMapping("butler_lottery_good", "id", LotteryGood.class);
-		arp.addMapping("butler_lottery_order", "id", LotteryOrder.class);
-		arp.addMapping("butler_order", "order_id", Order.class);
-		arp.addMapping("butler_order_comment", "order_commemt_id", OrderComment.class);
-		arp.addMapping("butler_order_div_rate", "id", OrderDivRate.class);
-		arp.addMapping("butler_order_goods", "rec_id", OrderGoods.class);
-		arp.addMapping("butler_point_effective", "id", PointEffective.class);
-		arp.addMapping("butler_point_freeze", "id", PointFreeze.class);
-		arp.addMapping("butler_point_invest", "id", PointInvest.class);
-		arp.addMapping("butler_point_sum", "id", PointSum.class);
-		arp.addMapping("butler_point_withdraw", "id", PointWithdraw.class);
-		arp.addMapping("butler_prom_goods", "id", PromGoods.class);
-		arp.addMapping("butler_prom_order", "id", PromOrder.class);
-		arp.addMapping("butler_recharge", "order_id", Recharge.class);
-		arp.addMapping("butler_return_goods", "id", ReturnGoods.class);
-		arp.addMapping("butler_search_word", "id", SearchWord.class);
-		arp.addMapping("butler_service_worker", "id", ServiceWorker.class);
-		arp.addMapping("butler_shipping", "shipping_id", Shipping.class);
-		arp.addMapping("butler_shipping_area", "id", ShippingArea.class);
-		arp.addMapping("butler_sms_template", "tpl_id", SmsTemplate.class);
-		arp.addMapping("butler_spec", "id", Spec.class);
-		arp.addMapping("butler_spec_item", "id", SpecItem.class);
-		arp.addMapping("butler_stock_log", "id", StockLog.class);
-		arp.addMapping("butler_store", "store_id", Store.class);
-		arp.addMapping("butler_store_address", "store_address_id", StoreAddress.class);
-		arp.addMapping("butler_store_apply", "id", StoreApply.class);
-		arp.addMapping("butler_store_collect", "log_id", StoreCollect.class);
-		arp.addMapping("butler_store_goods_class", "cat_id", StoreGoodsClass.class);
-		arp.addMapping("butler_store_level", "id", StoreLevel.class);
-		arp.addMapping("butler_store_level_category", "id", StoreLevelCategory.class);
-		arp.addMapping("butler_store_level_set", "id", StoreLevelSet.class);
-		arp.addMapping("butler_user", "user_id", User.class);
-		arp.addMapping("butler_user_address", "address_id", UserAddress.class);
-		arp.addMapping("butler_user_balance", "id", UserBalance.class);
-		arp.addMapping("butler_user_balance_detail", "id", UserBalanceDetail.class);
-		arp.addMapping("butler_user_level", "level_id", UserLevel.class);
-		arp.addMapping("butler_user_message", "rec_id", UserMessage.class);
-		arp.addMapping("butler_user_msg_tpl", "mmt_code", UserMsgTpl.class);
-		arp.addMapping("butler_user_sign", "id", UserSign.class);
+		arp.addMapping("cms_article", "id", CmsArticle.class);
+		arp.addMapping("cms_article_cat", "id", CmsArticleCat.class);
 		arp.addMapping("oms_config", "id", Config.class);
-		arp.addMapping("oms_express_company", "id", ExpressCompany.class);
 		arp.addMapping("oms_operate", "id", Operate.class);
 		arp.addMapping("oms_region", "id", Region.class);
 		arp.addMapping("oms_role", "id", Role.class);
 		// Composite Primary Key order: operateId,roleId
 		arp.addMapping("oms_role_operation", "operateId,roleId", RoleOperation.class);
-		arp.addMapping("oms_sms_log", "id", SmsLog.class);
 		arp.addMapping("oms_staff", "id", Staff.class);
 		// Composite Primary Key order: adminId,roleId
 		arp.addMapping("oms_staff_role", "adminId,roleId", StaffRole.class);
-		arp.addMapping("oms_wxbank", "id", Wxbank.class);
 	}
 }
 

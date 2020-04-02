@@ -4,6 +4,7 @@ import cn.qw.base.RestController;
 import cn.qw.kit.AppIdKit;
 import cn.qw.kit.CryptKit;
 import cn.qw.kit.DateKit;
+import cn.qw.plugin.event.EventKit;
 import cn.qw.render.CaptchaRender;
 import cn.qw.shiro.ShiroMethod;
 import com.jfinal.aop.Before;
@@ -14,9 +15,6 @@ import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.tx.Tx;
 import com.jfinal.plugin.ehcache.CacheKit;
-import com.jfinal.plugin.redis.Cache;
-import com.jfinal.plugin.redis.Redis;
-import com.qw.conf.QuantityConf;
 import com.qw.model.Staff;
 import com.qw.service.bakend.system.RoleService;
 import com.qw.service.bakend.system.StaffService;
@@ -72,20 +70,19 @@ public class StaffController extends RestController {
             renderParamError("用户不存在");
             return;
         }
-        Cache loginTimesRedis = Redis.use(QuantityConf.LOGIN_ERROR);
-        Integer loginTimes = loginTimesRedis.get(username);
+        Integer loginTimes = CacheKit.get("com.qw.ErrorLogin", username);
         int times = loginTimes != null ? loginTimes.intValue() : 0;
         if (times > 5) {
             renderParamError("您已输入错误5次，已被暂时锁定，请15分钟再试。");
             return;
         }
-        if (!CryptKit.butlerMd5(password).equals(admin.getPassword())) {
+        if (!CryptKit.qwCry(password).equals(admin.getPassword())) {
             if (times < 5) {
                 renderParamError("用户名或密码错误，错误5次后用户将被锁定15分钟。");
             } else {
                 renderParamError("您已输入错误5次，已被暂时锁定，请15分钟后再试。");
             }
-            loginTimesRedis.setex(username, 60 * 15, times + 1);
+            CacheKit.put("com.qw.ErrorLogin", username, times + 1);
             return;
         }
         // 处理登录逻辑，保存token
@@ -94,12 +91,8 @@ public class StaffController extends RestController {
     }
 
     public void logout() {
-        boolean logout = StaffService.me().logout();
-        if(logout) {
-            renderSuccess("退出成功");
-        }else{
-            renderParamError("退出错误");
-        }
+        StaffService.me().logout();
+        renderSuccess("退出成功");
     }
 
     /**
@@ -138,7 +131,7 @@ public class StaffController extends RestController {
         Staff staff = Staff.dao.findById(id);
         if (staff == null) {
             staff = new Staff();
-            staff.setPassword(CryptKit.butlerMd5("000000"));
+            staff.setPassword(CryptKit.qwCry("000000"));
         }
         staff.setUsername(username);
         staff.setName(name);
@@ -171,8 +164,6 @@ public class StaffController extends RestController {
         renderJson(record);
     }
 
-    // 自己主动修改密码
-    @Clear(ShiroInterceptor.class)
     public void changePw() {
         String password = getPara("password");
         String confirmPassword = getPara("confirmPassword");
@@ -189,7 +180,7 @@ public class StaffController extends RestController {
             renderParamError("用户信息不存在");
             return;
         }
-        staff.setPassword(CryptKit.butlerMd5(password));
+        staff.setPassword(CryptKit.qwCry(password));
         if (staff.update(false)) {
             // 修改成功后退出登录
             if (ShiroMethod.authenticated()) {
@@ -207,7 +198,7 @@ public class StaffController extends RestController {
         int userId = getParaToInt("userId", 0);
         Staff staff = Staff.dao.findById(userId);
         String ps = DateKit.dateToString(new Date(), "yyyyMMddHHmmss");
-        staff.setPassword(CryptKit.butlerMd5(ps));
+        staff.setPassword(CryptKit.qwCry(ps));
         if (staff.update(false)) {
             renderSuccess("密码已重置为“" + ps + "”，请妥善保管");
         } else {

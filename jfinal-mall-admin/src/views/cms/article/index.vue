@@ -8,7 +8,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="success" v-on:click="getList">搜索</el-button>
-            <el-button type="primary" v-on:click="handleAddArticle">添加资讯</el-button>
+            <el-button type="primary" v-on:click="handleAddArticle">新增资讯</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -68,7 +68,7 @@
 </template>
 <script>
 import util from "@/util/util";
-import { articleList, saveArticle, deleteArticle } from "@/api/CMS/article";
+import { articleList, saveArticle, deleteArticle } from "@/api/article";
 import Paging from "../../../components/paging";
 import { Message, MessageBox } from "element-ui";
 import { checkPermission } from "@/util/operator";
@@ -113,14 +113,14 @@ export default {
           props: "addTime"
         },
         {
-          label: "发布时间",
+          label: "关键字",
           width: 200,
-          props: "publishTime"
+          props: "keyword"
         },
         {
           label: "浏览量",
           width: 200,
-          props: "clickCount"
+          props: "click"
         }
       ]
     };

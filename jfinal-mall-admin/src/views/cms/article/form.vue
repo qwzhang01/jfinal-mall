@@ -8,8 +8,8 @@
         <el-form-item label="作者：" prop="author" :rules="rules.val">
           <el-input type="input" v-model="articleForm.author"></el-input>
         </el-form-item>
-        <el-form-item label="关键字：" prop="keywords" :rules="rules.val">
-          <el-input type="input" v-model="articleForm.keywords"></el-input>
+        <el-form-item label="关键字：" prop="keyword" :rules="rules.val">
+          <el-input type="input" v-model="articleForm.keyword"></el-input>
         </el-form-item>
         <el-form-item label="缩略图" prop="thumb" :rules="rules.val">
           <el-upload
@@ -36,7 +36,7 @@
 </template>
 <script>
 import util from "@/util/util";
-import { saveArticle, detailArticle } from "@/api/CMS/article";
+import { saveArticle, detailArticle } from "@/api/article";
 import { Message, MessageBox } from "element-ui";
 
 import tinymce from "tinymce/tinymce";
@@ -95,7 +95,7 @@ export default {
         id: "",
         title: "",
         author: "",
-        keywords: "",
+        keyword: "",
         thumb: "",
         showThumb: "",
         content: "",
