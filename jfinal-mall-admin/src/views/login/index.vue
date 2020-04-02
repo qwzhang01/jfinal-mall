@@ -10,7 +10,7 @@
         class="login-form"
       >
         <div class="title">
-          <span>联通创客销售管理平台</span>
+          <span>舅服你商城BUG版</span>
         </div>
         <el-form-item prop="account">
           <el-input
@@ -55,7 +55,7 @@
         </el-form-item>
       </el-form>
       <div class="tips-login">
-        <span>版权所有：联通创客销售管理平台</span>
+        <span>版权所有：舅服你商城BUG版</span>
         <a href="http://static.centbrowser.com/installer_32/centbrowser_2.5.6.57.exe">下载谷歌浏览器</a>
       </div>
     </div>
@@ -149,7 +149,7 @@ export default {
       padding: 35px 35px 15px 35px;
       background: #fff;
       border: 1px solid #eaeaea;
-      box-shadow: 0 0 25px #cac6c6;
+      // box-shadow: 0 0 25px #cac6c6;
       .title {
         margin: 0px auto 40px auto;
         text-align: center;

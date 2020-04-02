@@ -3,10 +3,10 @@
     <el-header class="header">
       <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
         <span v-if="!collapsed">
-          <el-image src="/static/img/logo.png" fit="cover" style="float: left;"></el-image>
+          <el-image :src="logImg" fit="cover" style="float: left;"></el-image>
           {{sysName}}
         </span>
-        <el-image src="/static/img/logo.png" fit="cover" v-else></el-image>
+        <el-image :src="logImg" fit="cover" v-else></el-image>
       </el-col>
       <!-- 折叠面板 -->
       <el-col :span="1">
@@ -135,10 +135,13 @@ import { removeToken, removeUserId } from "@/util/cookie";
 import { checkPermission } from "@/util/operator";
 import rules from "../../comm/rules";
 import { changePw } from "@/api/system/staff";
+import logImg from "@/assets/logo.png";
+
 export default {
   data() {
     return {
-      sysName: "积分商城运营平台",
+      logImg,
+      sysName: "舅服你商城BUG版",
       collapsed: false,
       dialogVisible: false,
       changePwForm: {
