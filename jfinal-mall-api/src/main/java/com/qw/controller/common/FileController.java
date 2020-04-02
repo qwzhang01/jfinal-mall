@@ -26,10 +26,11 @@ import java.util.UUID;
  */
 public class FileController extends RestController {
 
-    public void show() throws FileNotFoundException {
+    @Clear(SecurityInterceptor.class)
+    public void show() {
         String path = get("p");
         String file_path = PropKit.get("file_path");
-        String fileUrl = file_path + File.separator + "jfile" + File.separator + path;
+        String fileUrl = file_path + File.separator + path;
         render(new FileRender(fileUrl));
     }
     /**
@@ -41,16 +42,9 @@ public class FileController extends RestController {
     @Clear(SecurityInterceptor.class)
     public void updateFile() {
         UploadFile sourceFile = getFile();
-        String fileName = sourceFile.getFileName();
-        // 生成唯一的文件名(避免原文件名带有中文)
-        int index = fileName.lastIndexOf(".");
-        // 获取后缀名
-        String fileNameHouZhui = fileName.substring(index);
-        String uuidFileName = UUID.randomUUID().toString().replace("-", "") + fileNameHouZhui;
-        String file = UploadKit.uploadFile(sourceFile.getFile(), uuidFileName);
-
+        File file = sourceFile.getFile();
         Record result = new Record();
-        result.set("savePath", file);
+        result.set("savePath", "web/file/show?p=" + file.getName());
         String key = getPara("key");
         if (StrKit.notBlank(key)) {
             result.set("key", key);

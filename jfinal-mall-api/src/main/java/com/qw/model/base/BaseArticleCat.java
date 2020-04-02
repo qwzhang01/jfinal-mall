@@ -9,12 +9,12 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseArticleCat<M extends BaseArticleCat<M>> extends BaseModel<M> implements IBean {
 
-	public void setCatId(java.lang.Long catId) {
-		set("cat_id", catId);
+	public void setId(java.lang.Integer id) {
+		set("id", id);
 	}
 
-	public java.lang.Long getCatId() {
-		return getLong("cat_id");
+	public java.lang.Integer getId() {
+		return getInt("id");
 	}
 
 	/**
@@ -29,62 +29,6 @@ public abstract class BaseArticleCat<M extends BaseArticleCat<M>> extends BaseMo
 	 */
 	public java.lang.String getCatName() {
 		return getStr("cat_name");
-	}
-
-	/**
-	 * 默认分组
-	 */
-	public void setCatType(java.lang.Integer catType) {
-		set("cat_type", catType);
-	}
-
-	/**
-	 * 默认分组
-	 */
-	public java.lang.Integer getCatType() {
-		return getInt("cat_type");
-	}
-
-	/**
-	 * 夫级ID
-	 */
-	public void setParentId(java.lang.Integer parentId) {
-		set("parent_id", parentId);
-	}
-
-	/**
-	 * 夫级ID
-	 */
-	public java.lang.Integer getParentId() {
-		return getInt("parent_id");
-	}
-
-	/**
-	 * 是否导航显示
-	 */
-	public void setShowInNav(java.lang.Boolean showInNav) {
-		set("show_in_nav", showInNav);
-	}
-
-	/**
-	 * 是否导航显示
-	 */
-	public java.lang.Boolean getShowInNav() {
-		return get("show_in_nav");
-	}
-
-	/**
-	 * 排序
-	 */
-	public void setSortOrder(java.lang.Integer sortOrder) {
-		set("sort_order", sortOrder);
-	}
-
-	/**
-	 * 排序
-	 */
-	public java.lang.Integer getSortOrder() {
-		return getInt("sort_order");
 	}
 
 	/**
@@ -104,29 +48,15 @@ public abstract class BaseArticleCat<M extends BaseArticleCat<M>> extends BaseMo
 	/**
 	 * 搜索关键词
 	 */
-	public void setKeywords(java.lang.String keywords) {
-		set("keywords", keywords);
+	public void setKeyword(java.lang.String keyword) {
+		set("keyword", keyword);
 	}
 
 	/**
 	 * 搜索关键词
 	 */
-	public java.lang.String getKeywords() {
-		return getStr("keywords");
-	}
-
-	/**
-	 * 别名
-	 */
-	public void setCatAlias(java.lang.String catAlias) {
-		set("cat_alias", catAlias);
-	}
-
-	/**
-	 * 别名
-	 */
-	public java.lang.String getCatAlias() {
-		return getStr("cat_alias");
+	public java.lang.String getKeyword() {
+		return getStr("keyword");
 	}
 
 }

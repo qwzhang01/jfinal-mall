@@ -11,6 +11,8 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 
+import java.util.Date;
+
 @RequiresAuthentication
 @RequiresPermissions("资讯管理")
 public class ArticleController extends RestController {
@@ -28,22 +30,35 @@ public class ArticleController extends RestController {
         int id = getParaToInt("id", 0);
         Article article = Article.dao.findById(id);
         Record record = new Record();
-        record.set("id", article.getArticleId());
+        record.set("id", article.getId());
         record.set("title", article.getTitle());
         record.set("author", article.getAuthor());
-        record.set("keywords", article.getKeywords());
+        record.set("keyword", article.getKeyword());
         record.set("thumb", article.getThumb());
-        String content = article.getContent();
-        try {
-            // TODO 临时解决老数据 新数据不兼容的问题
-            Base64Kit.decodeToStr(content);
-            record.set("content", content);
-        } catch (Exception e) {
-            record.set("content", Base64Kit.encode(StringEscapeUtils.unescapeHtml4(content)));
-        }
         renderJson(record);
     }
-
+    @RequiresPermissions("资讯管理-查看")
+    public void save() {
+        int id = getParaToInt("id", 0);
+        String title = getPara("title");
+        String author = getPara("author");
+        String keywords = getPara("keyword");
+        String thumb = getPara("thumb");
+        String content = getPara("content");
+        Article article = Article.dao.findById(id);
+        if (article == null) {
+            article = new Article();
+        }
+        article.setTitle(title);
+        article.setThumb(thumb);
+        article.setAuthor(author);
+        article.setKeyword(keywords);
+        article.setContent(content);
+        article.setCatId(24);
+        article.setAddTime(new Date());
+        article.saveOrUpdate(false);
+        renderSuccess("保存成功");
+    }
     @RequiresPermissions("资讯管理-查看")
     public void delete() {
         int id = getParaToInt("id", 0);
@@ -54,29 +69,5 @@ public class ArticleController extends RestController {
         }
         article.delete();
         renderSuccess("删除成功");
-    }
-
-    @RequiresPermissions("资讯管理-查看")
-    public void save() {
-        Integer id = getParaToInt("id");
-        String title = getPara("title");
-        String author = getPara("author");
-        String keywords = getPara("keywords");
-        String thumb = getPara("thumb");
-        String content = getPara("content");
-        Article article = Article.dao.findById(id);
-        if (article == null) {
-            article = new Article();
-        }
-        article.setTitle(title);
-        article.setThumb(thumb);
-        article.setAuthor(author);
-        article.setKeywords(keywords);
-        article.setContent(content);
-        article.setCatId(99);
-        article.setAddTime(System.currentTimeMillis() / 1000);
-        article.setPublishTime(article.getAddTime().intValue());
-        article.saveOrUpdate(false);
-        renderSuccess("保存成功");
     }
 }

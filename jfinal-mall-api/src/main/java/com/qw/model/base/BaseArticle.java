@@ -9,12 +9,12 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseArticle<M extends BaseArticle<M>> extends BaseModel<M> implements IBean {
 
-	public void setArticleId(java.lang.Integer articleId) {
-		set("article_id", articleId);
+	public void setId(java.lang.Integer id) {
+		set("id", id);
 	}
 
-	public java.lang.Integer getArticleId() {
-		return getInt("article_id");
+	public java.lang.Integer getId() {
+		return getInt("id");
 	}
 
 	/**
@@ -45,14 +45,6 @@ public abstract class BaseArticle<M extends BaseArticle<M>> extends BaseModel<M>
 		return getStr("title");
 	}
 
-	public void setContent(java.lang.String content) {
-		set("content", content);
-	}
-
-	public java.lang.String getContent() {
-		return getStr("content");
-	}
-
 	/**
 	 * 文章作者
 	 */
@@ -68,105 +60,39 @@ public abstract class BaseArticle<M extends BaseArticle<M>> extends BaseModel<M>
 	}
 
 	/**
-	 * 作者邮箱
+	 * 关键字
 	 */
-	public void setAuthorEmail(java.lang.String authorEmail) {
-		set("author_email", authorEmail);
-	}
-
-	/**
-	 * 作者邮箱
-	 */
-	public java.lang.String getAuthorEmail() {
-		return getStr("author_email");
+	public void setKeyword(java.lang.String keyword) {
+		set("keyword", keyword);
 	}
 
 	/**
 	 * 关键字
 	 */
-	public void setKeywords(java.lang.String keywords) {
-		set("keywords", keywords);
+	public java.lang.String getKeyword() {
+		return getStr("keyword");
 	}
 
 	/**
-	 * 关键字
+	 * 文章缩略图
 	 */
-	public java.lang.String getKeywords() {
-		return getStr("keywords");
-	}
-
-	public void setArticleType(java.lang.Boolean articleType) {
-		set("article_type", articleType);
-	}
-
-	public java.lang.Boolean getArticleType() {
-		return get("article_type");
-	}
-
-	public void setIsOpen(java.lang.Boolean isOpen) {
-		set("is_open", isOpen);
-	}
-
-	public java.lang.Boolean getIsOpen() {
-		return get("is_open");
-	}
-
-	public void setAddTime(java.lang.Long addTime) {
-		set("add_time", addTime);
-	}
-
-	public java.lang.Long getAddTime() {
-		return getLong("add_time");
+	public void setThumb(java.lang.String thumb) {
+		set("thumb", thumb);
 	}
 
 	/**
-	 * 附件地址
+	 * 文章缩略图
 	 */
-	public void setFileUrl(java.lang.String fileUrl) {
-		set("file_url", fileUrl);
+	public java.lang.String getThumb() {
+		return getStr("thumb");
 	}
 
-	/**
-	 * 附件地址
-	 */
-	public java.lang.String getFileUrl() {
-		return getStr("file_url");
+	public void setContent(java.lang.String content) {
+		set("content", content);
 	}
 
-	public void setOpenType(java.lang.Boolean openType) {
-		set("open_type", openType);
-	}
-
-	public java.lang.Boolean getOpenType() {
-		return get("open_type");
-	}
-
-	/**
-	 * 链接地址
-	 */
-	public void setLink(java.lang.String link) {
-		set("link", link);
-	}
-
-	/**
-	 * 链接地址
-	 */
-	public java.lang.String getLink() {
-		return getStr("link");
-	}
-
-	/**
-	 * 文章摘要
-	 */
-	public void setDescription(java.lang.String description) {
-		set("description", description);
-	}
-
-	/**
-	 * 文章摘要
-	 */
-	public java.lang.String getDescription() {
-		return getStr("description");
+	public java.lang.String getContent() {
+		return getStr("content");
 	}
 
 	/**
@@ -184,31 +110,17 @@ public abstract class BaseArticle<M extends BaseArticle<M>> extends BaseModel<M>
 	}
 
 	/**
-	 * 文章预告发布时间
+	 * 新增时间 
 	 */
-	public void setPublishTime(java.lang.Integer publishTime) {
-		set("publish_time", publishTime);
+	public void setAddTime(java.util.Date addTime) {
+		set("add_time", addTime);
 	}
 
 	/**
-	 * 文章预告发布时间
+	 * 新增时间 
 	 */
-	public java.lang.Integer getPublishTime() {
-		return getInt("publish_time");
-	}
-
-	/**
-	 * 文章缩略图
-	 */
-	public void setThumb(java.lang.String thumb) {
-		set("thumb", thumb);
-	}
-
-	/**
-	 * 文章缩略图
-	 */
-	public java.lang.String getThumb() {
-		return getStr("thumb");
+	public java.util.Date getAddTime() {
+		return get("add_time");
 	}
 
 }

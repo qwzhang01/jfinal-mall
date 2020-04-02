@@ -5,7 +5,7 @@ import { getToken, getUserId, logOut } from '@/util/cookie'
 
 const service = axios.create({
   headers: {
-    'Content-Type': 'application/json;charset=utf-8',
+    // 'Content-Type': 'application/json;charset=utf-8',
     'Content-Type': 'application/x-www-form-urlencoded',
   },
   baseURL: process.env.BASE_API + "/web",

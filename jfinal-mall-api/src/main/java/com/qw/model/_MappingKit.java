@@ -16,8 +16,8 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 public class _MappingKit {
 	
 	public static void mapping(ActiveRecordPlugin arp) {
-		arp.addMapping("cms_article", "id", CmsArticle.class);
-		arp.addMapping("cms_article_cat", "id", CmsArticleCat.class);
+		arp.addMapping("cms_article", "id", Article.class);
+		arp.addMapping("cms_article_cat", "id", ArticleCat.class);
 		arp.addMapping("oms_config", "id", Config.class);
 		arp.addMapping("oms_operate", "id", Operate.class);
 		arp.addMapping("oms_region", "id", Region.class);

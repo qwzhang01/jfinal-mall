@@ -6,18 +6,6 @@ import java.io.*;
 
 public class UploadKit {
 
-    public static String uploadFile(File f, String uuidFileName) {
-        String path = PropKit.get("file_path") + File.separator + "jfile" + File.separator + uuidFileName;
-        File dir = new File(path);
-        if (!dir.exists() && dir.isDirectory()) {
-            dir.mkdirs();
-        }
-        File file = new File(path);
-        f.renameTo(file);
-        return "api/file/show?p=" + uuidFileName;
-    }
-
-
     public static String uploadFile(byte[] b, String uuidFileName) {
         String path = PropKit.get("file_path") + File.separator + "jfile" + File.separator + uuidFileName;
         File dir = new File(path);

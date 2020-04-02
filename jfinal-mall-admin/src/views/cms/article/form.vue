@@ -54,11 +54,13 @@ import "tinymce/plugins/textcolor";
 import rules from "@/comm/rules";
 let Base64 = require("js-base64").Base64;
 import { UpdateFileFast, UpdateFileFastFn } from "../../../api/comm.js";
+import set from "@/set.js";
 
 export default {
   components: { editor: Editor },
   data() {
     return {
+      set,
       UpdateFileFast,
       subDisabled: false,
       API_KEY: "b4d3m0aae39vlsudqrzyh4ifdxebbeuwoprcbq4y7u0hp8py",
@@ -86,7 +88,7 @@ export default {
           UpdateFileFastFn(fd)
             .then(res => {
               let result = res.data;
-              success(result.showPath);
+              success(set.fileHost + result.savePath);
             })
             .catch(err => {});
         }
@@ -135,6 +137,10 @@ export default {
           _this.articleForm.showContent = Base64.decode(
             _this.articleForm.content
           );
+          if (_this.articleForm.thumb) {
+            _this.articleForm.showThumb =
+              _this.set.fileHost + _this.articleForm.thumb;
+          }
         }
       });
     },

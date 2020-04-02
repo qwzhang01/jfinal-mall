@@ -50,8 +50,7 @@ public class QwGenerator {
         // 设置是否生成字典文件
         gernerator.setGenerateDataDictionary(true);
         // 设置需要被移除的表名前缀用于生成modelName。
-        gernerator.setRemovedTableNamePrefixes("_tb", "app_", "oms_",
-                "global_", "rbac_", "pub_", "mkt_", "im_", "butler_");
+        gernerator.setRemovedTableNamePrefixes("oms_", "cms_");
         // 生成
         gernerator.generate();
     }

@@ -27,7 +27,7 @@
         <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
         <el-table-column width="120" align="center">
           <template slot-scope="scope">
-            <el-image :src="scope.row.thumb" fit="cover"></el-image>
+            <el-image :src="set.fileHost + scope.row.thumb" fit="cover"></el-image>
           </template>
         </el-table-column>
         <el-table-column
@@ -68,6 +68,7 @@
 </template>
 <script>
 import util from "@/util/util";
+import set from "@/set.js";
 import { articleList, saveArticle, deleteArticle } from "@/api/article";
 import Paging from "../../../components/paging";
 import { Message, MessageBox } from "element-ui";
@@ -79,6 +80,7 @@ export default {
   },
   data() {
     return {
+      set,
       listLoading: false,
       page: {
         pageNumber: 1,

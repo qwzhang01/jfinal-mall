@@ -7,15 +7,14 @@ import service from '../util/config';
 export const UpdateFileFast = process.env.BASE_API + '/web/file/updateFile';
 
 /**
- * 传统图片上传方法
+ * Base64上传方法
  */
-export function UpdateFileFastFn(params) {
+export function UpdateFileFastFn(data) {
     return service({
-        url: '/article/detail',
-        method: 'post',
-        params,
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
+        url: '/file/updateFile',
+        method: 'post', headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+        data
     })
 }
