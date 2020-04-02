@@ -101,7 +101,7 @@
   </el-card>
 </template>
 <script>
-import util from "@/util/util";
+
 import {
   pageList,
   resetPw,

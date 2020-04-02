@@ -113,7 +113,6 @@
   </section>
 </template>
 <script>
-import util from "@/util/util";
 import { checkPermission } from "@/util/operator";
 import {
   pageList,

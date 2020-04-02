@@ -35,7 +35,6 @@
   </section>
 </template>
 <script>
-import util from "@/util/util";
 import { saveArticle, detailArticle } from "@/api/article";
 import { Message, MessageBox } from "element-ui";
 

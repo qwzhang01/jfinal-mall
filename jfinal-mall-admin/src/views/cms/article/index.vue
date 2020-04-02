@@ -67,7 +67,6 @@
   </section>
 </template>
 <script>
-import util from "@/util/util";
 import set from "@/set.js";
 import { articleList, saveArticle, deleteArticle } from "@/api/article";
 import Paging from "../../../components/paging";
